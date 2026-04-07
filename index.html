@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Portal Física em Quadrinhos | 1º Ano EM • 1º Bimestre | Prof. Anderson Daniel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Comic Neue', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #0a2a36 0%, #0c1f2a 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        /* container principal */
+        .portal-container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* cabeçalho hero */
+        .hero {
+            background: linear-gradient(135deg, #1e4a6e, #0e2f44);
+            border-radius: 50px;
+            padding: 25px 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            border-bottom: 5px solid #ffb347;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "⚛️🔬📏";
+            font-size: 120px;
+            position: absolute;
+            bottom: -30px;
+            right: -20px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            color: #fff3e0;
+            text-shadow: 3px 3px 0 #1a3a4a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 span {
+            background: #ffb34720;
+            padding: 5px 15px;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: #ffdd99;
+            margin-top: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .prof-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #00000040;
+            border-radius: 60px;
+            padding: 5px 18px;
+            margin-top: 18px;
+            font-size: 0.9rem;
+            color: #ffeaaf;
+            backdrop-filter: blur(4px);
+        }
+
+        .prof-badge a {
+            color: #ffb347;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .prof-badge a:hover {
+            text-decoration: underline;
+            color: #ffd966;
+        }
+
+        /* grade de módulos */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+            margin: 30px 0 40px;
+        }
+
+        /* card clicável */
+        .module-card {
+            background: #fffef7;
+            border-radius: 36px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 180, 71, 0.3);
+            position: relative;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 22px 30px -12px black;
+            border-color: #ffb347;
+        }
+
+        .card-header {
+            background: linear-gradient(115deg, #1f3f50, #14313f);
+            padding: 20px 20px 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 4px solid #ffb347;
+        }
+
+        .card-icon {
+            font-size: 2.8rem;
+            background: #ffb34720;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .card-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .card-badge {
+            font-size: 0.7rem;
+            background: #ffb347;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #1e2f3a;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+
+        .card-body {
+            padding: 20px 22px 24px;
+        }
+
+        .card-body p {
+            color: #2c3e3a;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin-bottom: 20px;
+        }
+
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .topic-tag {
+            background: #fff0df;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #b45f1b;
+            letter-spacing: 0.3px;
+        }
+
+        .card-footer-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #ffe1b3;
+            padding-top: 15px;
+            margin-top: 6px;
+            font-weight: 600;
+            color: #c96f0e;
+            transition: 0.2s;
+        }
+
+        .module-card:hover .card-footer-link {
+            color: #e0841a;
+            gap: 8px;
+        }
+
+        .arrow-icon {
+            font-size: 1.3rem;
+            transition: transform 0.2s;
+        }
+
+        .module-card:hover .arrow-icon {
+            transform: translateX(5px);
+        }
+
+        /* rodapé expansivo */
+        .footer-portal {
+            background: #0a212b;
+            border-radius: 40px;
+            padding: 30px 28px;
+            margin-top: 25px;
+            text-align: center;
+            border-top: 3px solid #ffb347;
+            color: #f7e5c2;
+        }
+
+        .physics-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 18px;
+            background: #0e2e3b;
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 80px;
+            color: #ffe5b4;
+        }
+
+        .footer-contact {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .footer-contact a {
+            color: #ffb347;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .small-note {
+            font-size: 0.75rem;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 750px) {
+            .hero h1 { font-size: 1.6rem; }
+            .modules-grid { gap: 20px; }
+            .card-header h2 { font-size: 1.1rem; }
+            .card-icon { font-size: 2rem; width: 50px; height: 50px; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 15px; }
+            .hero { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="portal-container">
+    <!-- Cabeçalho principal com identidade do professor -->
+    <div class="hero">
+        <h1>
+            <span>📘✨ FÍSICA EM QUADRINHOS ✨📘</span>
+        </h1>
+        <div class="hero-sub">
+            🔭 1º Ano do Ensino Médio • 1º Bimestre • 8 Unidades Interativas 🔭
+        </div>
+        <div class="prof-badge">
+            👨‍🏫 <strong>Professor Anderson Daniel</strong> | ✉️ <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> | 🧪 Ciência com criatividade
+        </div>
+        <div style="margin-top: 12px; font-size: 0.8rem; background: #00000030; display: inline-block; padding: 4px 16px; border-radius: 60px;">
+            🌟 "Cada módulo é uma aventura em quadrinhos + questões + teoria visual" 🌟
+        </div>
+    </div>
+
+    <!-- Grade de módulos: 8 unidades completas conforme arquivos listados -->
+    <div class="modules-grid">
+        
+        <!-- 1 - DILATAÇÃO TÉRMICA (U1.1) -->
+        <a href="1EM.Fis.1B.U1.1.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">🔥🧊📏</div>
+                <div>
+                    <h2>Dilatação Térmica<br><span style="font-size: 0.7rem;">Sólidos e Líquidos</span></h2>
+                    <div class="card-badge">Unidade 1</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>🔬 <strong>Microscopia da dilatação</strong>, fórmulas lineares, superficiais e volumétricas. Comportamento anômalo da água e dilatação real/aparente em líquidos. Com histórias em quadrinhos e exercícios gamificados.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">ΔL = L₀·α·ΔT</span>
+                    <span class="topic-tag">γ = 3α</span>
+                    <span class="topic-tag">Água: densidade máx. 4°C</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Explorar capítulos interativos</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 2 - CALOR: ENERGIA TÉRMICA EM TRÂNSITO (U2.1) -->
+        <a href="1EM.Fis.1B.U2.1.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">🔥🌡️💨</div>
+                <div>
+                    <h2>Calor – Energia Térmica<br><span style="font-size: 0.7rem;">em Trânsito</span></h2>
+                    <div class="card-badge">Unidade 2</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>🌡️ Conceitos fundamentais: calor como energia em trânsito, diferença entre temperatura e calor, capacidade térmica, calor sensível e latente. Trocas de calor e equilíbrio térmico em quadrinhos científicos.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Q = m·c·ΔT</span>
+                    <span class="topic-tag">Calor Latente</span>
+                    <span class="topic-tag">Condução/Convecção</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Aventura térmica</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 3 - TRANSFORMAÇÕES DA MATÉRIA (U3.1) Sólido, Líquido, Gasoso, Plasma, Condensado de Bose-Einstein -->
+        <a href="1EM.Fis.1B.U3.1.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">🧊💧⚡✨</div>
+                <div>
+                    <h2>Transformações da Matéria<br><span style="font-size: 0.7rem;">Sólido → Líq. → Gas. → Plasma → BEC</span></h2>
+                    <div class="card-badge">Unidade 3</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>🔁 Estados de agregação, mudanças de fase, diagrama de fases, plasma no universo e Condensado de Bose-Einstein (BEC). Fenômenos como fusão, vaporização, sublimação em uma abordagem visual e contextualizada.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Fusão/Vaporização</span>
+                    <span class="topic-tag">Plasma estelar</span>
+                    <span class="topic-tag">BEC - 5º estado</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Explore a matéria</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 4 - CINEMÁTICA - MOVIMENTO UNIFORME (MU) - F2.U1 -->
+        <a href="1EM.Fis.1B.F2.U1.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">🚗📏⏱️</div>
+                <div>
+                    <h2>Cinemática • Movimento Uniforme (MU)<br><span style="font-size: 0.7rem;">Velocidade constante</span></h2>
+                    <div class="card-badge">Física 2 • Unid. 1</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>📐 Conceitos de posição, deslocamento, velocidade escalar constante, função horária S = S₀ + v·t. Gráficos do MRU e situações do cotidiano. Exercícios com estilo HQ e desafios progressivos.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">S = S₀ + v·t</span>
+                    <span class="topic-tag">Movimento retilíneo</span>
+                    <span class="topic-tag">Gráficos espaço×tempo</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Velocidade constante em ação</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 5 - ACELERAÇÃO CONSTANTE | QUEDA LIVRE | MOV. ACELERADO E RETARDADO - F2.U2 -->
+        <a href="1EM.Fis.1B.F2.U2.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">📈⬇️🔄</div>
+                <div>
+                    <h2>Aceleração Constante & Queda Livre<br><span style="font-size: 0.7rem;">Movimento acelerado/retardado</span></h2>
+                    <div class="card-badge">Física 2 • Unid. 2</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>⚡ Movimento Uniformemente Variado (MUV), aceleração escalar, funções horárias, velocidade média, queda livre (g = 9,8 m/s²), subida e descida. Contextualização com experimentos e histórias em quadrinhos.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">v = v₀ + a·t</span>
+                    <span class="topic-tag">Queda livre</span>
+                    <span class="topic-tag">Torricelli</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Desvende a aceleração</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 6 - QUEDA LIVRE | LANÇAMENTO VERTICAL | GALILEU - F2.U3 -->
+        <a href="1EM.Fis.1B.F2.U3.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">🪂📐🧑‍🔬</div>
+                <div>
+                    <h2>Queda Livre & Lançamento Vertical<br><span style="font-size: 0.7rem;">Galileu e os corpos celestes</span></h2>
+                    <div class="card-badge">Física 2 • Unid. 3</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>🏛️ O legado de Galileu: corpos em queda desprezando resistência do ar, tempo de subida/descida, altura máxima, função horária da posição no lançamento vertical. Estudo gráfico e situações-problema.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">y = y₀+v₀t - ½gt²</span>
+                    <span class="topic-tag">Tempo de voo</span>
+                    <span class="topic-tag">Simetria do movimento</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Explore o universo Galileano</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 7 - FUNÇÕES CONSTANTES, 1º GRAU, 2º GRAU | ESPAÇO, VELOCIDADE, ACELERAÇÃO - F2.U4 -->
+        <a href="1EM.Fis.1B.F2.U4.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">📊📈🧮</div>
+                <div>
+                    <h2>Funções na Física: 1º e 2º Grau<br><span style="font-size: 0.7rem;">Espaço, Velocidade, Aceleração</span></h2>
+                    <div class="card-badge">Física 2 • Unid. 4</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>📈 Interpretação algébrica e gráfica: movimento uniforme (função afim) e uniformemente variado (função quadrática). Relação entre posição, velocidade e aceleração através de modelos matemáticos em quadrinhos.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Função horária 1º grau</span>
+                    <span class="topic-tag">Parábola S×t</span>
+                    <span class="topic-tag">Aceleração = concavidade</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Matemática do movimento</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 8 - GRANDEZAS ESCALARES E VETORIAIS | OPERAÇÕES COM VETORES | COMPONENTES - F2.U5 -->
+        <a href="1EM.Fis.1B.F2.U5.html" class="module-card">
+            <div class="card-header">
+                <div class="card-icon">🧭➡️➕</div>
+                <div>
+                    <h2>Grandezas Escalares e Vetoriais<br><span style="font-size: 0.7rem;">Operações, componentes, resultante</span></h2>
+                    <div class="card-badge">Física 2 • Unid. 5</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <p>🧲 Diferenciação entre grandezas escalares (massa, temperatura) e vetoriais (velocidade, força). Soma vetorial, regra do paralelogramo, decomposição cartesiana, vetor resultante e aplicações em situações gráficas.</p>
+                <div class="topic-tags">
+                    <span class="topic-tag">Vetor → módulo, direção, sentido</span>
+                    <span class="topic-tag">Componentes retangulares</span>
+                    <span class="topic-tag">Lei dos cossenos</span>
+                </div>
+                <div class="card-footer-link">
+                    <span>▶ Navegue pelos vetores</span>
+                    <span class="arrow-icon">➡️</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Rodapé inspirador com mensagem do professor -->
+    <div class="footer-portal">
+        <div class="physics-quote">
+            🌡️ "A Física nos ensina que tudo se expande com o calor, assim como o conhecimento se expande com a curiosidade! Estude com paixão e veja o universo se dilatar diante dos seus olhos!" 🌡️
+        </div>
+        <div class="footer-contact">
+            👨‍🏫 <strong>Professor Anderson Daniel</strong> | 📧 <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> | 🧪 Física com histórias, ciência e encantamento
+        </div>
+        <div class="small-note">
+            📚 Todos os módulos são interativos, com teoria em quadrinhos, exercícios estilo game e feedback imediato. Perfeito para aprender e revisar conteúdos do 1º bimestre do 1º ano do Ensino Médio.
+        </div>
+        <div style="margin-top: 20px; font-size: 0.7rem; opacity: 0.7;">
+            🔬 "A ciência é a chave que transforma o desconhecido em conhecimento — assim como o calor transforma a matéria!" 🔬
+        </div>
+    </div>
+</div>
+</body>
+</html>
