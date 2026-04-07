@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Física em Quadrinhos - Gráficos do MU e MUV | Prof. Anderson Daniel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2632 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .physics-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 30px 30px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #f1c40f;
+            box-shadow: 0 8px 0 #1f618d;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #1f618d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area p {
+            font-size: 0.7rem;
+            color: #ffdd99;
+            font-weight: bold;
+        }
+
+        .physics-stats {
+            display: flex;
+            gap: 20px;
+            background: #1a2632;
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 2px solid #f1c40f;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #ffdd99;
+        }
+
+        .comic-content {
+            background: #fff8f0;
+            border-radius: 0 0 30px 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comic-panel {
+            background: #fef7e8;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #f1c40f;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .comic-panel::before {
+            content: "📊";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: #fff8f0;
+            padding: 0 10px;
+        }
+
+        .character {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            font-size: 4rem;
+            background: #f1c40f;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #e67e22;
+            box-shadow: 4px 4px 0 #c0392b;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #f1c40f;
+            position: relative;
+        }
+
+        .theory-box {
+            background: linear-gradient(135deg, #e8f4fc, #d4eaf8);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #f1c40f;
+        }
+
+        .theory-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2980b9;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-box {
+            background: #f1c40f20;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #f1c40f;
+        }
+
+        .graph-container {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .graph-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .question-box {
+            background: #fff3e0;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 10px solid #f1c40f;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e2a;
+        }
+
+        .options-comic {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-comic {
+            background: white;
+            border: 2px solid #e6d5b8;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .option-comic:hover {
+            background: #fff3e0;
+            border-color: #f1c40f;
+            transform: translateX(10px);
+        }
+
+        .option-number {
+            background: #f1c40f;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .feedback-comic {
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+
+        .feedback-comic.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback-comic.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #f1c40f;
+            color: #2c3e50;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 15px;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #c0392b;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #fff3e0, #ffe4c4);
+            border-radius: 40px;
+            padding: 35px;
+            margin: 20px 0;
+            border: 4px solid #f1c40f;
+            text-align: center;
+        }
+
+        .score-bar {
+            background: #f1c40f;
+            height: 30px;
+            border-radius: 25px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .restart-btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            background: #fef3e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .footer {
+            margin-top: 25px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #1a2632, #0e1620);
+            border-radius: 20px;
+            text-align: center;
+            color: #ffdd99;
+            font-size: 0.9rem;
+            border-top: 3px solid #f1c40f;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #ffd966;
+        }
+
+        .footer .physics-message {
+            font-style: italic;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ffd966;
+        }
+
+        .footer .prof-name {
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .comic-content {
+                padding: 15px;
+            }
+            .character-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="physics-header">
+        <div class="logo-area">
+            <h1><span>📊📈📉</span> GRÁFICOS DO MU E MUV</h1>
+            <p>⚡ 1º Ano EM • 1º Bimestre: Funções Constantes, 1º Grau, 2º Grau | Espaço, Velocidade, Aceleração ⚡</p>
+        </div>
+        <div class="physics-stats">
+            <div class="stat"><div class="stat-value" id="scoreValue">0</div><div class="stat-label">Acertos</div></div>
+            <div class="stat"><div class="stat-value" id="currentQ">1</div><div class="stat-label">/<span id="totalQ">32</span></div></div>
+        </div>
+    </div>
+    <div class="comic-content" id="gameContent"></div>
+    <div class="footer">
+        <div class="physics-message">
+            📊 "Assim como os gráficos revelam o comportamento do movimento, a análise dos dados revela a verdade da natureza. Um gráfico vale mais que mil palavras!" 📊
+        </div>
+        <div class="prof-name">
+            👨‍🏫 <strong>Professor Anderson Daniel</strong> | ✉️ <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> 👨‍🏫
+        </div>
+        <div style="font-size: 0.7rem; margin-top: 8px;">
+            📐 "A reta, a parábola e a constante contam histórias de movimento - aprenda a ler esses livros visuais da Física!" 📐
+        </div>
+    </div>
+</div>
+
+<script>
+    let score = 0, currentIndex = 0, answered = false, userAnswer = null;
+
+    // ==================== 32 CAPÍTULOS SOBRE GRÁFICOS DO MU E MUV ====================
+    const CHAPTERS = [
+        { id:1, title:"📊 Capítulo 1: O Poder dos Gráficos na Física", character:"Mestre dos Gráficos", avatar:"📊🧠", speech:"Gráficos são a linguagem visual da Física! Eles nos mostram como o movimento acontece!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 IMPORTÂNCIA DOS GRÁFICOS</div><div class="theory-content">Gráficos são representações visuais que mostram a relação entre duas grandezas. Na Cinemática, usamos gráficos para:<br><br>🔹 Visualizar o movimento<br>🔹 Determinar velocidades e acelerações<br>🔹 Calcular deslocamentos (áreas)<br>🔹 Comparar movimentos diferentes<br><br><strong>Tipos de gráficos que veremos:</strong><br>• Gráficos de funções CONSTANTES (reta horizontal)<br>• Gráficos de funções do 1º GRAU (reta inclinada)<br>• Gráficos de funções do 2º GRAU (parábola)</div><div class="formula-box">📌 No gráfico, o eixo horizontal (x) é o TEMPO e o vertical (y) é a grandeza analisada!</div></div>`,
+          text:"No estudo da Cinemática, qual grandeza geralmente é colocada no eixo horizontal (x) dos gráficos?",
+          options:["Espaço","Velocidade","Tempo","Aceleração"], correct:2,
+          explanation:"✅ O tempo é a variável independente e geralmente é colocado no eixo horizontal (abscissas)." },
+        { id:2, title:"📈 Capítulo 2: Gráficos de Funções Constantes", character:"Analista Constante", avatar:"📈➡️", speech:"Funções constantes geram RETAS HORIZONTAIS!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO DE FUNÇÃO CONSTANTE</div><div class="theory-content">Uma função constante tem a forma f(x) = k, onde k é constante. Seu gráfico é uma RETA HORIZONTAL.<br><br>🔹 Exemplo: Aceleração constante no MUV (a = cte) → gráfico a × t é horizontal<br>🔹 Velocidade constante no MU → gráfico v × t é horizontal<br>🔹 Espaço constante → repouso → gráfico S × t é horizontal</div><div class="graph-container"><svg width="250" height="150" viewBox="0 0 250 150"><rect x="20" y="10" width="210" height="130" fill="white" stroke="#333" stroke-width="1"/><line x1="20" y1="120" x2="230" y2="120" stroke="#333" stroke-width="1"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333" stroke-width="1"/><line x1="20" y1="70" x2="230" y2="70" stroke="#f1c40f" stroke-width="3" stroke-dasharray="5,5"/><text x="10" y="125" font-size="10">t</text><text x="235" y="15" font-size="10">y</text><text x="100" y="60" fill="#f1c40f" font-weight="bold">y = constante</text></svg><div>Gráfico de função constante: reta horizontal</div></div></div>`,
+          text:"Um gráfico de uma função constante (como a aceleração constante no MUV) tem que forma?",
+          options:["Reta inclinada","Reta horizontal","Parábola","Hipérbole"], correct:1,
+          explanation:"✅ Funções constantes geram RETAS HORIZONTAIS no gráfico." },
+        { id:3, title:"📈 Capítulo 3: Gráficos do 1º Grau (Reta Inclinada)", character:"Analista Linear", avatar:"📈⬆️", speech:"Funções do 1º grau geram RETAS INCLINADAS!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO DE FUNÇÃO DO 1º GRAU</div><div class="theory-content">Função do 1º grau: y = a·x + b. Seu gráfico é uma RETA INCLINADA.<br><br>🔹 Coeficiente angular (a) = inclinação da reta<br>🔹 Coeficiente linear (b) = ponto onde a reta corta o eixo y<br><br><strong>Na Cinemática:</strong><br>• MU: S = S₀ + v·t → gráfico S × t é reta inclinada (v = inclinação)<br>• MUV: v = v₀ + a·t → gráfico v × t é reta inclinada (a = inclinação)</div><div class="graph-container"><svg width="250" height="150" viewBox="0 0 250 150"><rect x="20" y="10" width="210" height="130" fill="white" stroke="#333" stroke-width="1"/><line x1="20" y1="120" x2="230" y2="120" stroke="#333" stroke-width="1"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333" stroke-width="1"/><polyline points="20,110 230,30" stroke="#f1c40f" stroke-width="3" fill="none"/><text x="10" y="125" font-size="10">t</text><text x="235" y="15" font-size="10">y</text><text x="140" y="60" fill="#f1c40f" font-weight="bold">y = a·x + b</text></svg><div>Gráfico do 1º grau: reta inclinada</div></div></div>`,
+          text:"No gráfico S × t do MU (S = S₀ + v·t), o que representa a inclinação da reta?",
+          options:["Posição inicial","Velocidade","Aceleração","Tempo"], correct:1,
+          explanation:"✅ A inclinação da reta no gráfico S × t representa a VELOCIDADE." },
+        { id:4, title:"📉 Capítulo 4: Gráficos do 2º Grau (Parábola)", character:"Analista Quadrático", avatar:"📉🔀", speech:"Funções do 2º grau geram PARÁBOLAS!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO DE FUNÇÃO DO 2º GRAU</div><div class="theory-content">Função do 2º grau: y = a·x² + b·x + c. Seu gráfico é uma PARÁBOLA.<br><br>🔹 Concavidade: para cima se a > 0, para baixo se a < 0<br><br><strong>Na Cinemática:</strong><br>• MUV: S = S₀ + v₀·t + (a·t²)/2 → gráfico S × t é uma PARÁBOLA<br>• Se a > 0 → concavidade para cima (acelerado)<br>• Se a < 0 → concavidade para baixo (retardado)</div><div class="graph-container"><svg width="250" height="150" viewBox="0 0 250 150"><rect x="20" y="10" width="210" height="130" fill="white" stroke="#333" stroke-width="1"/><line x1="20" y1="120" x2="230" y2="120" stroke="#333" stroke-width="1"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333" stroke-width="1"/><path d="M 20,100 Q 60,50 100,70 Q 140,90 180,60 Q 220,30 230,30" stroke="#f1c40f" stroke-width="3" fill="none"/><text x="10" y="125" font-size="10">t</text><text x="235" y="15" font-size="10">S</text><text x="130" y="40" fill="#f1c40f" font-weight="bold">Parábola</text></svg><div>Gráfico do 2º grau: parábola</div></div></div>`,
+          text:"No MUV, o gráfico S × t (espaço × tempo) tem que forma?",
+          options:["Reta horizontal","Reta inclinada","Parábola","Hipérbole"], correct:2,
+          explanation:"✅ No MUV, S = S₀ + v₀·t + (a·t²)/2 é uma função quadrática, gerando uma PARÁBOLA." },
+        { id:5, title:"📊 Capítulo 5: Gráfico S × t do MU", character:"Analista MU", avatar:"📊🚗", speech:"No MU, o gráfico espaço × tempo é uma RETA!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO S × t - MU</div><div class="theory-content">No MU, a função é S = S₀ + v·t → função do 1º grau.<br><br>🔹 Gráfico: RETA INCLINADA<br>🔹 Inclinação = velocidade (v)<br>🔹 Quanto mais inclinada, maior a velocidade<br>🔹 Inclinação positiva → movimento progressivo (v > 0)<br>🔹 Inclinação negativa → movimento retrógrado (v < 0)<br>🔹 Reta horizontal → repouso (v = 0)</div><div class="graph-container"><svg width="300" height="150" viewBox="0 0 300 150"><rect x="20" y="10" width="260" height="130" fill="white" stroke="#333" stroke-width="1"/><line x1="20" y1="120" x2="280" y2="120" stroke="#333"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333"/><polyline points="20,100 100,70 180,40 260,20" stroke="#f1c40f" stroke-width="3" fill="none"/><text x="10" y="125" font-size="10">t</text><text x="285" y="15" font-size="10">S</text><text x="150" y="60" fill="#f1c40f">v > 0 (progressivo)</text></svg><div>MU: S × t = reta inclinada (v = constante)</div></div></div>`,
+          text:"No gráfico S × t do MU, uma reta horizontal indica:",
+          options:["Movimento progressivo","Movimento retrógrado","Repouso","Movimento acelerado"], correct:2,
+          explanation:"✅ Reta horizontal no gráfico S × t significa que a posição não varia → REPOUSO." },
+        { id:6, title:"📊 Capítulo 6: Gráfico v × t do MU", character:"Analista Velocidade", avatar:"📊⚡", speech:"No MU, a velocidade é constante! Gráfico v × t é horizontal!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO v × t - MU</div><div class="theory-content">No MU, a velocidade é constante, então v = constante.<br><br>🔹 Gráfico: RETA HORIZONTAL<br>🔹 A área sob a reta representa o DESLOCAMENTO (ΔS)<br>🔹 ΔS = v × Δt (área do retângulo)</div><div class="graph-container"><svg width="300" height="150" viewBox="0 0 300 150"><rect x="20" y="10" width="260" height="130" fill="white" stroke="#333"/><line x1="20" y1="120" x2="280" y2="120" stroke="#333"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333"/><line x1="20" y1="60" x2="280" y2="60" stroke="#f1c40f" stroke-width="3"/><text x="10" y="125" font-size="10">t</text><text x="285" y="15" font-size="10">v</text><text x="130" y="50" fill="#f1c40f">v = constante</text></svg><div>MU: v × t = reta horizontal (v constante)</div></div></div>`,
+          text:"No gráfico v × t do MU, o que representa a área sob a reta?",
+          options:["Velocidade","Aceleração","Deslocamento","Tempo"], correct:2,
+          explanation:"✅ A área sob o gráfico v × t representa o DESLOCAMENTO (ΔS)." },
+        { id:7, title:"📊 Capítulo 7: Gráfico a × t do MU", character:"Analista Aceleração", avatar:"📊🔄", speech:"No MU, a aceleração é zero! Gráfico a × t é horizontal no zero!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO a × t - MU</div><div class="theory-content">No MU, a aceleração é ZERO (a = 0).<br><br>🔹 Gráfico: RETA HORIZONTAL sobre o eixo do tempo<br>🔹 Área sob o gráfico = variação da velocidade (Δv = 0)</div><div class="graph-container"><svg width="300" height="150" viewBox="0 0 300 150"><rect x="20" y="10" width="260" height="130" fill="white" stroke="#333"/><line x1="20" y1="120" x2="280" y2="120" stroke="#333"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333"/><line x1="20" y1="75" x2="280" y2="75" stroke="#f1c40f" stroke-width="3"/><text x="10" y="125" font-size="10">t</text><text x="285" y="15" font-size="10">a</text><text x="130" y="65" fill="#f1c40f">a = 0</text></svg><div>MU: a × t = reta horizontal no zero</div></div></div>`,
+          text:"No MU, o gráfico a × t é uma reta:",
+          options:["Inclinada crescente","Inclinada decrescente","Horizontal no zero","Parábola"], correct:2,
+          explanation:"✅ No MU, a aceleração é zero, então o gráfico a × t é uma reta horizontal no eixo do tempo." },
+        { id:8, title:"📊 Capítulo 8: Gráfico S × t do MUV", character:"Analista MUV", avatar:"📊🏎️", speech:"No MUV, o gráfico espaço × tempo é uma PARÁBOLA!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO S × t - MUV</div><div class="theory-content">No MUV, S = S₀ + v₀·t + (a·t²)/2 → função do 2º grau.<br><br>🔹 Gráfico: PARÁBOLA<br>🔹 a > 0 → concavidade para CIMA (acelerado)<br>🔹 a < 0 → concavidade para BAIXO (retardado)<br>🔹 O vértice da parábola pode indicar inversão de sentido</div><div class="graph-container"><svg width="300" height="150" viewBox="0 0 300 150"><rect x="20" y="10" width="260" height="130" fill="white" stroke="#333"/><line x1="20" y1="120" x2="280" y2="120" stroke="#333"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333"/><path d="M 20,110 Q 80,70 140,80 Q 200,90 260,40" stroke="#f1c40f" stroke-width="3" fill="none"/><text x="10" y="125" font-size="10">t</text><text x="285" y="15" font-size="10">S</text><text x="130" y="50" fill="#f1c40f">a > 0 (acelerado)</text></svg><div>MUV: S × t = parábola</div></div></div>`,
+          text:"No gráfico S × t do MUV, uma concavidade para CIMA indica:",
+          options:["a = 0","a > 0 (aceleração positiva)","a < 0 (aceleração negativa)","v = constante"], correct:1,
+          explanation:"✅ Concavidade para cima (formato de U) indica aceleração POSITIVA (a > 0)." },
+        { id:9, title:"📊 Capítulo 9: Gráfico v × t do MUV", character:"Analista Velocidade MUV", avatar:"📊📈", speech:"No MUV, a velocidade varia linearmente! Gráfico v × t é RETA!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO v × t - MUV</div><div class="theory-content">No MUV, v = v₀ + a·t → função do 1º grau.<br><br>🔹 Gráfico: RETA INCLINADA<br>🔹 Inclinação = aceleração (a)<br>🔹 Área sob a reta = deslocamento (ΔS)<br>🔹 a > 0 → reta crescente<br>🔹 a < 0 → reta decrescente</div><div class="graph-container"><svg width="300" height="150" viewBox="0 0 300 150"><rect x="20" y="10" width="260" height="130" fill="white" stroke="#333"/><line x1="20" y1="120" x2="280" y2="120" stroke="#333"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333"/><polyline points="20,100 100,80 180,60 260,40" stroke="#f1c40f" stroke-width="3" fill="none"/><text x="10" y="125" font-size="10">t</text><text x="285" y="15" font-size="10">v</text><text x="130" y="70" fill="#f1c40f">a < 0 (retardado)</text></svg><div>MUV: v × t = reta inclinada</div></div></div>`,
+          text:"No gráfico v × t do MUV, a inclinação da reta representa:",
+          options:["Velocidade","Aceleração","Deslocamento","Posição"], correct:1,
+          explanation:"✅ A inclinação da reta no gráfico v × t representa a ACELERAÇÃO (a)." },
+        { id:10, title:"📊 Capítulo 10: Gráfico a × t do MUV", character:"Analista Aceleração MUV", avatar:"📊🔄", speech:"No MUV, a aceleração é constante! Gráfico a × t é HORIZONTAL!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICO a × t - MUV</div><div class="theory-content">No MUV, a aceleração é constante (a = constante ≠ 0).<br><br>🔹 Gráfico: RETA HORIZONTAL<br>🔹 Área sob o gráfico = variação da velocidade (Δv = a·Δt)<br>🔹 Se a > 0 → reta acima do eixo<br>🔹 Se a < 0 → reta abaixo do eixo</div><div class="graph-container"><svg width="300" height="150" viewBox="0 0 300 150"><rect x="20" y="10" width="260" height="130" fill="white" stroke="#333"/><line x1="20" y1="120" x2="280" y2="120" stroke="#333"/><line x1="20" y1="20" x2="20" y2="130" stroke="#333"/><line x1="20" y1="70" x2="280" y2="70" stroke="#f1c40f" stroke-width="3"/><text x="10" y="125" font-size="10">t</text><text x="285" y="15" font-size="10">a</text><text x="130" y="60" fill="#f1c40f">a = constante > 0</text></svg><div>MUV: a × t = reta horizontal</div></div></div>`,
+          text:"No gráfico a × t do MUV, a área sob a reta representa:",
+          options:["Aceleração","Velocidade","Variação da velocidade (Δv)","Deslocamento"], correct:2,
+          explanation:"✅ A área sob o gráfico a × t representa a VARIAÇÃO DA VELOCIDADE (Δv)." },
+        { id:11, title:"📐 Capítulo 11: Comparação MU × MUV", character:"Comparador", avatar:"📐⚖️", speech:"Vamos comparar os gráficos do MU e MUV!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 MU × MUV - COMPARAÇÃO DE GRÁFICOS</div><div class="theory-content"><strong>MU (a = 0):</strong><br>• S × t → reta inclinada<br>• v × t → reta horizontal<br>• a × t → reta horizontal no zero<br><br><strong>MUV (a = constante ≠ 0):</strong><br>• S × t → parábola<br>• v × t → reta inclinada<br>• a × t → reta horizontal</div><div class="formula-box">📌 A diferença está na ordem das funções: MU tem função do 1º grau para S, MUV tem função do 2º grau para S.</div></div>`,
+          text:"Qual gráfico é uma PARÁBOLA no MUV?",
+          options:["v × t","a × t","S × t","todos"], correct:2,
+          explanation:"✅ No MUV, o gráfico S × t é uma PARÁBOLA (função quadrática)." },
+        { id:12, title:"🔧 Capítulo 12: Exercício - Interpretação de Gráfico S×t (MU)", character:"Treinador", avatar:"🧮📊", speech:"Vamos interpretar um gráfico S × t do MU!",
+          text:"Um gráfico S × t mostra uma reta inclinada que passa pelos pontos (0, 10) e (5, 60). Qual a velocidade?",
+          options:["5 m/s","8 m/s","10 m/s","12 m/s"], correct:2,
+          explanation:"✅ v = ΔS/Δt = (60-10)/(5-0) = 50/5 = 10 m/s." },
+        { id:13, title:"🔧 Capítulo 13: Exercício - Área no Gráfico v×t (MU)", character:"Treinador", avatar:"🧮📐", speech:"Calcule o deslocamento pela área!",
+          text:"Um móvel tem velocidade constante 15 m/s durante 8 s. Qual o deslocamento?",
+          options:["80 m","100 m","120 m","140 m"], correct:2,
+          explanation:"✅ ΔS = área = v×Δt = 15×8 = 120 m." },
+        { id:14, title:"🔧 Capítulo 14: Exercício - Gráfico S×t (MUV)", character:"Treinador", avatar:"🧮📊", speech:"Interpretando uma parábola!",
+          text:"No gráfico S × t do MUV, a concavidade é para baixo. Isso indica que a aceleração é:",
+          options:["Positiva","Negativa","Zero","Variável"], correct:1,
+          explanation:"✅ Concavidade para baixo indica a < 0 (aceleração negativa, movimento retardado)." },
+        { id:15, title:"🔧 Capítulo 15: Exercício - Inclinação no v×t (MUV)", character:"Treinador", avatar:"🧮📈", speech:"A inclinação da reta é a aceleração!",
+          text:"Um gráfico v × t é uma reta que passa por (0, 10) e (4, 30). Qual a aceleração?",
+          options:["2 m/s²","3 m/s²","4 m/s²","5 m/s²"], correct:4,
+          explanation:"✅ a = Δv/Δt = (30-10)/(4-0) = 20/4 = 5 m/s²." },
+        { id:16, title:"🔧 Capítulo 16: Exercício - Área no v×t (MUV)", character:"Treinador", avatar:"🧮📏", speech:"Área sob a reta = deslocamento!",
+          text:"Um gráfico v × t é uma reta de (0, 0) a (5, 20). Qual o deslocamento? (área do triângulo)",
+          options:["40 m","50 m","60 m","70 m"], correct:1,
+          explanation:"✅ Área do triângulo = (base × altura)/2 = (5×20)/2 = 50 m." },
+        { id:17, title:"🏆 Capítulo 17: Teste - Gráficos MU", character:"Avaliador", avatar:"🏆📊", speech:"Teste de gráficos do MU!",
+          text:"No MU, o gráfico v × t é uma:",
+          options:["Reta inclinada","Reta horizontal","Parábola","Hipérbole"], correct:1,
+          explanation:"✅ No MU, a velocidade é constante, então v × t é uma RETA HORIZONTAL." },
+        { id:18, title:"🏆 Capítulo 18: Teste - Gráficos MUV", character:"Avaliador", avatar:"🏆📈", speech:"Teste de gráficos do MUV!",
+          text:"No MUV, o gráfico a × t é uma:",
+          options:["Reta inclinada","Reta horizontal","Parábola","Hipérbole"], correct:1,
+          explanation:"✅ No MUV, a aceleração é constante, então a × t é uma RETA HORIZONTAL." },
+        { id:19, title:"🏆 Capítulo 19: Teste - Inclinação", character:"Avaliador", avatar:"🏆📐", speech:"O que a inclinação representa?",
+          text:"No gráfico v × t do MUV, a inclinação da reta representa:",
+          options:["Velocidade","Aceleração","Deslocamento","Posição"], correct:1,
+          explanation:"✅ A inclinação da reta no gráfico v × t representa a ACELERAÇÃO." },
+        { id:20, title:"🏆 Capítulo 20: Teste - Área", character:"Avaliador", avatar:"🏆📏", speech:"O que a área representa?",
+          text:"No gráfico v × t, a área sob a curva representa:",
+          options:["Velocidade","Aceleração","Deslocamento","Tempo"], correct:2,
+          explanation:"✅ A área sob o gráfico v × t representa o DESLOCAMENTO." },
+        { id:21, title:"📊 Capítulo 21: Gráfico da Parábola", character:"Geômetra", avatar:"📊🔀", speech:"A parábola pode ter concavidade para cima ou para baixo!",
+          text:"No gráfico S × t do MUV, concavidade para cima indica:",
+          options:["a > 0 (acelerado)","a < 0 (retardado)","a = 0","v = 0"], correct:0,
+          explanation:"✅ Concavidade para cima (formato de U) indica a > 0, movimento acelerado." },
+        { id:22, title:"📊 Capítulo 22: Interpretação de Pontos", character:"Analista", avatar:"📊🎯", speech:"Pontos importantes no gráfico!",
+          text:"No gráfico S × t do MUV, o vértice da parábola indica:",
+          options:["Posição máxima ou mínima","Velocidade máxima","Aceleração máxima","Tempo final"], correct:0,
+          explanation:"✅ O vértice da parábola indica o ponto de POSIÇÃO MÁXIMA ou MÍNIMA, onde a velocidade se anula (inversão de sentido)." },
+        { id:23, title:"📈 Capítulo 23: Gráficos com Velocidade Negativa", character:"Analista", avatar:"📈⬇️", speech:"Velocidade negativa no gráfico!",
+          text:"No gráfico S × t do MU, uma reta com inclinação negativa indica:",
+          options:["Movimento progressivo","Movimento retrógrado (v < 0)","Repouso","Movimento acelerado"], correct:1,
+          explanation:"✅ Inclinação negativa significa velocidade negativa → movimento RETRÓGRADO." },
+        { id:24, title:"🧠 Capítulo 24: Recapitulação - Gráficos MU", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar os gráficos do MU!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RECAPITULAÇÃO - MU</div><div class="theory-content"><strong>MU (v constante, a = 0):</strong><br>• S × t → RETA INCLINADA (v = inclinação)<br>• v × t → RETA HORIZONTAL (v constante)<br>• a × t → RETA HORIZONTAL no ZERO<br>• Área v×t = ΔS<br>• Inclinação S×t = v</div></div>`,
+          text:"No MU, o gráfico a × t é uma:",
+          options:["Reta inclinada","Reta horizontal no zero","Parábola","Hipérbole"], correct:1,
+          explanation:"✅ No MU, a = 0, então a × t é uma reta horizontal sobre o eixo do tempo." },
+        { id:25, title:"🧠 Capítulo 25: Recapitulação - Gráficos MUV", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar os gráficos do MUV!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RECAPITULAÇÃO - MUV</div><div class="theory-content"><strong>MUV (a constante ≠ 0):</strong><br>• S × t → PARÁBOLA<br>• v × t → RETA INCLINADA (a = inclinação)<br>• a × t → RETA HORIZONTAL<br>• Área v×t = ΔS<br>• Área a×t = Δv</div></div>`,
+          text:"No MUV, o gráfico v × t é uma:",
+          options:["Reta horizontal","Reta inclinada","Parábola","Hipérbole"], correct:1,
+          explanation:"✅ No MUV, v = v₀ + a·t é função do 1º grau → RETA INCLINADA." },
+        { id:26, title:"🏆 Capítulo 26: Teste Especial - Área e Inclinação", character:"Desafiador", avatar:"🏆📊", speech:"Desafio de interpretação!",
+          text:"Um gráfico v × t é uma reta que passa por (0, 10) e (4, 30). Qual a aceleração e o deslocamento?",
+          options:["a=5, ΔS=80","a=5, ΔS=60","a=4, ΔS=80","a=5, ΔS=100"], correct:0,
+          explanation:"✅ a = (30-10)/4 = 5 m/s²; ΔS = área do trapézio = ((10+30)×4)/2 = 40×2 = 80 m." },
+        { id:27, title:"🏆 Capítulo 27: Teste Especial - Parábola", character:"Desafiador", avatar:"🏆🔀", speech:"Desafio da parábola!",
+          text:"No gráfico S × t do MUV, se a parábola tem concavidade para cima, podemos afirmar que:",
+          options:["a > 0 e movimento acelerado","a < 0 e movimento retardado","v = constante","a = 0"], correct:0,
+          explanation:"✅ Concavidade para cima (U) indica a > 0, movimento acelerado." },
+        { id:28, title:"🏆 Capítulo 28: Teste Especial - Comparação", character:"Comparador", avatar:"🏆⚖️", speech:"Compare os gráficos!",
+          text:"Qual gráfico é uma reta inclinada tanto no MU quanto no MUV?",
+          options:["S × t no MU e v × t no MUV","v × t no MU e a × t no MUV","S × t no MUV e v × t no MU","a × t no MU e S × t no MUV"], correct:0,
+          explanation:"✅ S × t no MU é reta inclinada; v × t no MUV também é reta inclinada." },
+        { id:29, title:"🏆 Capítulo 29: Teste Especial - Velocidade Média", character:"Avaliador", avatar:"🏆📊", speech:"Velocidade média pelo gráfico!",
+          text:"Em um gráfico v × t, como podemos determinar a velocidade média?",
+          options:["Pela inclinação","Pela área total dividida pelo tempo","Pela altura máxima","Pelo ponto inicial"], correct:1,
+          explanation:"✅ v_m = ΔS/Δt = (área sob o gráfico) / Δt." },
+        { id:30, title:"🏆 Capítulo 30: Teste Especial - Inversão de Sentido", character:"Analista", avatar:"🏆🔄", speech:"Onde ocorre inversão de sentido?",
+          text:"No gráfico S × t do MUV, a inversão de sentido ocorre no:",
+          options:["Início do movimento","Vértice da parábola","Ponto onde a reta cruza o eixo","Final do movimento"], correct:1,
+          explanation:"✅ No vértice da parábola, a velocidade se anula e ocorre inversão de sentido." },
+        { id:31, title:"🏆 Capítulo 31: Teste Especial - Repouso", character:"Avaliador", avatar:"🏆🛑", speech:"Identificando repouso no gráfico!",
+          text:"No gráfico S × t, o repouso é representado por:",
+          options:["Reta inclinada","Reta horizontal","Parábola","Reta vertical"], correct:1,
+          explanation:"✅ Repouso: posição constante → reta HORIZONTAL no gráfico S × t." },
+        { id:32, title:"🎓 Capítulo 32: Certificado do Mestre dos Gráficos", character:"Professor Anderson Daniel", avatar:"🎓📊", speech:"Parabéns! Você domina a interpretação de gráficos do MU e MUV!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 VOCÊ APRENDEU:</div><div class="theory-content">✓ Gráficos de funções constantes (retas horizontais)<br>✓ Gráficos de funções do 1º grau (retas inclinadas)<br>✓ Gráficos de funções do 2º grau (parábolas)<br>✓ Gráficos S × t, v × t e a × t para MU e MUV<br>✓ Inclinação = velocidade ou aceleração<br>✓ Área sob o gráfico = deslocamento ou variação de velocidade<br>✓ Interpretação de concavidade e vértice<br>✓ Exercícios resolvidos, propostos e testes especiais!</div><div class="formula-box">🌟 "Os gráficos são a janela para a alma do movimento - aprenda a ler essa linguagem e o universo se revelará diante de seus olhos!" 🌟</div></div>`,
+          text:"No gráfico v × t, a área sob a curva representa o(a):",
+          options:["Velocidade","Aceleração","Deslocamento","Tempo"], correct:2,
+          explanation:"✅ A área sob o gráfico v × t representa o DESLOCAMENTO (ΔS)." }
+    ];
+
+    const totalQuestions = CHAPTERS.length;
+    const gameContent = document.getElementById("gameContent");
+    const scoreSpan = document.getElementById("scoreValue");
+    const currentQSpan = document.getElementById("currentQ");
+    const totalQSpan = document.getElementById("totalQ");
+
+    function updateUI() { scoreSpan.textContent = score; currentQSpan.textContent = currentIndex+1; totalQSpan.textContent = totalQuestions; }
+
+    function render() {
+        if(currentIndex >= totalQuestions) { renderResult(); return; }
+        const ch = CHAPTERS[currentIndex];
+        const letters = ["A","B","C","D"];
+        let theoryHtml = ch.theory ? ch.theory : '';
+        let optionsHtml = ch.options.map((opt,idx)=>`<div class="option-comic" data-opt-index="${idx}"><div class="option-number">${letters[idx]}</div><div>${escapeHtml(opt)}</div></div>`).join('');
+        let feedbackHtml = answered ? `<div class="feedback-comic ${userAnswer===ch.correct?'correct':'incorrect'}">${userAnswer===ch.correct?"✅✨ ACERTOU! ✨✅":"❌💔 VAMOS REVISAR! 💔❌"}<br><strong>${ch.explanation}</strong>${userAnswer!==ch.correct?`<br><br>📖 <strong>Resposta correta:</strong> ${ch.options[ch.correct]}`:''}</div>` : '';
+        const html = `<div class="comic-panel"><div class="character"><div class="character-avatar">${ch.avatar}</div><div><div class="character-name">${ch.character}</div><div class="speech-bubble">"${ch.speech}"</div></div></div>${theoryHtml}<div class="question-box">📖 <strong>${ch.title}</strong><br>${escapeHtml(ch.text)}</div><div class="options-comic">${optionsHtml}</div>${feedbackHtml}<button class="next-btn" id="nextBtn" ${!answered?'disabled':''}>▶ Próximo Capítulo ▶</button></div>`;
+        gameContent.innerHTML = html;
+        if(!answered) document.querySelectorAll(".option-comic").forEach(opt=>opt.addEventListener("click",()=>{if(!answered){const idx=parseInt(opt.dataset.optIndex); handleAnswer(idx,ch);}}));
+        document.getElementById("nextBtn")?.addEventListener("click",nextChapter);
+    }
+
+    function handleAnswer(selectedIdx,ch){ if(answered) return; answered=true; userAnswer=selectedIdx; if(selectedIdx===ch.correct) score++; updateUI(); render(); }
+    function nextChapter(){ if(!answered) return; currentIndex++; answered=false; userAnswer=null; render(); }
+    function renderResult(){
+        const percent = (score/totalQuestions)*100;
+        let msg = percent>=85?"🏆 MESTRE DOS GRÁFICOS! 🏆": percent>=65?"📊 GUARDIÃO DA INTERPRETAÇÃO! 📊":"🌱 APRENDIZ VISUAL! 🌱";
+        let message = percent>=85?"Excelente! Você domina todos os conceitos de gráficos do MU e MUV: funções constantes, 1º grau, 2º grau, interpretação de inclinações e áreas!":percent>=65?"Muito bem! Revise os gráficos de parábola, as relações de inclinação e área.":"Revise os capítulos sobre gráficos de retas, parábolas e a interpretação de inclinações e áreas!";
+        const html = `<div class="comic-panel result-panel"><div style="font-size:3rem;">📊📈📉</div><h2>${msg}</h2><div style="background:#1a2632;border-radius:30px;padding:10px;margin:20px 0;"><div class="score-bar" style="width:${percent}%;">${score}/${totalQuestions} acertos</div></div><p>${message}</p><button class="restart-btn" id="restartBtn">📊 Recomeçar Estudo 📊</button><div class="summary-box"><strong>📚 RESUMO DOS GRÁFICOS - MU e MUV:</strong><br><br><strong>MU (a = 0):</strong><br>• S × t → RETA INCLINADA (v = inclinação)<br>• v × t → RETA HORIZONTAL (área = ΔS)<br>• a × t → RETA HORIZONTAL no ZERO<br><br><strong>MUV (a constante ≠ 0):</strong><br>• S × t → PARÁBOLA (concavidade = sinal de a)<br>• v × t → RETA INCLINADA (a = inclinação, área = ΔS)<br>• a × t → RETA HORIZONTAL (área = Δv)<br><br>📌 DICAS IMPORTANTES:<br>• Inclinação = derivada (taxa de variação)<br>• Área = integral (acumulação)<br>• Reta horizontal → grandeza constante<br>• Reta inclinada → grandeza variando linearmente<br>• Parábola → grandeza variando quadraticamente<br><br>📊 "Aprender a ler gráficos é como aprender um novo idioma - o idioma do movimento!" 📊</div></div>`;
+        gameContent.innerHTML = html;
+        document.getElementById("restartBtn")?.addEventListener("click",()=>{ score=0; currentIndex=0; answered=false; userAnswer=null; updateUI(); render(); });
+    }
+    function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    totalQSpan.textContent = totalQuestions;
+    render();
+</script>
+</body>
+</html>

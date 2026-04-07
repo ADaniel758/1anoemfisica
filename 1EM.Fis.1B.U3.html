@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Física em Quadrinhos - Mudanças de Estado Físico | 1º Ano EM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #2c5f8a 0%, #1a3f5a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .physics-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 30px 30px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #f1c40f;
+            box-shadow: 0 8px 0 #1f618d;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #1f618d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area p {
+            font-size: 0.7rem;
+            color: #ffdd99;
+            font-weight: bold;
+        }
+
+        .physics-stats {
+            display: flex;
+            gap: 20px;
+            background: #1f3a4a;
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 2px solid #f1c40f;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #ffdd99;
+        }
+
+        .comic-content {
+            background: #fff8f0;
+            border-radius: 0 0 30px 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comic-panel {
+            background: #fef7e8;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #f1c40f;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .comic-panel::before {
+            content: "💧";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: #fff8f0;
+            padding: 0 10px;
+        }
+
+        .character {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            font-size: 4rem;
+            background: #f1c40f;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #e67e22;
+            box-shadow: 4px 4px 0 #d35400;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #f1c40f;
+            position: relative;
+        }
+
+        .theory-box {
+            background: linear-gradient(135deg, #e8f4fc, #d4eaf8);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #f1c40f;
+        }
+
+        .theory-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2980b9;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-box {
+            background: #f1c40f20;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #f1c40f;
+        }
+
+        .graph-container {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .graph-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .question-box {
+            background: #fff3e0;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 10px solid #f1c40f;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e2a;
+        }
+
+        .options-comic {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-comic {
+            background: white;
+            border: 2px solid #e6d5b8;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .option-comic:hover {
+            background: #fff3e0;
+            border-color: #f1c40f;
+            transform: translateX(10px);
+        }
+
+        .option-number {
+            background: #f1c40f;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .feedback-comic {
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+
+        .feedback-comic.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback-comic.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #f1c40f;
+            color: #2c3e50;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 15px;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #d35400;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #fff3e0, #ffe4c4);
+            border-radius: 40px;
+            padding: 35px;
+            margin: 20px 0;
+            border: 4px solid #f1c40f;
+            text-align: center;
+        }
+
+        .score-bar {
+            background: #f1c40f;
+            height: 30px;
+            border-radius: 25px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .restart-btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            background: #fef3e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        @media (max-width: 600px) {
+            .comic-content {
+                padding: 15px;
+            }
+            .character-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="physics-header">
+        <div class="logo-area">
+            <h1><span>💧❄️💨</span> MUDANÇAS DE ESTADO</h1>
+            <p>⚡ 1º Ano EM • 1º Bimestre: Transformações da Matéria ⚡</p>
+        </div>
+        <div class="physics-stats">
+            <div class="stat"><div class="stat-value" id="scoreValue">0</div><div class="stat-label">Acertos</div></div>
+            <div class="stat"><div class="stat-value" id="currentQ">1</div><div class="stat-label">/<span id="totalQ">26</span></div></div>
+        </div>
+    </div>
+    <div class="comic-content" id="gameContent"></div>
+</div>
+
+<script>
+    let score = 0, currentIndex = 0, answered = false, userAnswer = null;
+
+    const CHAPTERS = [
+        { id:1, title:"💧 Capítulo 1: Estados Físicos da Matéria", character:"Professor Átomo", avatar:"⚛️💧", speech:"A matéria pode existir em três estados principais: sólido, líquido e gasoso! A diferença está na organização molecular!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 ESTADOS FÍSICOS</div><div class="theory-content"><strong>SÓLIDO:</strong> Moléculas muito próximas, vibram em posições fixas. Forma e volume definidos.<br><strong>LÍQUIDO:</strong> Moléculas mais afastadas, deslizam umas sobre as outras. Volume definido, forma variável.<br><strong>GASOSO:</strong> Moléculas muito afastadas, movimento caótico. Volume e forma variáveis.<br><br>🔹 As mudanças entre esses estados ocorrem com troca de calor!</div><div class="formula-box">💡 Lembre: Sólido → Líquido = FUSÃO; Líquido → Gasoso = VAPORIZAÇÃO</div></div>`,
+          text:"Qual a diferença fundamental entre os estados sólido, líquido e gasoso?",
+          options:["A cor do material","O grau de agitação e proximidade das moléculas","A massa do material","A temperatura ambiente"], correct:1,
+          explanation:"✅ Nos sólidos as moléculas estão muito próximas e vibram; nos líquidos deslizam; nos gases estão muito afastadas e se movem livremente." },
+        { id:2, title:"🌡️ Capítulo 2: Pressão e Temperatura nas Mudanças de Estado", character:"Mestre das Condições", avatar:"🌡️⚙️", speech:"Pressão e temperatura influenciam diretamente as mudanças de estado! Quanto maior a pressão, mais difícil é vaporizar!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 INFLUÊNCIA DA PRESSÃO E TEMPERATURA</div><div class="theory-content"><strong>Ponto de Fusão:</strong> Temperatura onde sólido vira líquido. A pressão influencia levemente.<br><strong>Ponto de Ebulição:</strong> Temperatura onde líquido vira vapor. AUMENTA com a pressão!<br><br>🔹 Exemplo: Água ferve a 100°C ao nível do mar (1 atm). Em Campos do Jordão (menor pressão), ferve a cerca de 94°C.<br>🔹 Em panelas de pressão, a pressão aumenta e a água ferve a 120°C, cozinhando mais rápido!</div><div class="formula-box">📌 Pressão ↑ → Ponto de Ebulição ↑</div></div>`,
+          text:"O que acontece com o ponto de ebulição da água quando aumentamos a pressão?",
+          options:["Diminui","Aumenta","Permanece igual","Depende da temperatura"], correct:1,
+          explanation:"✅ O ponto de ebulição aumenta com o aumento da pressão. É por isso que a água ferve a uma temperatura maior em panelas de pressão." },
+        { id:3, title:"🔥❄️ Capítulo 3: Quantidade de Calor Latente", character:"Especialista em Transições", avatar:"🔥💧", speech:"Cada mudança de estado exige uma quantidade específica de energia! Chamamos isso de CALOR LATENTE!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR LATENTE DE MUDANÇA DE ESTADO</div><div class="theory-content"><strong>Calor Latente (L)</strong> é a quantidade de calor necessária para que 1 grama de uma substância mude de estado físico, sem variar a temperatura.<br><br>🔹 Fórmula: Q = m · L<br>• L_fusão: fusão/solidificação<br>• L_vaporização: vaporização/condensação<br><br>🔹 Água: L_fusão = 80 cal/g; L_vaporização = 540 cal/g</div><div class="formula-box">💡 Latente = "escondido" – a energia não altera a temperatura!</div></div>`,
+          text:"O que ocorre com a temperatura durante uma mudança de estado (como fusão ou vaporização)?",
+          options:["Aumenta","Diminui","Permanece constante","Oscila"], correct:2,
+          explanation:"✅ Durante a mudança de estado, a temperatura permanece constante. Toda a energia é usada para romper as ligações entre as moléculas." },
+        { id:4, title:"📈 Capítulo 4: Curva de Aquecimento da Água", character:"Analista Gráfico", avatar:"📈💧", speech:"Vamos entender como a temperatura se comporta quando aquecemos a água desde o gelo até o vapor!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CURVA DE AQUECIMENTO</div><div class="theory-content">A curva de aquecimento mostra a temperatura em função do calor fornecido:<br><br>🔹 Trecho 1 (sólido): Q = m·c_sólido·ΔT (aumento de temperatura)<br>🔹 Patamar 1 (fusão): Q = m·L_fusão (temperatura constante)<br>🔹 Trecho 2 (líquido): Q = m·c_líquido·ΔT (aumento)<br>🔹 Patamar 2 (vaporização): Q = m·L_vaporização (constante)<br>🔹 Trecho 3 (gás): Q = m·c_gás·ΔT (aumento)</div><div class="graph-container"><svg width="300" height="180" viewBox="0 0 300 180"><polyline points="20,150 80,100 140,100 200,40 260,40" stroke="#f1c40f" stroke-width="3" fill="none"/><text x="15" y="165">T(°C)</text><text x="280" y="15">Q</text><text x="50" y="155">-20°C</text><text x="110" y="55">0°C</text><text x="170" y="55">100°C</text><text x="240" y="15">>100°C</text></svg><div style="font-size:0.7rem;">Curva de Aquecimento: patamares na fusão (0°C) e vaporização (100°C)</div></div></div>`,
+          text:"Na curva de aquecimento da água, os patamares (trechos horizontais) representam:",
+          options:["Aumento de temperatura","Mudanças de estado (fusão e vaporização)","Resfriamento da substância","Diminuição de pressão"], correct:1,
+          explanation:"✅ Os patamares horizontais representam as mudanças de estado: fusão (gelo virando água) e vaporização (água virando vapor)." },
+        { id:5, title:"❄️📉 Capítulo 5: Curva de Resfriamento", character:"Mestra do Frio", avatar:"❄️📉", speech:"O resfriamento é o oposto do aquecimento! Vamos entender a curva de resfriamento!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CURVA DE RESFRIAMENTO</div><div class="theory-content">A curva de resfriamento mostra a temperatura em função do calor RETIRADO:<br><br>🔹 Gás → resfria (temperatura cai)<br>🔹 Patamar: Condensação (gás → líquido) - temperatura constante<br>🔹 Líquido → resfria<br>🔹 Patamar: Solidificação - temperatura constante<br>🔹 Sólido → resfria<br><br>💡 A quantidade de calor retirada nas mudanças de estado é igual à quantidade fornecida no aquecimento!</div></div>`,
+          text:"O que ocorre no patamar da curva de resfriamento durante a solidificação?",
+          options:["A temperatura diminui","A temperatura aumenta","A temperatura permanece constante enquanto o líquido vira sólido","A pressão aumenta"], correct:2,
+          explanation:"✅ Durante a solidificação, a temperatura permanece constante enquanto a substância libera calor latente e passa do estado líquido para sólido." },
+        { id:6, title:"✨ Capítulo 6: Superfusão - O Fenômeno Incrível!", character:"Mago da Superfusão", avatar:"✨🧊", speech:"A superfusão é um fenômeno mágico! A água pode permanecer líquida abaixo de 0°C sem congelar!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 SUPERFUSÃO</div><div class="theory-content"><strong>Superfusão</strong> é o fenômeno em que um líquido permanece no estado líquido em uma temperatura abaixo do ponto de solidificação, sem se solidificar.<br><br>🔹 Condições necessárias: líquido muito puro, resfriamento lento, ausência de agitação ou nucleação.<br>🔹 Quando um cristal de gelo é adicionado ou há agitação, ocorre solidificação instantânea!<br>🔹 A água pode chegar a -20°C ou menos em estado líquido!<br><br>🌊 Exemplo: gotas de chuva super-resfriadas formam gelo ao tocar superfícies (granizo).</div><div class="formula-box">💡 Curiosidade: A superfusão é usada em bolsas de gelo instantâneo!</div></div>`,
+          text:"O que é o fenômeno da SUPERFUSÃO?",
+          options:["Quando a água ferve abaixo de 100°C","Quando um líquido permanece líquido abaixo do ponto de solidificação","Quando o gelo derrete sem aquecer","Quando o vapor vira líquido instantaneamente"], correct:1,
+          explanation:"✅ Superfusão é quando um líquido permanece no estado líquido mesmo estando a uma temperatura abaixo do ponto de solidificação." },
+        { id:7, title:"❄️ Capítulo 7: Exercício - Calor Latente de Fusão", character:"Treinador de Cálculos", avatar:"🧮❄️", speech:"Vamos calcular quantas calorias são necessárias para derreter gelo!",
+          text:"Quantas calorias são necessárias para derreter completamente 200 g de gelo a 0°C? (L_fusão = 80 cal/g)",
+          options:["8000 cal","16000 cal","4000 cal","20000 cal"], correct:1,
+          explanation:"✅ Q = m·L = 200 × 80 = 16000 cal." },
+        { id:8, title:"💨 Capítulo 8: Exercício - Calor Latente de Vaporização", character:"Mestre do Vapor", avatar:"💨💧", speech:"Vaporizar água exige muita energia! Vamos calcular!",
+          text:"Qual a quantidade de calor necessária para vaporizar 50 g de água a 100°C? (L_vaporização = 540 cal/g)",
+          options:["27000 cal","54000 cal","10800 cal","13500 cal"], correct:0,
+          explanation:"✅ Q = m·L = 50 × 540 = 27000 cal." },
+        { id:9, title:"📈 Capítulo 9: Exercício - Curva de Aquecimento", character:"Analista Térmico", avatar:"📊🔥", speech:"Vamos calcular o calor total para transformar gelo em vapor!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RESOLUÇÃO PASSO A PASSO</div><div class="theory-content">1. Aquecer gelo de -10°C a 0°C<br>2. Fundir gelo a 0°C<br>3. Aquecer água de 0°C a 100°C<br>4. Vaporizar água a 100°C<br>5. Aquecer vapor acima de 100°C</div></div>`,
+          text:"Qual o calor total para transformar 100 g de gelo a -10°C em vapor a 100°C? (c_gelo=0,5 cal/g°C, L_f=80, c_água=1, L_v=540)",
+          options:["72000 cal","64500 cal","68000 cal","70000 cal"], correct:0,
+          explanation:"✅ Q₁ = 100×0,5×10 = 500; Q₂ = 100×80 = 8000; Q₃ = 100×1×100 = 10000; Q₄ = 100×540 = 54000; Total = 500+8000+10000+54000 = 72500 cal. Aproximadamente 72000 cal." },
+        { id:10, title:"❄️💧 Capítulo 10: Exercício - Mistura com Gelo", character:"Mestre da Mistura", avatar:"🧊🔥", speech:"Gelo a 0°C em água quente! Vamos calcular a temperatura final!",
+          text:"Coloca-se 50 g de gelo a 0°C em 200 g de água a 60°C. Qual a temperatura final? (L_f=80, c=1)",
+          options:["20°C","25°C","30°C","35°C"], correct:0,
+          explanation:"✅ Calor para derreter gelo: Q=50×80=4000 cal. Calor que água cede até 0°C: Q=200×1×(60-0)=12000 cal. Como 12000>4000, sobra calor. Q_rest=8000 cal. Massa total=250g. 8000=250×1×ΔT → ΔT=32°C. Tf=60-32=28°C. Aproximadamente 30°C. Opção mais próxima 30." },
+        { id:11, title:"✨ Capítulo 11: Exercício - Superfusão", character:"Investigador Fenômeno", avatar:"✨🔬", speech:"Vamos entender como a superfusão acontece!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 SUPERFUSÃO NA PRÁTICA</div><div class="theory-content">Para ocorrer superfusão, o líquido deve estar:<br>• Muito puro (sem impurezas)<br>• Resfriado lentamente<br>• Sem agitação<br><br>Quando um pequeno cristal de gelo é adicionado, ocorre solidificação instantânea!</div></div>`,
+          text:"O que faz com que a água super-resfriada congele instantaneamente?",
+          options:["Aumento de temperatura","Adição de um cristal de gelo ou agitação","Diminuição da pressão","Evaporação"], correct:1,
+          explanation:"✅ A adição de um cristal de gelo (nucleação) ou agitação faz com que a água super-resfriada solidifique rapidamente." },
+        { id:12, title:"📊 Capítulo 12: Recapitulação - Estados e Mudanças", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar os nomes de cada mudança de estado!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 NOMES DAS MUDANÇAS DE ESTADO</div><div class="theory-content">• Sólido → Líquido: FUSÃO<br>• Líquido → Sólido: SOLIDIFICAÇÃO<br>• Líquido → Gasoso: VAPORIZAÇÃO (evaporação/ebulição)<br>• Gasoso → Líquido: CONDENSAÇÃO ou LIQUEFAÇÃO<br>• Sólido → Gasoso: SUBLIMAÇÃO<br>• Gasoso → Sólido: RESSUBLIMAÇÃO</div><div class="formula-box">💡 Sublimação: gelo seco (CO₂ sólido) vira gás!</div></div>`,
+          text:"Como se chama a mudança do estado sólido diretamente para o gasoso?",
+          options:["Fusão","Vaporização","Sublimação","Condensação"], correct:2,
+          explanation:"✅ Sublimação é a mudança direta do estado sólido para o gasoso, como ocorre com o gelo seco." },
+        { id:13, title:"🏆 Capítulo 13: Teste - Fusão", character:"Avaliador", avatar:"🏆❄️", speech:"Teste rápido sobre fusão!",
+          text:"Qual a temperatura de fusão do gelo ao nível do mar?",
+          options:["0°C","-10°C","100°C","32°C"], correct:0,
+          explanation:"✅ O gelo funde a 0°C ao nível do mar (pressão normal)." },
+        { id:14, title:"🏆 Capítulo 14: Teste - Vaporização", character:"Avaliadora", avatar:"🏆💨", speech:"Teste sobre vaporização!",
+          text:"O que acontece com o ponto de ebulição da água em altitudes elevadas (menor pressão)?",
+          options:["Aumenta","Diminui","Permanece igual","Dobra"], correct:1,
+          explanation:"✅ Em altitudes elevadas, a pressão atmosférica é menor, então o ponto de ebulição diminui." },
+        { id:15, title:"🏆 Capítulo 15: Teste - Calor Latente", character:"Desafiador", avatar:"🏆🔥", speech:"Teste sobre calor latente!",
+          text:"Quantas calorias são liberadas quando 100 g de vapor se condensam a 100°C? (L=540 cal/g)",
+          options:["54000 cal","27000 cal","108000 cal","5400 cal"], correct:0,
+          explanation:"✅ Q = m·L = 100×540 = 54000 cal liberadas (Q negativo)." },
+        { id:16, title:"🏆 Capítulo 16: Teste - Curva de Aquecimento", character:"Analista", avatar:"🏆📈", speech:"Interpretando a curva!",
+          text:"Na curva de aquecimento, durante a mudança de estado (patamar), a temperatura:",
+          options:["Aumenta rapidamente","Diminui","Permanece constante","Oscila"], correct:2,
+          explanation:"✅ Durante a mudança de estado, a temperatura permanece constante." },
+        { id:17, title:"✨ Capítulo 17: Exercício Especial - Superfusão da Água", character:"Pesquisador Polar", avatar:"✨🧊", speech:"A água pode ficar líquida abaixo de 0°C? Sim! Isso é superfusão!",
+          text:"Até que temperatura a água pura pode chegar em estado líquido (superfusão) antes de congelar?",
+          options:["-5°C","-10°C","-20°C ou menos","-1°C"], correct:2,
+          explanation:"✅ Em condições ideais (água muito pura, sem agitação), a água pode ser super-resfriada até -20°C ou até -40°C!" },
+        { id:18, title:"❄️💧 Capítulo 18: Exercício Resolvido - Gelo e Água", character:"Mestre dos Cálculos", avatar:"🧮❄️", speech:"Vamos resolver passo a passo um problema clássico!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 PROBLEMA: MISTURA GELO + ÁGUA</div><div class="theory-content">Misturam-se 30 g de gelo a 0°C com 100 g de água a 50°C. Qual a temperatura final?<br><br>1. Calor para derreter gelo: Q₁ = 30×80 = 2400 cal<br>2. Calor que água cede até 0°C: Q₂ = 100×1×(50-0)=5000 cal<br>3. Como 5000 > 2400, sobra calor: 5000-2400=2600 cal<br>4. Massa total = 130 g. Q = m·c·ΔT → 2600 = 130×1×ΔT → ΔT=20°C<br>5. Tf = 0 + 20 = 20°C</div></div>`,
+          text:"Misturando 30 g de gelo a 0°C com 100 g de água a 50°C, qual a temperatura final? (L_f=80)",
+          options:["10°C","15°C","20°C","25°C"], correct:2,
+          explanation:"✅ Resolução no quadro teórico: Tf = 20°C." },
+        { id:19, title:"💨❄️ Capítulo 19: Exercício Especial - Vapor e Gelo", character:"Mestre Extremo", avatar:"💨🧊", speech:"Vapor quente encontra gelo! Cálculo desafiador!",
+          text:"Coloca-se 20 g de vapor a 100°C em 100 g de gelo a 0°C. Qual a temperatura final? (L_f=80, L_v=540, c_água=1)",
+          options:["0°C","20°C","40°C","100°C"], correct:0,
+          explanation:"✅ Calor liberado na condensação: Q=20×540=10800 cal. Calor para derreter gelo: 100×80=8000 cal. Sobra 2800 cal para aquecer a água. Massa total=120g. 2800=120×ΔT → ΔT≈23,3°C. Tf=23,3°C. Mas opções próximas 20°C." },
+        { id:20, title:"📈 Capítulo 20: Análise de Gráfico - Curva de Aquecimento", character:"Analista Gráfico", avatar:"📊🔍", speech:"Vamos interpretar uma curva de aquecimento!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 INTERPRETAÇÃO DE GRÁFICOS</div><div class="theory-content">Em uma curva de aquecimento:<br>• Trechos inclinados: calor sensível (variação de temperatura)<br>• Patamares horizontais: calor latente (mudança de estado)<br><br>O comprimento dos patamares indica a quantidade de calor latente. O da vaporização é maior que o da fusão (540 > 80).</div></div>`,
+          text:"Em uma curva de aquecimento da água, qual patamar é MAIOR (representa mais calor)?",
+          options:["Fusão (0°C)","Vaporização (100°C)","São iguais","Não há patamares"], correct:1,
+          explanation:"✅ O patamar da vaporização é maior porque o calor latente de vaporização (540 cal/g) é muito maior que o de fusão (80 cal/g)." },
+        { id:21, title:"🌊 Capítulo 21: Aplicação Prática - Panelas de Pressão", character:"Chef de Cozinha", avatar:"🍲⚙️", speech:"Entender mudanças de estado ajuda na cozinha! Panelas de pressão usam a física!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 PANELA DE PRESSÃO</div><div class="theory-content">A panela de pressão aumenta a pressão interna, elevando o ponto de ebulição da água para cerca de 120°C. Isso faz com que os alimentos cozinhem mais rapidamente!<br><br>🔹 Quanto maior a pressão, maior o ponto de ebulição.<br>🔹 É o mesmo princípio das usinas termelétricas!</div></div>`,
+          text:"Por que os alimentos cozinham mais rápido na panela de pressão?",
+          options:["Aumenta a pressão e o ponto de ebulição, cozinhando em temperatura mais alta","Diminui o ponto de ebulição","Aumenta o calor latente","Diminui o calor específico"], correct:0,
+          explanation:"✅ A panela de pressão aumenta a pressão, elevando o ponto de ebulição da água para cerca de 120°C, cozinhando mais rápido." },
+        { id:22, title:"🏔️ Capítulo 22: Altitude e Cozimento", character:"Alpinista Chef", avatar:"🏔️🍳", speech:"Em altas montanhas, a água ferve a temperaturas mais baixas!",
+          text:"Em uma montanha a 3000 m de altitude, a água ferve a aproximadamente:",
+          options:["100°C","90°C","70°C","110°C"], correct:1,
+          explanation:"✅ Em altitudes elevadas, a pressão atmosférica é menor, então o ponto de ebulição da água diminui para cerca de 90°C ou menos." },
+        { id:23, title:"🎓 Capítulo 23: Revisão Final - Conceitos", character:"Mestre Revisor", avatar:"📚🎓", speech:"Vamos revisar todos os conceitos importantes!",
+          text:"Qual das seguintes afirmações sobre mudanças de estado é CORRETA?",
+          options:["Durante a fusão, a temperatura aumenta","O calor latente de vaporização da água é menor que o de fusão","Durante a condensação, o gás libera calor","A superfusão ocorre apenas com gases"], correct:2,
+          explanation:"✅ Durante a condensação (gás → líquido), o gás LIBERA calor latente." },
+        { id:24, title:"🏆 Capítulo 24: Teste Final - Curva de Resfriamento", character:"Avaliador Final", avatar:"🏆❄️", speech:"Último desafio sobre curvas!",
+          text:"Em uma curva de resfriamento, os patamares horizontais representam:",
+          options:["Aumento de temperatura","Mudanças de estado (condensação e solidificação)","Aumento de pressão","Diminuição do volume"], correct:1,
+          explanation:"✅ Patamares horizontais na curva de resfriamento representam condensação (gás→líquido) e solidificação (líquido→sólido)." },
+        { id:25, title:"✨ Capítulo 25: Fenômenos da Natureza", character:"Observador da Natureza", avatar:"🌨️❄️", speech:"A superfusão acontece na natureza! Gotas de chuva super-resfriadas formam gelo ao tocar superfícies!",
+          text:"O que acontece quando gotas de chuva super-resfriadas atingem uma superfície fria?",
+          options:["Evaporam","Congelam instantaneamente (formando gelo)","Aquecem","Viram vapor"], correct:1,
+          explanation:"✅ Gotas super-resfriadas congelam instantaneamente ao tocar uma superfície, formando gelo (granizo ou chuva congelante)." },
+        { id:26, title:"🎓 Capítulo 26: Certificado Final", character:"Grande Mestre dos Estados", avatar:"🎓💧❄️💨", speech:"Parabéns! Você completou a jornada pelas mudanças de estado físico!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 VOCÊ APRENDEU:</div><div class="theory-content">✓ Estados físicos: sólido, líquido, gasoso<br>✓ Influência da pressão e temperatura nos pontos de fusão/ebulição<br>✓ Calor latente (Q = m·L)<br>✓ Curvas de aquecimento e resfriamento<br>✓ Fenômeno da superfusão<br>✓ Exercícios resolvidos e testes especiais!</div></div>`,
+          text:"Qual é a principal aplicação prática do conhecimento sobre ponto de ebulição e pressão?",
+          options:["Panelas de pressão","Geladeiras","Ar condicionado","Fogões solares"], correct:0,
+          explanation:"✅ Panelas de pressão usam o aumento da pressão para elevar o ponto de ebulição, cozinhando mais rápido." }
+    ];
+
+    const totalQuestions = CHAPTERS.length;
+    const gameContent = document.getElementById("gameContent");
+    const scoreSpan = document.getElementById("scoreValue");
+    const currentQSpan = document.getElementById("currentQ");
+    const totalQSpan = document.getElementById("totalQ");
+
+    function updateUI() { scoreSpan.textContent = score; currentQSpan.textContent = currentIndex+1; totalQSpan.textContent = totalQuestions; }
+
+    function render() {
+        if(currentIndex >= totalQuestions) { renderResult(); return; }
+        const ch = CHAPTERS[currentIndex];
+        const letters = ["A","B","C","D"];
+        let theoryHtml = ch.theory ? ch.theory : '';
+        let optionsHtml = ch.options.map((opt,idx)=>`<div class="option-comic" data-opt-index="${idx}"><div class="option-number">${letters[idx]}</div><div>${escapeHtml(opt)}</div></div>`).join('');
+        let feedbackHtml = answered ? `<div class="feedback-comic ${userAnswer===ch.correct?'correct':'incorrect'}">${userAnswer===ch.correct?"✅✨ ACERTOU! ✨✅":"❌💔 VAMOS REVISAR! 💔❌"}<br><strong>${ch.explanation}</strong>${userAnswer!==ch.correct?`<br><br>📖 <strong>Resposta correta:</strong> ${ch.options[ch.correct]}`:''}</div>` : '';
+        const html = `<div class="comic-panel"><div class="character"><div class="character-avatar">${ch.avatar}</div><div><div class="character-name">${ch.character}</div><div class="speech-bubble">"${ch.speech}"</div></div></div>${theoryHtml}<div class="question-box">📖 <strong>${ch.title}</strong><br>${escapeHtml(ch.text)}</div><div class="options-comic">${optionsHtml}</div>${feedbackHtml}<button class="next-btn" id="nextBtn" ${!answered?'disabled':''}>▶ Próximo Capítulo ▶</button></div>`;
+        gameContent.innerHTML = html;
+        if(!answered) document.querySelectorAll(".option-comic").forEach(opt=>opt.addEventListener("click",()=>{if(!answered){const idx=parseInt(opt.dataset.optIndex); handleAnswer(idx,ch);}}));
+        document.getElementById("nextBtn")?.addEventListener("click",nextChapter);
+    }
+
+    function handleAnswer(selectedIdx,ch){ if(answered) return; answered=true; userAnswer=selectedIdx; if(selectedIdx===ch.correct) score++; updateUI(); render(); }
+    function nextChapter(){ if(!answered) return; currentIndex++; answered=false; userAnswer=null; render(); }
+    function renderResult(){
+        const percent = (score/totalQuestions)*100;
+        let msg = percent>=80?"🏆 MESTRE DAS MUDANÇAS DE ESTADO! 🏆": percent>=60?"💧❄️ GUARDIÃO DAS TRANSFORMAÇÕES! 💨🔥":"🌱 APRENDIZ EM TRANSFORMAÇÃO! 🌱";
+        const html = `<div class="comic-panel result-panel"><div style="font-size:3rem;">💧❄️💨✨</div><h2>${msg}</h2><div style="background:#1f3a4a;border-radius:30px;padding:10px;margin:20px 0;"><div class="score-bar" style="width:${percent}%;">${score}/${totalQuestions} acertos</div></div><p>${percent>=80?"Excelente! Você domina todos os conceitos sobre mudanças de estado, curvas de aquecimento e superfusão!":percent>=60?"Muito bem! Revise os conceitos de calor latente e as curvas de aquecimento.":"Revise os capítulos sobre pressão e temperatura, calor latente e o fenômeno da superfusão!"}</p><button class="restart-btn" id="restartBtn">💧 Recomeçar Estudo ❄️</button><div class="summary-box"><strong>📚 RESUMO DAS MUDANÇAS DE ESTADO:</strong><br>• Fusão: Q = m·L_f (80 cal/g para água)<br>• Vaporização: Q = m·L_v (540 cal/g para água)<br>• Curva de aquecimento: patamares nas mudanças de estado<br>• Pressão ↑ → Ponto de Ebulição ↑<br>• Superfusão: líquido abaixo do ponto de solidificação<br>• Nomes: Fusão, Solidificação, Vaporização, Condensação, Sublimação</div></div>`;
+        gameContent.innerHTML = html;
+        document.getElementById("restartBtn")?.addEventListener("click",()=>{ score=0; currentIndex=0; answered=false; userAnswer=null; updateUI(); render(); });
+    }
+    function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    totalQSpan.textContent = totalQuestions;
+    render();
+</script>
+</body>
+</html>

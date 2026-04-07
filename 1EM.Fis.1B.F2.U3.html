@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Física em Quadrinhos - Movimentos Verticais | Queda Livre e Lançamento Vertical | Prof. Anderson Daniel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #2c6e5f 0%, #1a4a3f 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .physics-header {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 30px 30px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #f1c40f;
+            box-shadow: 0 8px 0 #1e6f5e;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #1e6f5e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area p {
+            font-size: 0.7rem;
+            color: #ffdd99;
+            font-weight: bold;
+        }
+
+        .physics-stats {
+            display: flex;
+            gap: 20px;
+            background: #1a4a3f;
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 2px solid #f1c40f;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #ffdd99;
+        }
+
+        .comic-content {
+            background: #fff8f0;
+            border-radius: 0 0 30px 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comic-panel {
+            background: #fef7e8;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #f1c40f;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .comic-panel::before {
+            content: "🍎";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: #fff8f0;
+            padding: 0 10px;
+        }
+
+        .character {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            font-size: 4rem;
+            background: #f1c40f;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #e67e22;
+            box-shadow: 4px 4px 0 #c0392b;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #f1c40f;
+            position: relative;
+        }
+
+        .theory-box {
+            background: linear-gradient(135deg, #e8f8f5, #d4f0e8);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #f1c40f;
+        }
+
+        .theory-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #27ae60;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-box {
+            background: #f1c40f20;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #f1c40f;
+        }
+
+        .question-box {
+            background: #fff3e0;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 10px solid #f1c40f;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e2a;
+        }
+
+        .options-comic {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-comic {
+            background: white;
+            border: 2px solid #e6d5b8;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .option-comic:hover {
+            background: #fff3e0;
+            border-color: #f1c40f;
+            transform: translateX(10px);
+        }
+
+        .option-number {
+            background: #f1c40f;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .feedback-comic {
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+
+        .feedback-comic.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback-comic.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #f1c40f;
+            color: #2c3e50;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 15px;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #c0392b;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #fff3e0, #ffe4c4);
+            border-radius: 40px;
+            padding: 35px;
+            margin: 20px 0;
+            border: 4px solid #f1c40f;
+            text-align: center;
+        }
+
+        .score-bar {
+            background: #f1c40f;
+            height: 30px;
+            border-radius: 25px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .restart-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            background: #fef3e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .footer {
+            margin-top: 25px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #1a4a3f, #0e2a22);
+            border-radius: 20px;
+            text-align: center;
+            color: #ffdd99;
+            font-size: 0.9rem;
+            border-top: 3px solid #f1c40f;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #ffd966;
+        }
+
+        .footer .physics-message {
+            font-style: italic;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ffd966;
+        }
+
+        .footer .prof-name {
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .comic-content {
+                padding: 15px;
+            }
+            .character-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="physics-header">
+        <div class="logo-area">
+            <h1><span>🍎⬇️⬆️</span> MOVIMENTOS VERTICAIS</h1>
+            <p>⚡ 1º Ano EM • 1º Bimestre: Queda Livre | Lançamento Vertical | Galileu ⚡</p>
+        </div>
+        <div class="physics-stats">
+            <div class="stat"><div class="stat-value" id="scoreValue">0</div><div class="stat-label">Acertos</div></div>
+            <div class="stat"><div class="stat-value" id="currentQ">1</div><div class="stat-label">/<span id="totalQ">28</span></div></div>
+        </div>
+    </div>
+    <div class="comic-content" id="gameContent"></div>
+    <div class="footer">
+        <div class="physics-message">
+            🍎 "Assim como a maçã de Newton caiu e desvendou a gravidade, que seu conhecimento caia no solo fértil da curiosidade e floresça em grandes descobertas!" 🍎
+        </div>
+        <div class="prof-name">
+            👨‍🏫 <strong>Professor Anderson Daniel</strong> | ✉️ <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> 👨‍🏫
+        </div>
+        <div style="font-size: 0.7rem; margin-top: 8px;">
+            🌍 "A queda livre nos ensina que todos os corpos caem com a mesma aceleração - assim como todos podem alcançar grandes alturas com estudo e dedicação!" 🌍
+        </div>
+    </div>
+</div>
+
+<script>
+    let score = 0, currentIndex = 0, answered = false, userAnswer = null;
+
+    // ==================== 28 CAPÍTULOS SOBRE MOVIMENTOS VERTICAIS ====================
+    const CHAPTERS = [
+        { id:1, title:"🍎 Capítulo 1: A História da Queda Livre", character:"Galileu Galilei", avatar:"🍎🧠", speech:"Conta a lenda que eu, Galileu, deixei cair objetos da Torre de Pisa para provar que todos caem com a mesma aceleração!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 A QUEDA LIVRE E GALILEU</div><div class="theory-content"><strong>Queda livre</strong> é o movimento de um corpo sob a ação exclusiva da gravidade, desprezando a resistência do ar.<br><br>🔹 Galileu descobriu que todos os corpos caem com a mesma aceleração, independentemente de sua massa!<br>🔹 A aceleração da gravidade na Terra é g ≈ 9,8 m/s² (aproximamos para 10 m/s² em muitos exercícios)<br>🔹 No vácuo, uma pena e um martelo caem juntos!</div><div class="formula-box">💡 g = 9,8 m/s² (na superfície da Terra)</div></div>`,
+          text:"O que Galileu demonstrou ao deixar cair objetos da Torre de Pisa?",
+          options:["Objetos mais pesados caem mais rápido","Todos os corpos caem com a mesma aceleração","Objetos mais leves caem mais rápido","A queda depende da forma do objeto"], correct:1,
+          explanation:"✅ Galileu demonstrou que, desprezando a resistência do ar, todos os corpos caem com a mesma aceleração (g)." },
+        { id:2, title:"📐 Capítulo 2: Características da Queda Livre", character:"Mestre da Gravidade", avatar:"📐🌍", speech:"Na queda livre, a aceleração é constante e aponta para o centro da Terra!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CARACTERÍSTICAS DA QUEDA LIVRE</div><div class="theory-content">A queda livre é um MOVIMENTO UNIFORMEMENTE VARIADO (MUV) com aceleração igual a g.<br><br>🔹 Partindo do repouso: v₀ = 0<br>🔹 Sentido do movimento: para baixo (consideramos positivo)<br>🔹 Fórmulas:<br>• v = g·t<br>• h = (g·t²)/2<br>• v² = 2·g·h<br><br>🔹 A velocidade aumenta linearmente com o tempo<br>🔹 A altura varia com o quadrado do tempo</div><div class="formula-box">📌 Na queda livre, quanto maior o tempo, maior a velocidade!</div></div>`,
+          text:"Na queda livre, partindo do repouso, a velocidade varia de que forma com o tempo?",
+          options:["Linearmente (v ∝ t)","Quadraticamente (v ∝ t²)","Exponencialmente","Constantemente"], correct:0,
+          explanation:"✅ v = g·t → a velocidade varia LINEARMENTE com o tempo." },
+        { id:3, title:"⚡ Capítulo 3: Cálculo da Velocidade na Queda Livre", character:"Físico Galileano", avatar:"⚡📏", speech:"Vamos calcular a velocidade de um objeto em queda livre!",
+          text:"Um corpo é abandonado do repouso (g=10 m/s²). Qual sua velocidade após 3 segundos?",
+          options:["10 m/s","20 m/s","30 m/s","40 m/s"], correct:2,
+          explanation:"✅ v = g·t = 10×3 = 30 m/s." },
+        { id:4, title:"📏 Capítulo 4: Cálculo da Altura na Queda Livre", character:"Medidor de Alturas", avatar:"📏🍎", speech:"Calcule a altura de queda a partir do tempo!",
+          text:"Um objeto cai de uma altura e leva 4 s para atingir o solo (g=10 m/s²). Qual a altura?",
+          options:["60 m","70 m","80 m","90 m"], correct:2,
+          explanation:"✅ h = (g·t²)/2 = (10×16)/2 = 160/2 = 80 m." },
+        { id:5, title:"🔧 Capítulo 5: Exercício - Torricelli na Queda", character:"Treinador", avatar:"🧮⚡", speech:"Use Torricelli para calcular a velocidade a partir da altura!",
+          text:"Um corpo cai de uma altura de 45 m (g=10 m/s²). Qual sua velocidade ao atingir o solo?",
+          options:["20 m/s","25 m/s","30 m/s","35 m/s"], correct:2,
+          explanation:"✅ v² = 2·g·h = 2×10×45 = 900 → v = 30 m/s." },
+        { id:6, title:"🔧 Capítulo 6: Exercício - Tempo de Queda", character:"Treinador", avatar:"🧮⏱️", speech:"Calcule o tempo de queda a partir da altura!",
+          text:"De que altura um objeto deve cair para atingir o solo com velocidade de 50 m/s? (g=10 m/s²)",
+          options:["100 m","125 m","150 m","175 m"], correct:1,
+          explanation:"✅ v² = 2·g·h → 2500 = 20h → h = 125 m." },
+        { id:7, title:"🚀 Capítulo 7: Lançamento Vertical para Cima", character:"Mestre do Lançamento", avatar:"🚀⬆️", speech:"No lançamento vertical para cima, a gravidade age contra o movimento!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 LANÇAMENTO VERTICAL PARA CIMA</div><div class="theory-content">No lançamento vertical para cima, o corpo sobe com aceleração -g (contra o movimento).<br><br>🔹 Função horária da velocidade: v = v₀ - g·t<br>🔹 Função horária da altura: h = v₀·t - (g·t²)/2<br>🔹 Altura máxima: quando v = 0 → t_subida = v₀/g<br>🔹 h_max = v₀²/(2g)<br>🔹 Tempo total = 2·t_subida (subida + descida)</div><div class="formula-box">📌 Na altura máxima, a velocidade é ZERO!</div></div>`,
+          text:"No lançamento vertical para cima, o que acontece com a velocidade na altura máxima?",
+          options:["É máxima","É zero","É negativa","É constante"], correct:1,
+          explanation:"✅ Na altura máxima, o corpo para instantaneamente antes de começar a cair: v = 0." },
+        { id:8, title:"⏱️ Capítulo 8: Tempo de Subida", character:"Cronometrista", avatar:"⏱️🚀", speech:"Calcule o tempo que o corpo leva para atingir a altura máxima!",
+          text:"Um corpo é lançado verticalmente para cima com v₀=40 m/s (g=10 m/s²). Qual o tempo de subida?",
+          options:["2 s","3 s","4 s","5 s"], correct:2,
+          explanation:"✅ t_subida = v₀/g = 40/10 = 4 s." },
+        { id:9, title:"📏 Capítulo 9: Altura Máxima", character:"Altímetro", avatar:"📏🚀", speech:"Calcule a altura máxima atingida!",
+          text:"Com v₀=30 m/s e g=10 m/s², qual a altura máxima?",
+          options:["35 m","40 m","45 m","50 m"], correct:2,
+          explanation:"✅ h_max = v₀²/(2g) = 900/20 = 45 m." },
+        { id:10, title:"🔄 Capítulo 10: Tempo Total de Voo", character:"Mestre do Tempo", avatar:"🔄⏱️", speech:"O tempo total é o dobro do tempo de subida!",
+          text:"Um objeto lançado verticalmente para cima com v₀=20 m/s (g=10 m/s²) leva quanto tempo para voltar ao solo?",
+          options:["2 s","3 s","4 s","5 s"], correct:2,
+          explanation:"✅ t_subida = 20/10 = 2 s; t_total = 2×2 = 4 s." },
+        { id:11, title:"⚡ Capítulo 11: Velocidade de Retorno", character:"Físico", avatar:"⚡🔄", speech:"Ao retornar ao ponto de lançamento, a velocidade tem o mesmo módulo!",
+          text:"Um corpo é lançado para cima com v₀=25 m/s. Qual a velocidade ao retornar ao ponto de lançamento? (g=10 m/s²)",
+          options:["-25 m/s","25 m/s","0 m/s","12,5 m/s"], correct:0,
+          explanation:"✅ Ao retornar, a velocidade tem o mesmo módulo, mas sentido oposto: v = -25 m/s." },
+        { id:12, title:"📐 Capítulo 12: Função Horária da Altura", character:"Equacionista", avatar:"📐📈", speech:"A altura varia quadraticamente com o tempo!",
+          text:"Um corpo lançado para cima com v₀=30 m/s (g=10 m/s²). Qual a altura após 2 s?",
+          options:["30 m","40 m","50 m","60 m"], correct:1,
+          explanation:"✅ h = 30×2 - (10×4)/2 = 60 - 20 = 40 m." },
+        { id:13, title:"🔧 Capítulo 13: Exercício - Velocidade em um instante", character:"Treinador", avatar:"🧮⚡", speech:"Calcule a velocidade em um instante qualquer!",
+          text:"Um corpo lançado para cima com v₀=50 m/s (g=10 m/s²). Qual a velocidade após 3 s?",
+          options:["10 m/s","20 m/s","30 m/s","40 m/s"], correct:1,
+          explanation:"✅ v = 50 - 10×3 = 50 - 30 = 20 m/s." },
+        { id:14, title:"🔧 Capítulo 14: Exercício - Tempo para atingir altura", character:"Treinador", avatar:"🧮📏", speech:"Calcule o tempo para atingir uma determinada altura!",
+          text:"Um corpo lançado para cima com v₀=40 m/s (g=10 m/s²). Quanto tempo leva para atingir 60 m de altura?",
+          options:["2 s","3 s","4 s","5 s"], correct:0,
+          explanation:"✅ 60 = 40t - 5t² → 5t² - 40t + 60 = 0 → t² - 8t + 12 = 0 → t=2 s ou t=6 s (subida e descida)." },
+        { id:15, title:"🏆 Capítulo 15: Teste - Queda Livre", character:"Avaliador", avatar:"🏆🍎", speech:"Teste rápido de queda livre!",
+          text:"Um corpo cai de uma altura de 125 m (g=10 m/s²). Qual o tempo de queda?",
+          options:["3 s","4 s","5 s","6 s"], correct:2,
+          explanation:"✅ h = (g·t²)/2 → 125 = 5t² → t²=25 → t=5 s." },
+        { id:16, title:"🏆 Capítulo 16: Teste - Velocidade na Queda", character:"Avaliadora", avatar:"🏆⚡", speech:"Teste de velocidade!",
+          text:"Um corpo cai de uma altura de 80 m (g=10 m/s²). Qual a velocidade ao atingir o solo?",
+          options:["30 m/s","35 m/s","40 m/s","45 m/s"], correct:2,
+          explanation:"✅ v² = 2×10×80 = 1600 → v = 40 m/s." },
+        { id:17, title:"🏆 Capítulo 17: Teste - Lançamento Vertical", character:"Avaliador", avatar:"🏆🚀", speech:"Teste de lançamento!",
+          text:"Um corpo é lançado para cima com v₀=60 m/s (g=10 m/s²). Qual a altura máxima?",
+          options:["150 m","180 m","200 m","220 m"], correct:1,
+          explanation:"✅ h_max = v₀²/(2g) = 3600/20 = 180 m." },
+        { id:18, title:"🏆 Capítulo 18: Teste - Tempo Total", character:"Avaliador", avatar:"🏆⏱️", speech:"Teste de tempo total!",
+          text:"Com v₀=50 m/s e g=10 m/s², qual o tempo total de voo?",
+          options:["5 s","8 s","10 s","12 s"], correct:2,
+          explanation:"✅ t_subida = 50/10 = 5 s; t_total = 2×5 = 10 s." },
+        { id:19, title:"🏆 Capítulo 19: Teste - Velocidade em altura", character:"Avaliador", avatar:"🏆📏", speech:"Teste com Torricelli!",
+          text:"Um corpo lançado para cima com v₀=40 m/s (g=10 m/s²). Qual a velocidade a 60 m de altura?",
+          options:["10 m/s","20 m/s","30 m/s","40 m/s"], correct:1,
+          explanation:"✅ v² = 40² - 2×10×60 = 1600 - 1200 = 400 → v = 20 m/s." },
+        { id:20, title:"🍎 Capítulo 20: Exercício Especial - Queda com Velocidade Inicial", character:"Mestre", avatar:"🍎⚡", speech:"E se o corpo já tem velocidade inicial para baixo?",
+          theory:`<div class="theory-box"><div class="theory-title">📖 QUEDA COM VELOCIDADE INICIAL</div><div class="theory-content">Quando um corpo é lançado para baixo com velocidade inicial v₀:<br><br>🔹 v = v₀ + g·t<br>🔹 h = v₀·t + (g·t²)/2<br>🔹 v² = v₀² + 2·g·h</div></div>`,
+          text:"Um corpo é lançado para baixo com v₀=5 m/s de uma altura de 50 m (g=10 m/s²). Qual a velocidade ao atingir o solo?",
+          options:["30 m/s","32 m/s","35 m/s","40 m/s"], correct:1,
+          explanation:"✅ v² = 5² + 2×10×50 = 25 + 1000 = 1025 → v ≈ 32 m/s." },
+        { id:21, title:"🔧 Capítulo 21: Exercício - Lançamento com altura inicial", character:"Treinador", avatar:"🧮📏", speech:"Lançamento para cima a partir de uma altura!",
+          text:"Um corpo é lançado para cima do solo com v₀=20 m/s. Qual a altura máxima? (g=10 m/s²)",
+          options:["15 m","20 m","25 m","30 m"], correct:1,
+          explanation:"✅ h_max = v₀²/(2g) = 400/20 = 20 m." },
+        { id:22, title:"🧠 Capítulo 22: Recapitulação - Queda Livre", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar as fórmulas da queda livre!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RECAPITULAÇÃO - QUEDA LIVRE</div><div class="theory-content"><strong>Fórmulas da queda livre (v₀=0):</strong><br>• v = g·t<br>• h = (g·t²)/2<br>• v² = 2·g·h<br><br><strong>Características:</strong><br>• Aceleração constante (g)<br>• Movimento uniformemente variado<br>• Independe da massa do corpo</div></div>`,
+          text:"Na queda livre, a aceleração do corpo:",
+          options:["Depende da massa","É constante e igual a g","Aumenta com o tempo","Diminui com o tempo"], correct:1,
+          explanation:"✅ A aceleração na queda livre é constante e igual à aceleração da gravidade g." },
+        { id:23, title:"🧠 Capítulo 23: Recapitulação - Lançamento Vertical", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar as fórmulas do lançamento vertical!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RECAPITULAÇÃO - LANÇAMENTO VERTICAL</div><div class="theory-content"><strong>Fórmulas (para cima):</strong><br>• v = v₀ - g·t<br>• h = v₀·t - (g·t²)/2<br>• v² = v₀² - 2·g·h<br><br><strong>Altura máxima:</strong><br>• t_subida = v₀/g<br>• h_max = v₀²/(2g)<br><br><strong>Tempo total:</strong> t_total = 2·v₀/g</div></div>`,
+          text:"Na altura máxima do lançamento vertical para cima, a velocidade é:",
+          options:["Máxima","Zero","Mínima (negativa)","Constante"], correct:1,
+          explanation:"✅ Na altura máxima, a velocidade é ZERO (o corpo para instantaneamente)." },
+        { id:24, title:"🏆 Capítulo 24: Teste Especial - Queda de dois corpos", character:"Galileu", avatar:"🏆🍎", speech:"Dois corpos de massas diferentes caem juntos!",
+          text:"Uma pena e um martelo são abandonados do repouso no vácuo. O que acontece?",
+          options:["O martelo chega primeiro","A pena chega primeiro","Chegam juntos ao solo","Depende da altura"], correct:2,
+          explanation:"✅ No vácuo, todos os corpos caem com a mesma aceleração, independente da massa." },
+        { id:25, title:"🏆 Capítulo 25: Teste Especial - Lançamento com retorno", character:"Mestre", avatar:"🏆🔄", speech:"Calcule a velocidade de retorno!",
+          text:"Um corpo lançado para cima com v₀=35 m/s. Qual a velocidade ao retornar ao solo? (g=10 m/s²)",
+          options:["35 m/s","-35 m/s","0 m/s","17,5 m/s"], correct:1,
+          explanation:"✅ Ao retornar, a velocidade tem mesmo módulo e sentido oposto: v = -35 m/s." },
+        { id:26, title:"🍎⚡ Capítulo 26: Exercício Especial - Queda de um prédio", character:"Investigador", avatar:"🏢🍎", speech:"Um objeto cai de um prédio! Vamos calcular!",
+          text:"Um objeto cai de um prédio de 125 m de altura. Qual o tempo de queda? (g=10 m/s²)",
+          options:["3 s","4 s","5 s","6 s"], correct:2,
+          explanation:"✅ h = (g·t²)/2 → 125 = 5t² → t²=25 → t=5 s." },
+        { id:27, title:"🏆 Capítulo 27: Teste Especial - Comparação de tempos", character:"Analista", avatar:"🏆⏱️", speech:"Compare os tempos de subida e descida!",
+          text:"No lançamento vertical para cima, o tempo de subida se compara ao tempo de descida:",
+          options:["Maior","Menor","Igual","Depende da massa"], correct:2,
+          explanation:"✅ No lançamento vertical (desprezando resistência do ar), o tempo de subida é IGUAL ao tempo de descida." },
+        { id:28, title:"🎓 Capítulo 28: Certificado do Mestre dos Movimentos Verticais", character:"Professor Anderson Daniel", avatar:"🎓🍎", speech:"Parabéns! Você dominou a queda livre e o lançamento vertical! Continue estudando Física!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 VOCÊ APRENDEU:</div><div class="theory-content">✓ A história da queda livre e os experimentos de Galileu<br>✓ Queda livre: v = g·t, h = (g·t²)/2, v² = 2·g·h<br>✓ Lançamento vertical para cima: v = v₀ - g·t, h = v₀·t - (g·t²)/2<br>✓ Altura máxima: t_subida = v₀/g, h_max = v₀²/(2g)<br>✓ Tempo total de voo: t_total = 2·v₀/g<br>✓ Independência da massa na queda livre<br>✓ Exercícios resolvidos, propostos e testes especiais!</div><div class="formula-box">🌟 "Assim como Galileu desafiou o conhecimento de sua época, desafie seus limites e alcance novas alturas!" 🌟</div></div>`,
+          text:"Qual foi a principal contribuição de Galileu para a Física dos movimentos verticais?",
+          options:["Descobriu a gravidade","Demonstrou que todos os corpos caem com a mesma aceleração","Inventou o paraquedas","Criou o foguete"], correct:1,
+          explanation:"✅ Galileu demonstrou que, desprezando a resistência do ar, todos os corpos caem com a mesma aceleração (g)." }
+    ];
+
+    const totalQuestions = CHAPTERS.length;
+    const gameContent = document.getElementById("gameContent");
+    const scoreSpan = document.getElementById("scoreValue");
+    const currentQSpan = document.getElementById("currentQ");
+    const totalQSpan = document.getElementById("totalQ");
+
+    function updateUI() { scoreSpan.textContent = score; currentQSpan.textContent = currentIndex+1; totalQSpan.textContent = totalQuestions; }
+
+    function render() {
+        if(currentIndex >= totalQuestions) { renderResult(); return; }
+        const ch = CHAPTERS[currentIndex];
+        const letters = ["A","B","C","D"];
+        let theoryHtml = ch.theory ? ch.theory : '';
+        let optionsHtml = ch.options.map((opt,idx)=>`<div class="option-comic" data-opt-index="${idx}"><div class="option-number">${letters[idx]}</div><div>${escapeHtml(opt)}</div></div>`).join('');
+        let feedbackHtml = answered ? `<div class="feedback-comic ${userAnswer===ch.correct?'correct':'incorrect'}">${userAnswer===ch.correct?"✅✨ ACERTOU! ✨✅":"❌💔 VAMOS REVISAR! 💔❌"}<br><strong>${ch.explanation}</strong>${userAnswer!==ch.correct?`<br><br>📖 <strong>Resposta correta:</strong> ${ch.options[ch.correct]}`:''}</div>` : '';
+        const html = `<div class="comic-panel"><div class="character"><div class="character-avatar">${ch.avatar}</div><div><div class="character-name">${ch.character}</div><div class="speech-bubble">"${ch.speech}"</div></div></div>${theoryHtml}<div class="question-box">📖 <strong>${ch.title}</strong><br>${escapeHtml(ch.text)}</div><div class="options-comic">${optionsHtml}</div>${feedbackHtml}<button class="next-btn" id="nextBtn" ${!answered?'disabled':''}>▶ Próximo Capítulo ▶</button></div>`;
+        gameContent.innerHTML = html;
+        if(!answered) document.querySelectorAll(".option-comic").forEach(opt=>opt.addEventListener("click",()=>{if(!answered){const idx=parseInt(opt.dataset.optIndex); handleAnswer(idx,ch);}}));
+        document.getElementById("nextBtn")?.addEventListener("click",nextChapter);
+    }
+
+    function handleAnswer(selectedIdx,ch){ if(answered) return; answered=true; userAnswer=selectedIdx; if(selectedIdx===ch.correct) score++; updateUI(); render(); }
+    function nextChapter(){ if(!answered) return; currentIndex++; answered=false; userAnswer=null; render(); }
+    function renderResult(){
+        const percent = (score/totalQuestions)*100;
+        let msg = percent>=85?"🏆 MESTRE DOS MOVIMENTOS VERTICAIS! 🏆": percent>=65?"🍎 GUARDIÃO DA GRAVIDADE! 🍎":"🌱 APRENDIZ EM QUEDA! 🌱";
+        let message = percent>=85?"Excelente! Você domina todos os conceitos de queda livre e lançamento vertical: fórmulas, altura máxima, tempo de voo e as descobertas de Galileu!":percent>=65?"Muito bem! Revise as fórmulas da queda livre, o tempo de subida e a altura máxima.":"Revise os capítulos sobre queda livre, lançamento vertical e os exercícios resolvidos!";
+        const html = `<div class="comic-panel result-panel"><div style="font-size:3rem;">🍎⬇️⬆️🚀</div><h2>${msg}</h2><div style="background:#1a4a3f;border-radius:30px;padding:10px;margin:20px 0;"><div class="score-bar" style="width:${percent}%;">${score}/${totalQuestions} acertos</div></div><p>${message}</p><button class="restart-btn" id="restartBtn">🍎 Recomeçar Estudo 🍎</button><div class="summary-box"><strong>📚 FÓRMULAS ESSENCIAIS - MOVIMENTOS VERTICAIS:</strong><br><br><strong>QUEDA LIVRE (v₀=0):</strong><br>• v = g·t<br>• h = (g·t²)/2<br>• v² = 2·g·h<br><br><strong>LANÇAMENTO VERTICAL PARA CIMA:</strong><br>• v = v₀ - g·t<br>• h = v₀·t - (g·t²)/2<br>• v² = v₀² - 2·g·h<br>• t_subida = v₀/g<br>• h_max = v₀²/(2g)<br>• t_total = 2·v₀/g<br><br>🍎 g = 9,8 m/s² ≈ 10 m/s² (para facilitar cálculos)<br><br>🌍 "A Física nos ensina que todos os corpos caem com a mesma aceleração - assim como todos podem aprender com a mesma dedicação!" 🌍</div></div>`;
+        gameContent.innerHTML = html;
+        document.getElementById("restartBtn")?.addEventListener("click",()=>{ score=0; currentIndex=0; answered=false; userAnswer=null; updateUI(); render(); });
+    }
+    function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    totalQSpan.textContent = totalQuestions;
+    render();
+</script>
+</body>
+</html>

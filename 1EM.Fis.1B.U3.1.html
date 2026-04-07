@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Física em Quadrinhos - Mudanças de Estado Físico | 1º Ano EM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #2c5f8a 0%, #1a3f5a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .physics-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 30px 30px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #f1c40f;
+            box-shadow: 0 8px 0 #1f618d;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #1f618d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .logo-area p {
+            font-size: 0.7rem;
+            color: #ffdd99;
+            font-weight: bold;
+        }
+
+        .physics-stats {
+            display: flex;
+            gap: 20px;
+            background: #1f3a4a;
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 2px solid #f1c40f;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #ffdd99;
+        }
+
+        .comic-content {
+            background: #fff8f0;
+            border-radius: 0 0 30px 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comic-panel {
+            background: #fef7e8;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #f1c40f;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .comic-panel::before {
+            content: "💧";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: #fff8f0;
+            padding: 0 10px;
+        }
+
+        .character {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            font-size: 4rem;
+            background: #f1c40f;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #e67e22;
+            box-shadow: 4px 4px 0 #d35400;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #f1c40f;
+            position: relative;
+        }
+
+        .theory-box {
+            background: linear-gradient(135deg, #e8f4fc, #d4eaf8);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #f1c40f;
+        }
+
+        .theory-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2980b9;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-box {
+            background: #f1c40f20;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #f1c40f;
+        }
+
+        .states-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .state-card {
+            background: white;
+            border-radius: 20px;
+            padding: 12px;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            border: 2px solid #f1c40f;
+        }
+
+        .question-box {
+            background: #fff3e0;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 10px solid #f1c40f;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e2a;
+        }
+
+        .options-comic {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-comic {
+            background: white;
+            border: 2px solid #e6d5b8;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .option-comic:hover {
+            background: #fff3e0;
+            border-color: #f1c40f;
+            transform: translateX(10px);
+        }
+
+        .option-number {
+            background: #f1c40f;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .feedback-comic {
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+
+        .feedback-comic.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback-comic.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #f1c40f;
+            color: #2c3e50;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 15px;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #d35400;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #fff3e0, #ffe4c4);
+            border-radius: 40px;
+            padding: 35px;
+            margin: 20px 0;
+            border: 4px solid #f1c40f;
+            text-align: center;
+        }
+
+        .score-bar {
+            background: #f1c40f;
+            height: 30px;
+            border-radius: 25px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .restart-btn {
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            background: #fef3e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* Rodapé personalizado */
+        .footer {
+            margin-top: 20px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #1f3a4a, #0e2a3a);
+            border-radius: 20px;
+            text-align: center;
+            color: #ffdd99;
+            font-size: 0.9rem;
+            border-top: 3px solid #f1c40f;
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .comic-content {
+                padding: 15px;
+            }
+            .character-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="physics-header">
+        <div class="logo-area">
+            <h1><span>💧❄️💨⚡</span> MUDANÇAS DE ESTADO</h1>
+            <p>⚡ 1º Ano EM • 1º Bimestre: Transformações da Matéria | Sólido, Líquido, Gasoso, Plasma, Condensado de Bose-Einstein ⚡</p>
+        </div>
+        <div class="physics-stats">
+            <div class="stat"><div class="stat-value" id="scoreValue">0</div><div class="stat-label">Acertos</div></div>
+            <div class="stat"><div class="stat-value" id="currentQ">1</div><div class="stat-label">/<span id="totalQ">30</span></div></div>
+        </div>
+    </div>
+    <div class="comic-content" id="gameContent"></div>
+    <div class="footer">
+        <p>🔬 <strong>"A Física não é apenas fórmulas, é a poesia da natureza se revelando em cada mudança de estado!"</strong> 🔬</p>
+        <p>📚 <strong>Professor Anderson Daniel</strong> | ✉️ <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> 📚</p>
+        <p style="font-size: 0.7rem; margin-top: 5px;">🌡️ Conhecimento é a chave para transformar o mundo, assim como o calor transforma a matéria! 🌡️</p>
+    </div>
+</div>
+
+<script>
+    let score = 0, currentIndex = 0, answered = false, userAnswer = null;
+
+    const CHAPTERS = [
+        { id:1, title:"💧 Capítulo 1: Os Cinco Estados Físicos da Matéria", character:"Professor Anderson Daniel", avatar:"👨‍🏫⚛️", speech:"A matéria pode se apresentar em cinco estados principais! Vamos conhecer todos!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 OS CINCO ESTADOS FÍSICOS</div><div class="theory-content"><div class="states-grid"><div class="state-card"><strong>🔵 SÓLIDO</strong><br>Forma e volume definidos<br>Moléculas muito próximas</div><div class="state-card"><strong>💧 LÍQUIDO</strong><br>Volume definido, forma variável<br>Moléculas deslizam</div><div class="state-card"><strong>💨 GASOSO</strong><br>Volume e forma variáveis<br>Moléculas muito afastadas</div><div class="state-card"><strong>⚡ PLASMA</strong><br>Gás ionizado<br>Estrelas, raios, TVs de plasma</div><div class="state-card"><strong>✨ CONDENSADO DE BOSE-EINSTEIN</strong><br>Próximo do zero absoluto<br>Átomos se comportam como um só</div></div><br>🔹 Plasma: estado de alta energia onde elétrons são arrancados dos átomos. É o estado mais comum no universo (estrelas)!<br>🔹 Condensado de Bose-Einstein (CBE): previsto por Einstein em 1924, criado em laboratório em 1995. Átomos se comportam como uma única entidade quântica.</div><div class="formula-box">💡 99% da matéria visível no universo está no estado de PLASMA!</div></div>`,
+          text:"Qual é o estado físico MAIS COMUM no universo visível?",
+          options:["Sólido","Líquido","Gasoso","Plasma"], correct:3,
+          explanation:"✅ O plasma é o estado mais abundante no universo, presente em estrelas, nebulosas e no espaço interestelar." },
+        { id:2, title:"🌡️ Capítulo 2: Pressão e Temperatura nas Mudanças de Estado", character:"Mestre das Condições", avatar:"🌡️⚙️", speech:"Pressão e temperatura influenciam diretamente as mudanças de estado!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 INFLUÊNCIA DA PRESSÃO E TEMPERATURA</div><div class="theory-content"><strong>Ponto de Fusão:</strong> Temperatura onde sólido vira líquido. A pressão influencia levemente.<br><strong>Ponto de Ebulição:</strong> Temperatura onde líquido vira vapor. AUMENTA com a pressão!<br><br>🔹 Exemplo: Água ferve a 100°C ao nível do mar (1 atm). Em Campos do Jordão (menor pressão), ferve a cerca de 94°C.<br>🔹 Em panelas de pressão, a pressão aumenta e a água ferve a 120°C, cozinhando mais rápido!</div><div class="formula-box">📌 Pressão ↑ → Ponto de Ebulição ↑</div></div>`,
+          text:"O que acontece com o ponto de ebulição da água quando aumentamos a pressão?",
+          options:["Diminui","Aumenta","Permanece igual","Depende da temperatura"], correct:1,
+          explanation:"✅ O ponto de ebulição aumenta com o aumento da pressão. É por isso que a água ferve a uma temperatura maior em panelas de pressão." },
+        { id:3, title:"🔥❄️ Capítulo 3: Calor Latente e Mudanças de Estado", character:"Especialista em Transições", avatar:"🔥💧", speech:"Cada mudança de estado exige uma quantidade específica de energia!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR LATENTE DE MUDANÇA DE ESTADO</div><div class="theory-content"><strong>Calor Latente (L)</strong> é a quantidade de calor necessária para que 1 grama de uma substância mude de estado físico, sem variar a temperatura.<br><br>🔹 Fórmula: Q = m · L<br>• L_fusão: fusão/solidificação<br>• L_vaporização: vaporização/condensação<br><br>🔹 Água: L_fusão = 80 cal/g; L_vaporização = 540 cal/g</div><div class="formula-box">💡 Latente = "escondido" – a energia não altera a temperatura!</div></div>`,
+          text:"O que ocorre com a temperatura durante uma mudança de estado?",
+          options:["Aumenta","Diminui","Permanece constante","Oscila"], correct:2,
+          explanation:"✅ Durante a mudança de estado, a temperatura permanece constante. Toda a energia é usada para romper as ligações entre as moléculas." },
+        { id:4, title:"📈 Capítulo 4: Curva de Aquecimento", character:"Analista Gráfico", avatar:"📈💧", speech:"Vamos entender como a temperatura se comporta quando aquecemos a matéria!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CURVA DE AQUECIMENTO</div><div class="theory-content">A curva de aquecimento mostra a temperatura em função do calor fornecido:<br><br>🔹 Trecho 1 (sólido): Q = m·c_sólido·ΔT<br>🔹 Patamar 1 (fusão): Q = m·L_fusão (temperatura constante)<br>🔹 Trecho 2 (líquido): Q = m·c_líquido·ΔT<br>🔹 Patamar 2 (vaporização): Q = m·L_vaporização (constante)<br>🔹 Trecho 3 (gás): Q = m·c_gás·ΔT</div><div class="formula-box">📊 Os patamares representam mudanças de estado!</div></div>`,
+          text:"Na curva de aquecimento, os patamares horizontais representam:",
+          options:["Aumento de temperatura","Mudanças de estado (fusão e vaporização)","Resfriamento","Diminuição de pressão"], correct:1,
+          explanation:"✅ Os patamares horizontais representam as mudanças de estado, onde a temperatura permanece constante." },
+        { id:5, title:"❄️📉 Capítulo 5: Curva de Resfriamento", character:"Mestra do Frio", avatar:"❄️📉", speech:"O resfriamento é o oposto do aquecimento!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CURVA DE RESFRIAMENTO</div><div class="theory-content">A curva de resfriamento mostra a temperatura em função do calor RETIRADO:<br><br>🔹 Gás → resfria (temperatura cai)<br>🔹 Patamar: Condensação (gás → líquido) - temperatura constante<br>🔹 Líquido → resfria<br>🔹 Patamar: Solidificação - temperatura constante<br>🔹 Sólido → resfria</div></div>`,
+          text:"O que ocorre no patamar da curva de resfriamento durante a solidificação?",
+          options:["A temperatura diminui","A temperatura aumenta","A temperatura permanece constante","A pressão aumenta"], correct:2,
+          explanation:"✅ Durante a solidificação, a temperatura permanece constante enquanto a substância libera calor latente." },
+        { id:6, title:"✨ Capítulo 6: Superfusão", character:"Mago da Superfusão", avatar:"✨🧊", speech:"A superfusão é um fenômeno incrível! Água líquida abaixo de 0°C!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 SUPERFUSÃO</div><div class="theory-content"><strong>Superfusão</strong> é o fenômeno em que um líquido permanece no estado líquido em uma temperatura abaixo do ponto de solidificação.<br><br>🔹 Condições: líquido muito puro, resfriamento lento, ausência de agitação.<br>🔹 Quando um cristal de gelo é adicionado, ocorre solidificação instantânea!<br>🔹 A água pode chegar a -20°C ou menos em estado líquido!</div><div class="formula-box">💡 Curiosidade: A superfusão é usada em bolsas de gelo instantâneo!</div></div>`,
+          text:"O que faz com que a água super-resfriada congele instantaneamente?",
+          options:["Aumento de temperatura","Adição de um cristal de gelo ou agitação","Diminuição da pressão","Evaporação"], correct:1,
+          explanation:"✅ A adição de um cristal de gelo (nucleação) ou agitação faz com que a água super-resfriada solidifique rapidamente." },
+        { id:7, title:"⚡ Capítulo 7: Plasma - O Quarto Estado", character:"Astrofísico", avatar:"⚡🌞", speech:"O plasma é o estado de maior energia! Estrelas, raios e auroras são plasmáticas!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 PLASMA: O ESTADO IONIZADO</div><div class="theory-content"><strong>Plasma</strong> é um gás ionizado, onde os elétrons foram arrancados dos átomos, formando uma sopa de partículas carregadas.<br><br>🔹 Onde encontramos: estrelas (incluindo o Sol), raios, auroras boreais, TVs de plasma, chamas.<br>🔹 99% da matéria visível do universo está em estado de plasma!<br>🔹 Exemplos: o Sol, relâmpagos, nebulosas.</div><div class="formula-box">💡 O plasma conduz eletricidade e é influenciado por campos magnéticos!</div></div>`,
+          text:"Qual é a principal característica do estado PLASMA?",
+          options:["Moléculas muito próximas","Forma e volume definidos","Gás ionizado com partículas carregadas","Átomos em repouso absoluto"], correct:2,
+          explanation:"✅ O plasma é um gás ionizado, onde os elétrons foram separados dos núcleos, formando partículas carregadas." },
+        { id:8, title:"✨ Capítulo 8: Condensado de Bose-Einstein (CBE)", character:"Físico Quântico", avatar:"✨❄️", speech:"O quinto estado da matéria! Átomos se comportam como uma única entidade quântica!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CONDENSADO DE BOSE-EINSTEIN</div><div class="theory-content"><strong>Condensado de Bose-Einstein (CBE)</strong> é um estado da matéria previsto por Satyendra Nath Bose e Albert Einstein em 1924, criado em laboratório em 1995.<br><br>🔹 Ocorre a temperaturas próximas do zero absoluto (-273,15°C).<br>🔹 Os átomos se comportam como uma única "superpartícula" quântica.<br>🔹 Propriedades: superfluidez, supercondutividade, ondas de matéria.<br><br>🏆 Prêmio Nobel de Física 2001 para os criadores do CBE em laboratório.</div><div class="formula-box">💡 O CBE é um estado coletivo onde os átomos perdem sua individualidade!</div></div>`,
+          text:"Em que temperatura o Condensado de Bose-Einstein se forma?",
+          options:["100°C","0°C","Próximo do zero absoluto (-273,15°C)","10.000°C"], correct:2,
+          explanation:"✅ O Condensado de Bose-Einstein se forma a temperaturas próximas do zero absoluto, onde os átomos entram em um estado quântico coletivo." },
+        { id:9, title:"📝 Capítulo 9: Nomes das Mudanças de Estado", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar todos os nomes das mudanças de estado!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 NOMES DAS MUDANÇAS DE ESTADO</div><div class="theory-content"><strong>• Sólido → Líquido:</strong> FUSÃO<br><strong>• Líquido → Sólido:</strong> SOLIDIFICAÇÃO<br><strong>• Líquido → Gasoso:</strong> VAPORIZAÇÃO (evaporação/ebulição)<br><strong>• Gasoso → Líquido:</strong> CONDENSAÇÃO ou LIQUEFAÇÃO<br><strong>• Sólido → Gasoso:</strong> SUBLIMAÇÃO<br><strong>• Gasoso → Sólido:</strong> RESSUBLIMAÇÃO<br><strong>• Sólido → Plasma:</strong> IONIZAÇÃO<br><strong>• Plasma → Sólido:</strong> RECOMBINAÇÃO</div><div class="formula-box">💡 Sublimação: gelo seco (CO₂ sólido) vira gás!</div></div>`,
+          text:"Como se chama a mudança do estado sólido diretamente para o gasoso?",
+          options:["Fusão","Vaporização","Sublimação","Condensação"], correct:2,
+          explanation:"✅ Sublimação é a mudança direta do estado sólido para o gasoso, como ocorre com o gelo seco." },
+        { id:10, title:"🔬 Capítulo 10: Exercício - Fusão do Gelo", character:"Treinador de Cálculos", avatar:"🧮❄️", speech:"Vamos calcular quantas calorias são necessárias para derreter gelo!",
+          text:"Quantas calorias são necessárias para derreter completamente 200 g de gelo a 0°C? (L_fusão = 80 cal/g)",
+          options:["8000 cal","16000 cal","4000 cal","20000 cal"], correct:1,
+          explanation:"✅ Q = m·L = 200 × 80 = 16000 cal." },
+        { id:11, title:"💨 Capítulo 11: Exercício - Vaporização", character:"Mestre do Vapor", avatar:"💨💧", speech:"Vaporizar água exige muita energia!",
+          text:"Qual a quantidade de calor necessária para vaporizar 50 g de água a 100°C? (L_v = 540 cal/g)",
+          options:["27000 cal","54000 cal","10800 cal","13500 cal"], correct:0,
+          explanation:"✅ Q = m·L = 50 × 540 = 27000 cal." },
+        { id:12, title:"📈 Capítulo 12: Exercício - Gelo a Vapor", character:"Analista Térmico", avatar:"📊🔥", speech:"Transformar gelo em vapor é um desafio!",
+          text:"Calor total para transformar 100 g de gelo a -10°C em vapor a 100°C? (c_gelo=0,5, L_f=80, c_água=1, L_v=540)",
+          options:["72000 cal","64500 cal","72500 cal","70000 cal"], correct:2,
+          explanation:"✅ Q₁=100×0,5×10=500; Q₂=100×80=8000; Q₃=100×1×100=10000; Q₄=100×540=54000; Total=500+8000+10000+54000=72500 cal." },
+        { id:13, title:"🌊 Capítulo 13: Aplicação - Panelas de Pressão", character:"Chef de Cozinha", avatar:"🍲⚙️", speech:"Panelas de pressão usam a física!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 PANELA DE PRESSÃO</div><div class="theory-content">A panela de pressão aumenta a pressão interna, elevando o ponto de ebulição da água para cerca de 120°C. Isso faz com que os alimentos cozinhem mais rapidamente!</div></div>`,
+          text:"Por que os alimentos cozinham mais rápido na panela de pressão?",
+          options:["Aumenta a pressão e o ponto de ebulição","Diminui o ponto de ebulição","Aumenta o calor latente","Diminui o calor específico"], correct:0,
+          explanation:"✅ A panela de pressão aumenta a pressão, elevando o ponto de ebulição da água para cerca de 120°C." },
+        { id:14, title:"🏔️ Capítulo 14: Altitude e Cozimento", character:"Alpinista Chef", avatar:"🏔️🍳", speech:"Em altas montanhas, a água ferve a temperaturas mais baixas!",
+          text:"Em uma montanha a 3000 m, a água ferve a aproximadamente:",
+          options:["100°C","90°C","70°C","110°C"], correct:1,
+          explanation:"✅ Em altitudes elevadas, a pressão atmosférica é menor, então o ponto de ebulição diminui para cerca de 90°C." },
+        { id:15, title:"✨ Capítulo 15: Exercício - Superfusão", character:"Pesquisador Polar", avatar:"✨🧊", speech:"Água líquida abaixo de 0°C!",
+          text:"Até que temperatura a água pura pode chegar em estado líquido (superfusão)?",
+          options:["-5°C","-10°C","-20°C ou menos","-1°C"], correct:2,
+          explanation:"✅ Em condições ideais, a água pode ser super-resfriada até -20°C ou até -40°C!" },
+        { id:16, title:"❄️💧 Capítulo 16: Mistura Gelo e Água", character:"Mestre dos Cálculos", avatar:"🧮❄️", speech:"Vamos resolver um problema clássico!",
+          text:"Misturando 30 g de gelo a 0°C com 100 g de água a 50°C, qual a temperatura final? (L_f=80)",
+          options:["10°C","15°C","20°C","25°C"], correct:2,
+          explanation:"✅ Calor p/derreter=30×80=2400 cal. Água cede até 0°C: 100×1×50=5000 cal. Sobra 2600 cal. Massa total=130g. ΔT=2600/130=20°C. Tf=20°C." },
+        { id:17, title:"⚡ Capítulo 17: Plasma no Cotidiano", character:"Observador do Céu", avatar:"⚡🌩️", speech:"O plasma está mais perto do que você imagina!",
+          text:"Qual dos seguintes fenômenos NATURAIS ocorre no estado de plasma?",
+          options:["Chuva","Neve","Relâmpago","Vento"], correct:2,
+          explanation:"✅ Os relâmpagos são descargas elétricas em plasma, com temperaturas que podem atingir 30.000°C." },
+        { id:18, title:"✨ Capítulo 18: Condensado de Bose-Einstein", character:"Físico Quântico", avatar:"✨🔬", speech:"O quinto estado da matéria!",
+          text:"Em que ano o Condensado de Bose-Einstein foi criado em laboratório?",
+          options:["1924","1950","1995","2001"], correct:2,
+          explanation:"✅ O CBE foi criado em 1995 por Eric Cornell, Carl Wieman e Wolfgang Ketterle, ganhando o Nobel em 2001." },
+        { id:19, title:"🏆 Capítulo 19: Teste - Estados Físicos", character:"Avaliador", avatar:"🏆💧", speech:"Teste sobre os estados!",
+          text:"Qual estado físico é caracterizado por partículas carregadas eletricamente?",
+          options:["Sólido","Líquido","Gasoso","Plasma"], correct:3,
+          explanation:"✅ O plasma é formado por íons e elétrons livres, sendo eletricamente condutor." },
+        { id:20, title:"🏆 Capítulo 20: Teste - Calor Latente", character:"Avaliadora", avatar:"🏆🔥", speech:"Teste sobre calor latente!",
+          text:"Quantas calorias são liberadas quando 100 g de vapor se condensam? (L_v=540)",
+          options:["54000 cal","27000 cal","108000 cal","5400 cal"], correct:0,
+          explanation:"✅ Q = m·L = 100×540 = 54000 cal liberadas." },
+        { id:21, title:"🏆 Capítulo 21: Teste - Curva de Aquecimento", character:"Analista", avatar:"🏆📈", speech:"Interpretação de gráficos!",
+          text:"Na curva de aquecimento, durante a mudança de estado, a temperatura:",
+          options:["Aumenta","Diminui","Permanece constante","Oscila"], correct:2,
+          explanation:"✅ Durante a mudança de estado, a temperatura permanece constante." },
+        { id:22, title:"🏆 Capítulo 22: Teste - Plasma", character:"Astrofísico", avatar:"🏆🌞", speech:"Teste sobre o plasma!",
+          text:"Qual destes é um exemplo de plasma natural?",
+          options:["Gelo","Água do mar","O Sol","Vapor d'água"], correct:2,
+          explanation:"✅ O Sol é uma enorme esfera de plasma, com temperaturas na superfície de cerca de 5.500°C." },
+        { id:23, title:"🏆 Capítulo 23: Teste - CBE", character:"Físico Quântico", avatar:"🏆✨", speech:"Teste sobre o quinto estado!",
+          text:"O Condensado de Bose-Einstein ocorre em temperaturas próximas a:",
+          options:["0°C","-100°C","-273,15°C (zero absoluto)","-50°C"], correct:2,
+          explanation:"✅ O CBE ocorre a temperaturas próximas do zero absoluto (-273,15°C)." },
+        { id:24, title:"💧❄️ Capítulo 24: Sublimação", character:"Observador", avatar:"💨❄️", speech:"O gelo seco (CO₂ sólido) vira gás diretamente!",
+          text:"Qual fenômeno ocorre com o gelo seco em temperatura ambiente?",
+          options:["Fusão","Vaporização","Sublimação","Condensação"], correct:2,
+          explanation:"✅ O gelo seco (CO₂ sólido) sublima, passando diretamente do estado sólido para gasoso." },
+        { id:25, title:"📊 Capítulo 25: Análise de Curva", character:"Analista Gráfico", avatar:"📊🔍", speech:"Qual patamar é maior na curva da água?",
+          text:"Em uma curva de aquecimento da água, qual patamar é MAIOR?",
+          options:["Fusão (0°C)","Vaporização (100°C)","São iguais","Não há patamares"], correct:1,
+          explanation:"✅ O patamar da vaporização é maior porque L_v (540) > L_f (80)." },
+        { id:26, title:"🎓 Capítulo 26: Revisão - Todos os Estados", character:"Mestre Revisor", avatar:"📚🎓", speech:"Revisão completa!",
+          text:"Quantos estados físicos principais da matéria estudamos neste jogo?",
+          options:["3","4","5","6"], correct:2,
+          explanation:"✅ Estudamos 5 estados: Sólido, Líquido, Gasoso, Plasma e Condensado de Bose-Einstein." },
+        { id:27, title:"🔬 Capítulo 27: Ionização", character:"Físico de Partículas", avatar:"⚡🔬", speech:"Ionização é a passagem para o plasma!",
+          text:"Como se chama a mudança do estado gasoso para o plasma?",
+          options:["Vaporização","Sublimação","Ionização","Condensação"], correct:2,
+          explanation:"✅ A ionização é o processo que transforma um gás em plasma, arrancando elétrons dos átomos." },
+        { id:28, title:"✨ Capítulo 28: Propriedades do CBE", character:"Quântico Mestre", avatar:"✨❄️", speech:"O CBE tem propriedades únicas!",
+          text:"Qual propriedade está associada ao Condensado de Bose-Einstein?",
+          options:["Alta temperatura","Superfluidez","Alta pressão","Baixa densidade"], correct:1,
+          explanation:"✅ O CBE apresenta superfluidez, onde os átomos fluem sem resistência." },
+        { id:29, title:"🏆 Capítulo 29: Teste Final", character:"Avaliador Master", avatar:"🏆⭐", speech:"Desafio final!",
+          text:"Qual é o estado de maior energia entre os cinco?",
+          options:["Sólido","Líquido","Gasoso","Plasma"], correct:3,
+          explanation:"✅ O plasma é o estado de maior energia, onde os elétrons estão separados dos núcleos." },
+        { id:30, title:"🎓 Capítulo 30: Certificado Final", character:"Professor Anderson Daniel", avatar:"👨‍🏫🏆", speech:"Parabéns! Você dominou todos os estados físicos da matéria!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 VOCÊ APRENDEU:</div><div class="theory-content">✓ Sólido, Líquido, Gasoso, PLASMA e CONDENSADO DE BOSE-EINSTEIN<br>✓ Pressão e temperatura nas mudanças de estado<br>✓ Calor latente (Q = m·L)<br>✓ Curvas de aquecimento e resfriamento<br>✓ Superfusão<br>✓ Exercícios resolvidos e testes especiais!<br><br>🔬 "A física nos ensina que a transformação é a essência do universo!"</div></div>`,
+          text:"Qual é a mensagem final do Professor Anderson Daniel sobre o estudo da Física?",
+          options:["Física é só decorar fórmulas","A transformação é a essência do universo e do conhecimento","Física não serve para nada","Só estude para passar na prova"], correct:1,
+          explanation:"✅ Assim como a matéria se transforma, o conhecimento transforma nossa visão do mundo! Estude Física para entender o universo!" }
+    ];
+
+    const totalQuestions = CHAPTERS.length;
+    const gameContent = document.getElementById("gameContent");
+    const scoreSpan = document.getElementById("scoreValue");
+    const currentQSpan = document.getElementById("currentQ");
+    const totalQSpan = document.getElementById("totalQ");
+
+    function updateUI() { scoreSpan.textContent = score; currentQSpan.textContent = currentIndex+1; totalQSpan.textContent = totalQuestions; }
+
+    function render() {
+        if(currentIndex >= totalQuestions) { renderResult(); return; }
+        const ch = CHAPTERS[currentIndex];
+        const letters = ["A","B","C","D"];
+        let theoryHtml = ch.theory ? ch.theory : '';
+        let optionsHtml = ch.options.map((opt,idx)=>`<div class="option-comic" data-opt-index="${idx}"><div class="option-number">${letters[idx]}</div><div>${escapeHtml(opt)}</div></div>`).join('');
+        let feedbackHtml = answered ? `<div class="feedback-comic ${userAnswer===ch.correct?'correct':'incorrect'}">${userAnswer===ch.correct?"✅✨ ACERTOU! ✨✅":"❌💔 VAMOS REVISAR! 💔❌"}<br><strong>${ch.explanation}</strong>${userAnswer!==ch.correct?`<br><br>📖 <strong>Resposta correta:</strong> ${ch.options[ch.correct]}`:''}</div>` : '';
+        const html = `<div class="comic-panel"><div class="character"><div class="character-avatar">${ch.avatar}</div><div><div class="character-name">${ch.character}</div><div class="speech-bubble">"${ch.speech}"</div></div></div>${theoryHtml}<div class="question-box">📖 <strong>${ch.title}</strong><br>${escapeHtml(ch.text)}</div><div class="options-comic">${optionsHtml}</div>${feedbackHtml}<button class="next-btn" id="nextBtn" ${!answered?'disabled':''}>▶ Próximo Capítulo ▶</button></div>`;
+        gameContent.innerHTML = html;
+        if(!answered) document.querySelectorAll(".option-comic").forEach(opt=>opt.addEventListener("click",()=>{if(!answered){const idx=parseInt(opt.dataset.optIndex); handleAnswer(idx,ch);}}));
+        document.getElementById("nextBtn")?.addEventListener("click",nextChapter);
+    }
+
+    function handleAnswer(selectedIdx,ch){ if(answered) return; answered=true; userAnswer=selectedIdx; if(selectedIdx===ch.correct) score++; updateUI(); render(); }
+    function nextChapter(){ if(!answered) return; currentIndex++; answered=false; userAnswer=null; render(); }
+    function renderResult(){
+        const percent = (score/totalQuestions)*100;
+        let msg = percent>=80?"🏆 MESTRE DOS CINCO ESTADOS FÍSICOS! 🏆": percent>=60?"💧❄️💨⚡✨ GUARDIÃO DAS TRANSFORMAÇÕES!":"🌱 APRENDIZ EM TRANSFORMAÇÃO! 🌱";
+        const html = `<div class="comic-panel result-panel"><div style="font-size:3rem;">💧❄️💨⚡✨</div><h2>${msg}</h2><div style="background:#1f3a4a;border-radius:30px;padding:10px;margin:20px 0;"><div class="score-bar" style="width:${percent}%;">${score}/${totalQuestions} acertos</div></div><p>${percent>=80?"Excelente! Você domina todos os estados físicos da matéria: Sólido, Líquido, Gasoso, Plasma e Condensado de Bose-Einstein!":percent>=60?"Muito bem! Revise os conceitos de plasma, CBE e as curvas de aquecimento.":"Revise os capítulos sobre os cinco estados, calor latente e a superfusão!"}</p><button class="restart-btn" id="restartBtn">💧❄️ Recomeçar Estudo ⚡✨</button><div class="summary-box"><strong>📚 RESUMO DOS CINCO ESTADOS FÍSICOS:</strong><br>• SÓLIDO: forma e volume definidos<br>• LÍQUIDO: volume definido, forma variável<br>• GASOSO: volume e forma variáveis<br>• PLASMA: gás ionizado, presente nas estrelas<br>• CONDENSADO DE BOSE-EINSTEIN: próximo ao zero absoluto<br><br>🔹 Fórmulas: Q = m·c·ΔT (calor sensível) | Q = m·L (calor latente)<br>🔹 Curvas de aquecimento: patamares nas mudanças de estado<br>🔹 Superfusão: líquido abaixo do ponto de solidificação</div></div>`;
+        gameContent.innerHTML = html;
+        document.getElementById("restartBtn")?.addEventListener("click",()=>{ score=0; currentIndex=0; answered=false; userAnswer=null; updateUI(); render(); });
+    }
+    function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    totalQSpan.textContent = totalQuestions;
+    render();
+</script>
+</body>
+</html>

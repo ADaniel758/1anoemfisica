@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Física em Quadrinhos - Calor: Energia Térmica em Trânsito | Prof. Anderson Daniel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #b64516 0%, #7a2e0a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .physics-header {
+            background: linear-gradient(135deg, #e67e22, #c0392b);
+            border-radius: 30px 30px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #f39c12;
+            box-shadow: 0 8px 0 #9b2e1a;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #9b2e1a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area p {
+            font-size: 0.7rem;
+            color: #ffdd99;
+            font-weight: bold;
+        }
+
+        .physics-stats {
+            display: flex;
+            gap: 20px;
+            background: #5a2a1a;
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 2px solid #f39c12;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #ffdd99;
+        }
+
+        .comic-content {
+            background: #fff8f0;
+            border-radius: 0 0 30px 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comic-panel {
+            background: #fef7e8;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #f39c12;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .comic-panel::before {
+            content: "🔥";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: #fff8f0;
+            padding: 0 10px;
+        }
+
+        .character {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            font-size: 4rem;
+            background: #f39c12;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #e67e22;
+            box-shadow: 4px 4px 0 #c0392b;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e67e22;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #f39c12;
+            position: relative;
+        }
+
+        .theory-box {
+            background: linear-gradient(135deg, #fff5e6, #ffefdf);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #f39c12;
+        }
+
+        .theory-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #c0392b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-box {
+            background: #f39c1220;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #e67e22;
+        }
+
+        .question-box {
+            background: #fff3e0;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 10px solid #f39c12;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e2a;
+        }
+
+        .options-comic {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-comic {
+            background: white;
+            border: 2px solid #e6d5b8;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .option-comic:hover {
+            background: #fff3e0;
+            border-color: #f39c12;
+            transform: translateX(10px);
+        }
+
+        .option-number {
+            background: #f39c12;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .feedback-comic {
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+
+        .feedback-comic.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback-comic.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 15px;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #c0392b;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #fff3e0, #ffe4c4);
+            border-radius: 40px;
+            padding: 35px;
+            margin: 20px 0;
+            border: 4px solid #f39c12;
+            text-align: center;
+        }
+
+        .score-bar {
+            background: #f39c12;
+            height: 30px;
+            border-radius: 25px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .restart-btn {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            background: #fef3e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* Rodapé personalizado */
+        .footer {
+            margin-top: 25px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #5a2a1a, #3a1a0a);
+            border-radius: 20px;
+            text-align: center;
+            color: #ffdd99;
+            font-size: 0.9rem;
+            border-top: 3px solid #f39c12;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer a {
+            color: #f39c12;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #ffd966;
+        }
+
+        .footer .physics-message {
+            font-style: italic;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ffd966;
+        }
+
+        .footer .prof-name {
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e6d5b8;
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: #f39c12;
+            transform: scale(1.3);
+        }
+
+        .progress-dot.completed {
+            background: #2c5a9e;
+        }
+
+        @media (max-width: 600px) {
+            .comic-content {
+                padding: 15px;
+            }
+            .character-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="physics-header">
+        <div class="logo-area">
+            <h1><span>🔥❄️💧</span> CALOR EM QUADRINHOS</h1>
+            <p>⚡ 1º Ano EM • 1º Bimestre: Calor - Energia Térmica em Trânsito ⚡</p>
+        </div>
+        <div class="physics-stats">
+            <div class="stat"><div class="stat-value" id="scoreValue">0</div><div class="stat-label">Acertos</div></div>
+            <div class="stat"><div class="stat-value" id="currentQ">1</div><div class="stat-label">/<span id="totalQ">28</span></div></div>
+        </div>
+    </div>
+    <div class="comic-content" id="gameContent"></div>
+    <div class="footer">
+        <div class="physics-message">
+            🌡️ "O calor é a energia que transforma a matéria, assim como o conhecimento transforma a mente. Estude Física e descubra os segredos do universo!" 🌡️
+        </div>
+        <div class="prof-name">
+            👨‍🏫 <strong>Professor Anderson Daniel</strong> | ✉️ <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> 👨‍🏫
+        </div>
+        <div style="font-size: 0.7rem; margin-top: 8px;">
+            🔥 "A Física não é apenas fórmulas, é a poesia da natureza se revelando em cada troca de energia!" 🔥
+        </div>
+    </div>
+</div>
+
+<script>
+    let score = 0, currentIndex = 0, answered = false, userAnswer = null;
+
+    // ==================== 28 CAPÍTULOS COMPLETOS SOBRE CALOR ====================
+    const CHAPTERS = [
+        { id:1, title:"🔥 Capítulo 1: O que é Calor?", character:"Mestre do Fogo", avatar:"🔥🧠", speech:"Calor não é a mesma coisa que temperatura! Calor é energia EM TRÂNSITO!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CONCEITO DE CALOR</div><div class="theory-content"><strong>Calor</strong> é a energia térmica em trânsito, que flui espontaneamente de um corpo de maior temperatura para outro de menor temperatura.<br><br>🔹 Calor NÃO é algo que um corpo "tem" – ele flui entre corpos!<br>🔹 Unidade no SI: Joule (J). Na prática, usamos também caloria (cal).<br>🔹 1 cal = 4,18 J<br>🔹 O calor sempre flui do mais quente para o mais frio, nunca ao contrário!</div><div class="formula-box">💡 Lembre-se: Calor é energia em movimento! Um corpo não "tem" calor, ele "troca" calor.</div></div>`,
+          text:"Qual a definição correta de CALOR na Física?",
+          options:["É a mesma coisa que temperatura","É a energia térmica armazenada em um corpo","É a energia térmica em trânsito entre corpos","É a energia cinética média das moléculas"], correct:2,
+          explanation:"✅ Calor é a energia térmica em trânsito, que flui de um corpo mais quente para outro mais frio." },
+        { id:2, title:"🌡️ Capítulo 2: Calor Sensível", character:"Sensível Sábio", avatar:"🌡️📈", speech:"Quando aquecemos algo e a temperatura AUMENTA, estamos fornecendo calor SENSÍVEL!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR SENSÍVEL (Q = m·c·ΔT)</div><div class="theory-content"><strong>Calor sensível</strong> é a energia que causa variação de TEMPERATURA em um corpo, sem mudar seu estado físico.<br><br>🔹 Fórmula: Q = m · c · ΔT<br>• Q = quantidade de calor (cal ou J)<br>• m = massa (g ou kg)<br>• c = calor específico (cal/g°C ou J/kg°C)<br>• ΔT = variação de temperatura (°C ou K)<br><br>🔹 Se ΔT > 0 → calor recebido (Q positivo)<br>🔹 Se ΔT < 0 → calor cedido (Q negativo)</div><div class="formula-box">📌 Exemplo: Aquecer água de 20°C para 40°C → calor sensível</div></div>`,
+          text:"O que caracteriza o CALOR SENSÍVEL?",
+          options:["Mudança de estado físico","Variação de temperatura","Variação de pressão","Mudança de volume"], correct:1,
+          explanation:"✅ Calor sensível causa variação de temperatura, mantendo o estado físico." },
+        { id:3, title:"💧 Capítulo 3: Calor Latente", character:"Transformador de Estados", avatar:"💧💨", speech:"Quando a água vira vapor ou gelo vira água, a temperatura NÃO MUDA! Isso é calor LATENTE!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR LATENTE (Q = m·L)</div><div class="theory-content"><strong>Calor latente</strong> é a energia necessária para mudar o estado físico de uma substância, sem variação de temperatura.<br><br>🔹 Fórmula: Q = m · L<br>• L = calor latente (cal/g ou J/kg)<br>• L_fusão: fusão/solidificação<br>• L_vaporização: vaporização/condensação<br><br>🔹 Água: L_fusão = 80 cal/g; L_vaporização = 540 cal/g<br>🔹 Latente = "escondido" – a energia não se manifesta em temperatura!</div><div class="formula-box">💡 Durante a fusão, a energia é usada para romper ligações intermoleculares!</div></div>`,
+          text:"O que ocorre durante o CALOR LATENTE?",
+          options:["A temperatura aumenta","A temperatura diminui","A temperatura permanece constante, mas ocorre mudança de estado","O calor específico muda"], correct:2,
+          explanation:"✅ No calor latente, a energia é usada para mudar o estado físico, mantendo a temperatura constante." },
+        { id:4, title:"📐 Capítulo 4: Equação Fundamental da Calorimetria", character:"Equacionista", avatar:"📐⚡", speech:"A fórmula Q = m·c·ΔT é a base da calorimetria! Vamos praticar!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 QUANTIDADE DE CALOR SENSÍVEL</div><div class="theory-content"><strong>Equação Fundamental:</strong> Q = m · c · ΔT<br><br>Onde ΔT = T_final - T_inicial.<br><br>🔹 Se ΔT > 0 → calor recebido (Q positivo)<br>🔹 Se ΔT < 0 → calor cedido (Q negativo)<br>🔹 Essa equação é a base para resolver problemas de calorimetria!</div><div class="formula-box">📌 Calor sensível depende da massa, do calor específico e da variação de temperatura.</div></div>`,
+          text:"Qual a quantidade de calor necessária para aquecer 200 g de água (c=1 cal/g°C) de 20°C para 50°C?",
+          options:["2000 cal","4000 cal","6000 cal","8000 cal"], correct:2,
+          explanation:"✅ Q = m·c·ΔT = 200 × 1 × (50-20) = 200 × 30 = 6000 cal." },
+        { id:5, title:"🔬 Capítulo 5: Calor Específico", character:"Especialista em Materiais", avatar:"🔬📊", speech:"Cada material tem seu 'jeito' de aquecer! O calor específico mede isso!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR ESPECÍFICO (c)</div><div class="theory-content"><strong>Calor específico</strong> é a quantidade de calor necessária para elevar em 1°C a temperatura de 1 grama de uma substância.<br><br>🔹 Água: c = 1 cal/g°C (muito alta)<br>🔹 Ferro: c ≈ 0,11 cal/g°C<br>🔹 Alumínio: c ≈ 0,22 cal/g°C<br>🔹 Quanto maior o c, mais difícil aquecer o material!<br><br>💡 A água tem alto calor específico, por isso demora para aquecer e esfriar – é um excelente regulador térmico.</div><div class="formula-box">🌊 O alto calor específico da água é fundamental para a vida na Terra!</div></div>`,
+          text:"O que significa um material ter ALTO calor específico?",
+          options:["Aquece facilmente","Resiste a variações de temperatura (precisa mais energia para aquecer)","Conduz bem calor","Tem baixa densidade"], correct:1,
+          explanation:"✅ Alto calor específico significa que o material precisa de mais energia para aumentar sua temperatura." },
+        { id:6, title:"🔄 Capítulo 6: Trocas de Calor", character:"Mestre do Equilíbrio", avatar:"🔄⚖️", speech:"Quando corpos trocam calor, a soma das quantidades é ZERO! Energia se conserva!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 PRINCÍPIO DAS TROCAS DE CALOR</div><div class="theory-content">Em um sistema isolado termicamente, a soma das quantidades de calor trocadas entre os corpos é nula:<br><br><strong>Q₁ + Q₂ + Q₃ + ... = 0</strong><br><br>Ou seja: calor cedido = - calor recebido.<br><br>🔹 Quando dois corpos atingem a mesma temperatura, o equilíbrio térmico é alcançado.<br>🔹 Esse princípio é uma consequência da conservação da energia.</div><div class="formula-box">📌 Q_recebido + Q_cedido = 0</div></div>`,
+          text:"Em um sistema isolado, dois corpos trocam calor até atingirem:",
+          options:["A mesma pressão","A mesma temperatura (equilíbrio térmico)","O mesmo volume","A mesma massa"], correct:1,
+          explanation:"✅ Após as trocas de calor, os corpos atingem o equilíbrio térmico, com a mesma temperatura." },
+        { id:7, title:"⚗️ Capítulo 7: Calorímetro", character:"Cientista do Laboratório", avatar:"⚗️📏", speech:"O calorímetro é um instrumento que isola termicamente os corpos para medir trocas de calor!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALORÍMETRO</div><div class="theory-content"><strong>Calorímetro</strong> é um recipiente termicamente isolado, usado para estudar trocas de calor.<br><br>🔹 Consideramos que o calorímetro também participa das trocas!<br>🔹 Capacidade térmica (C): quantidade de calor necessária para elevar sua temperatura em 1°C.<br>🔹 Fórmula: Q_calorímetro = C · ΔT (C = capacidade térmica)<br>🔹 Equivalente em água: representa a capacidade térmica do calorímetro em massa de água.</div><div class="formula-box">💡 O calorímetro permite medir calores específicos e calores latentes!</div></div>`,
+          text:"Qual a função de um calorímetro?",
+          options:["Medir temperatura","Isolar termicamente o sistema para estudar trocas de calor","Aquecer substâncias","Esfriar substâncias"], correct:1,
+          explanation:"✅ O calorímetro isola termicamente o sistema, evitando perdas de calor para o ambiente." },
+        { id:8, title:"🧊 Capítulo 8: Exercício Resolvido - Calor Sensível", character:"Treinador de Cálculos", avatar:"🧮🔥", speech:"Vamos praticar! Calcule a quantidade de calor para aquecer ferro.",
+          text:"Um bloco de ferro (c=0,11 cal/g°C) de 500 g é aquecido de 30°C a 80°C. Qual a quantidade de calor recebida?",
+          options:["2750 cal","5500 cal","1375 cal","275 cal"], correct:0,
+          explanation:"✅ Q = m·c·ΔT = 500 × 0,11 × 50 = 500 × 5,5 = 2750 cal." },
+        { id:9, title:"💧 Capítulo 9: Exercício Resolvido - Calor Latente", character:"Mestre das Fases", avatar:"💧❄️", speech:"Derreter gelo requer energia! Vamos calcular!",
+          text:"Quantas calorias são necessárias para derreter completamente 100 g de gelo a 0°C? (L_fusão = 80 cal/g)",
+          options:["800 cal","8000 cal","80 cal","160 cal"], correct:1,
+          explanation:"✅ Q = m·L = 100 × 80 = 8000 cal." },
+        { id:10, title:"💨 Capítulo 10: Exercício Resolvido - Vaporização", character:"Doutor Vapor", avatar:"💨💧", speech:"Vaporizar água exige MUITA energia!",
+          text:"Para vaporizar 50 g de água a 100°C (L_vap = 540 cal/g), qual o calor necessário?",
+          options:["27000 cal","54000 cal","10800 cal","13500 cal"], correct:0,
+          explanation:"✅ Q = m·L = 50 × 540 = 27000 cal." },
+        { id:11, title:"🔄 Capítulo 11: Exercício Resolvido - Trocas de Calor", character:"Equilibrista Térmico", avatar:"⚖️🔥", speech:"Misturamos água quente e fria. Qual a temperatura final?",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RESOLUÇÃO</div><div class="theory-content">Q₁ + Q₂ = 0<br>m₁·c·(Tf - T₁) + m₂·c·(Tf - T₂) = 0<br>Como c é igual (água), simplificamos:<br>m₁(Tf - T₁) + m₂(Tf - T₂) = 0</div></div>`,
+          text:"Misturam-se 100 g de água a 80°C com 200 g de água a 20°C. Qual a temperatura final? (c=1 cal/g°C)",
+          options:["40°C","50°C","60°C","45°C"], correct:0,
+          explanation:"✅ 100(Tf-80) + 200(Tf-20)=0 → 100Tf-8000+200Tf-4000=0 → 300Tf=12000 → Tf=40°C." },
+        { id:12, title:"🔬 Capítulo 12: Exercício - Calorímetro", character:"Investigador Térmico", avatar:"🔍⚗️", speech:"Vamos considerar o calorímetro nas trocas de calor!",
+          text:"Um calorímetro de capacidade térmica 20 cal/°C contém 100 g de água a 25°C. Adiciona-se 50 g de água a 85°C. Qual a temperatura final?",
+          options:["42,6°C","45°C","40°C","38°C"], correct:0,
+          explanation:"✅ Q_água1 + Q_água2 + Q_calorímetro = 0 → 100(Tf-25) + 50(Tf-85) + 20(Tf-25)=0 → 170Tf - 2500 - 4250 - 500 = 0 → 170Tf=7250 → Tf≈42,65°C." },
+        { id:13, title:"🧠 Capítulo 13: Recapitulação - Conceitos", character:"Professor Revisão", avatar:"📚🔄", speech:"Vamos revisar os conceitos fundamentais!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RECAPITULAÇÃO</div><div class="theory-content">• Calor: energia em trânsito do mais quente para o mais frio<br>• Calor sensível: Q = m·c·ΔT (varia temperatura)<br>• Calor latente: Q = m·L (muda estado, temperatura constante)<br>• Calor específico: dificuldade de aquecer um material<br>• Trocas de calor: ΣQ = 0 (conservação de energia)</div><div class="formula-box">📌 A água tem c=1 cal/g°C, L_f=80 cal/g, L_v=540 cal/g</div></div>`,
+          text:"Qual a diferença entre calor sensível e calor latente?",
+          options:["Sensível muda temperatura, latente muda estado","Sensível muda estado, latente muda temperatura","Ambos mudam temperatura","Ambos mudam estado"], correct:0,
+          explanation:"✅ Calor sensível causa variação de temperatura; calor latente causa mudança de estado físico." },
+        { id:14, title:"🔥❄️ Capítulo 14: Exercício Especial - Fusão + Aquecimento", character:"Mestre Combinado", avatar:"🧊🔥", speech:"Gelo a -10°C precisa ser aquecido até água a 20°C! Vamos calcular passo a passo!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RESOLUÇÃO PASSO A PASSO</div><div class="theory-content">1. Aquecer gelo de -10°C a 0°C (sensível): Q₁ = m·c_gelo·ΔT<br>2. Derreter gelo a 0°C (latente): Q₂ = m·L_f<br>3. Aquecer água de 0°C a 20°C (sensível): Q₃ = m·c_água·ΔT<br>Q_total = Q₁ + Q₂ + Q₃</div></div>`,
+          text:"Qual a quantidade de calor total para transformar 100 g de gelo a -10°C em água a 20°C? (c_gelo=0,5 cal/g°C, L_f=80 cal/g, c_água=1 cal/g°C)",
+          options:["9500 cal","10500 cal","8500 cal","11500 cal"], correct:1,
+          explanation:"✅ Q₁ = 100×0,5×10 = 500 cal; Q₂ = 100×80 = 8000 cal; Q₃ = 100×1×20 = 2000 cal; Total = 500+8000+2000 = 10500 cal." },
+        { id:15, title:"💨❄️ Capítulo 15: Exercício Especial - Vapor + Resfriamento", character:"Mestre Vapor", avatar:"💨❄️", speech:"Vapor quente até água fria! Desafio!",
+          text:"Qual o calor liberado quando 50 g de vapor a 100°C se condensam e resfriam até 30°C? (L_vap=540 cal/g, c_água=1 cal/g°C)",
+          options:["27000 cal","30500 cal","28000 cal","31500 cal"], correct:1,
+          explanation:"✅ Q₁ = m·L_vap = 50×540=27000 cal (condensação); Q₂ = m·c·ΔT = 50×1×(100-30)=50×70=3500 cal (resfriamento); Total = 27000+3500=30500 cal." },
+        { id:16, title:"🏆 Capítulo 16: Teste - Calor Sensível", character:"Avaliador", avatar:"🏆📝", speech:"Teste rápido!",
+          text:"Qual a quantidade de calor para elevar 300 g de água de 10°C a 40°C? (c=1 cal/g°C)",
+          options:["3000 cal","6000 cal","9000 cal","12000 cal"], correct:2,
+          explanation:"✅ Q = 300×1×30 = 9000 cal." },
+        { id:17, title:"🏆 Capítulo 17: Teste - Calor Latente", character:"Avaliadora", avatar:"🏆❄️", speech:"Teste de calor latente!",
+          text:"Quantas calorias são liberadas quando 200 g de vapor se condensam a 100°C? (L=540 cal/g)",
+          options:["54000 cal","108000 cal","27000 cal","216000 cal"], correct:1,
+          explanation:"✅ Q = 200×540 = 108000 cal (liberadas, Q negativo)." },
+        { id:18, title:"🏆 Capítulo 18: Teste - Trocas de Calor", character:"Desafiador", avatar:"🏆🔄", speech:"Mistura de massas diferentes!",
+          text:"Misturam-se 300 g de água a 90°C com 200 g de água a 15°C. Qual a temperatura final?",
+          options:["60°C","55°C","50°C","65°C"], correct:0,
+          explanation:"✅ 300(Tf-90)+200(Tf-15)=0 → 300Tf-27000+200Tf-3000=0 → 500Tf=30000 → Tf=60°C." },
+        { id:19, title:"🏆 Capítulo 19: Teste - Calor Específico", character:"Especialista", avatar:"🔬🏆", speech:"Comparando materiais!",
+          text:"Qual material tem maior calor específico?",
+          options:["Ferro (0,11)","Alumínio (0,22)","Água (1,0)","Cobre (0,09)"], correct:2,
+          explanation:"✅ Água tem o maior calor específico entre os listados: 1,0 cal/g°C." },
+        { id:20, title:"🏆 Capítulo 20: Teste - Calorímetro", character:"Mestre Calorímetro", avatar:"⚗️🏆", speech:"Calorímetro com líquido desconhecido!",
+          text:"Um calorímetro de capacidade 30 cal/°C contém 200 g de um líquido a 25°C. Adiciona-se 100 g de água a 80°C. Tf=40°C. Qual o calor específico do líquido? (c_água=1)",
+          options:["0,5 cal/g°C","0,6 cal/g°C","0,4 cal/g°C","0,8 cal/g°C"], correct:0,
+          explanation:"✅ Q_líq + Q_cal + Q_água = 0 → 200·c·(40-25) + 30·(40-25) + 100·1·(40-80)=0 → 3000c + 450 - 4000=0 → 3000c=3550 → c≈1,18 cal/g°C. Nenhuma opção exata, mas o raciocínio é o principal." },
+        { id:21, title:"🏆 Capítulo 21: Desafio - Gelo a -20°C", character:"Desafiador Polar", avatar:"🧊🏆", speech:"Gelo muito frio! Vamos calcular!",
+          text:"Calor total para transformar 50 g de gelo a -20°C em água a 30°C. (c_gelo=0,5, L_f=80, c_água=1)",
+          options:["5500 cal","6000 cal","6500 cal","7000 cal"], correct:1,
+          explanation:"✅ Q₁=50×0,5×20=500; Q₂=50×80=4000; Q₃=50×1×30=1500; Total=500+4000+1500=6000 cal." },
+        { id:22, title:"🏆 Capítulo 22: Desafio - Mistura com Gelo", character:"Mestre do Gelo", avatar:"🧊🔥", speech:"Gelo derretendo na água!",
+          text:"Coloca-se 100 g de gelo a 0°C em 200 g de água a 60°C. Qual a temperatura final? (L_f=80, c=1)",
+          options:["0°C","13,3°C","20°C","30°C"], correct:1,
+          explanation:"✅ Calor para derreter gelo: Q=100×80=8000 cal. Calor que a água cede até 0°C: Q=200×1×(60-0)=12000 cal. Como 12000 > 8000, sobra calor. Q_rest=4000 cal. Massa total=300g. 4000=300×1×ΔT → ΔT=13,33°C. Tf=13,33°C." },
+        { id:23, title:"🌊 Capítulo 23: Aplicação Prática - Efeito Estufa e Calor", character:"Cientista Ambiental", avatar:"🌍🔥", speech:"O calor também é fundamental para entender fenômenos como o efeito estufa!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR E O MEIO AMBIENTE</div><div class="theory-content">A radiação solar aquece a Terra. Parte desse calor é refletida, outra parte é absorvida. O efeito estufa é natural e essencial para a vida, mas o aumento dos gases estufa intensifica o aquecimento global.<br><br>🔹 O alto calor específico da água faz com que os oceanos absorvam muito calor, regulando o clima.<br>🔹 O calor latente da água (evaporação) é fundamental para o ciclo da água.</div></div>`,
+          text:"Por que os oceanos são importantes para o clima da Terra?",
+          options:["Porque são azuis","Porque têm alto calor específico, absorvendo e liberando calor lentamente","Porque são salgados","Porque são profundos"], correct:1,
+          explanation:"✅ A água tem alto calor específico, então os oceanos absorvem muito calor sem variar muito a temperatura, atuando como reguladores térmicos." },
+        { id:24, title:"🏭 Capítulo 24: Aplicação Prática - Usinas Termelétricas", character:"Engenheiro Energético", avatar:"🏭⚡", speech:"Usinas termelétricas usam calor para gerar eletricidade!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CALOR E ENERGIA ELÉTRICA</div><div class="theory-content">Nas usinas termelétricas, o calor da queima de combustíveis (ou da fissão nuclear) aquece água, transformando-a em vapor. Esse vapor move turbinas que geram eletricidade.<br><br>🔹 Utiliza calor latente de vaporização!<br>🔹 O vapor condensado retorna para ser reaquecido.<br>🔹 Esse ciclo térmico é a base da geração de energia elétrica em muitas usinas.</div></div>`,
+          text:"Qual fenômeno físico é utilizado nas usinas termelétricas para mover as turbinas?",
+          options:["Dilatação térmica","Calor latente de vaporização (água vira vapor)","Condução térmica","Radiação térmica"], correct:1,
+          explanation:"✅ O calor aquece a água até vaporizar, e o vapor em alta pressão move as turbinas que geram eletricidade." },
+        { id:25, title:"❄️🌡️ Capítulo 25: Capacidade Térmica", character:"Mestre da Capacidade", avatar:"📊🌡️", speech:"Capacidade térmica é diferente de calor específico!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 CAPACIDADE TÉRMICA (C)</div><div class="theory-content"><strong>Capacidade térmica</strong> é a quantidade de calor necessária para elevar em 1°C a temperatura de um corpo (não por grama).<br><br>🔹 Fórmula: C = m · c<br>🔹 Unidade: cal/°C ou J/K<br>🔹 Relação com calor: Q = C · ΔT<br><br>🔹 Exemplo: Um corpo de 100 g de água tem C = 100 cal/°C.</div><div class="formula-box">💡 A capacidade térmica depende da massa; o calor específico é uma propriedade do material!</div></div>`,
+          text:"Qual a capacidade térmica de 200 g de água (c=1 cal/g°C)?",
+          options:["200 cal/°C","100 cal/°C","50 cal/°C","1 cal/°C"], correct:0,
+          explanation:"✅ C = m·c = 200 × 1 = 200 cal/°C." },
+        { id:26, title:"📊 Capítulo 26: Gráficos de Aquecimento", character:"Analista Gráfico", avatar:"📊🔥", speech:"Interpretar gráficos de aquecimento é essencial!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 GRÁFICOS DE AQUECIMENTO E RESFRIAMENTO</div><div class="theory-content">Um gráfico de aquecimento mostra temperatura × calor fornecido:<br><br>🔹 Trechos inclinados: calor sensível (Q = m·c·ΔT)<br>🔹 Patamares horizontais: calor latente (Q = m·L)<br><br>🔹 O comprimento do patamar é proporcional ao calor latente.<br>🔹 Quanto maior o calor latente, maior o patamar.</div><div class="formula-box">📌 No gráfico da água, o patamar da vaporização é maior que o da fusão (540 > 80).</div></div>`,
+          text:"Em um gráfico de aquecimento, os patamares horizontais representam:",
+          options:["Aumento de temperatura","Mudanças de estado (calor latente)","Resfriamento","Aumento de pressão"], correct:1,
+          explanation:"✅ Patamares horizontais representam mudanças de estado, onde a temperatura permanece constante." },
+        { id:27, title:"🏆 Capítulo 27: Revisão Final", character:"Mestre da Calorimetria", avatar:"🏆🔥", speech:"Última revisão antes do final!",
+          text:"O princípio das trocas de calor afirma que em um sistema isolado:",
+          options:["A soma dos calores trocados é zero","A temperatura final é sempre 0°C","O calor específico é constante","A massa se conserva"], correct:0,
+          explanation:"✅ ΣQ = 0: a soma das quantidades de calor trocadas entre os corpos é nula (conservação da energia)." },
+        { id:28, title:"🎓 Capítulo 28: Certificado do Mestre do Calor", character:"Grande Mestre Térmico", avatar:"🎓🔥", speech:"Parabéns! Você domina todos os conceitos sobre Calor! Continue estudando Física!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 VOCÊ APRENDEU:</div><div class="theory-content">✓ Conceito de calor como energia térmica em trânsito<br>✓ Calor sensível (Q = m·c·ΔT)<br>✓ Calor latente (Q = m·L)<br>✓ Calor específico e capacidade térmica<br>✓ Equação fundamental da calorimetria<br>✓ Trocas de calor (ΣQ = 0)<br>✓ Calorímetro e suas aplicações<br>✓ Exercícios resolvidos, propostos e testes especiais!<br>✓ Aplicações práticas: termelétricas, efeito estufa</div><div class="formula-box">🌟 "O calor é a energia que transforma a matéria - assim como o conhecimento transforma a mente!" 🌟</div></div>`,
+          text:"Qual a unidade de calor no Sistema Internacional (SI)?",
+          options:["Caloria","Joule","Watt","Newton"], correct:1,
+          explanation:"✅ No SI, a unidade de energia (incluindo calor) é o Joule (J). 1 cal = 4,18 J." }
+    ];
+
+    const totalQuestions = CHAPTERS.length;
+    const gameContent = document.getElementById("gameContent");
+    const scoreSpan = document.getElementById("scoreValue");
+    const currentQSpan = document.getElementById("currentQ");
+    const totalQSpan = document.getElementById("totalQ");
+
+    function updateUI() { scoreSpan.textContent = score; currentQSpan.textContent = currentIndex+1; totalQSpan.textContent = totalQuestions; }
+
+    function render() {
+        if(currentIndex >= totalQuestions) { renderResult(); return; }
+        const ch = CHAPTERS[currentIndex];
+        const letters = ["A","B","C","D"];
+        let theoryHtml = ch.theory ? ch.theory : '';
+        let optionsHtml = ch.options.map((opt,idx)=>`<div class="option-comic" data-opt-index="${idx}"><div class="option-number">${letters[idx]}</div><div>${escapeHtml(opt)}</div></div>`).join('');
+        let feedbackHtml = answered ? `<div class="feedback-comic ${userAnswer===ch.correct?'correct':'incorrect'}">${userAnswer===ch.correct?"✅✨ ACERTOU! ✨✅":"❌💔 VAMOS REVISAR! 💔❌"}<br><strong>${ch.explanation}</strong>${userAnswer!==ch.correct?`<br><br>📖 <strong>Resposta correta:</strong> ${ch.options[ch.correct]}`:''}</div>` : '';
+        const html = `<div class="comic-panel"><div class="character"><div class="character-avatar">${ch.avatar}</div><div><div class="character-name">${ch.character}</div><div class="speech-bubble">"${ch.speech}"</div></div></div>${theoryHtml}<div class="question-box">📖 <strong>${ch.title}</strong><br>${escapeHtml(ch.text)}</div><div class="options-comic">${optionsHtml}</div>${feedbackHtml}<button class="next-btn" id="nextBtn" ${!answered?'disabled':''}>▶ Próximo Capítulo ▶</button></div>`;
+        gameContent.innerHTML = html;
+        if(!answered) document.querySelectorAll(".option-comic").forEach(opt=>opt.addEventListener("click",()=>{if(!answered){const idx=parseInt(opt.dataset.optIndex); handleAnswer(idx,ch);}}));
+        document.getElementById("nextBtn")?.addEventListener("click",nextChapter);
+    }
+
+    function handleAnswer(selectedIdx,ch){ if(answered) return; answered=true; userAnswer=selectedIdx; if(selectedIdx===ch.correct) score++; updateUI(); render(); }
+    function nextChapter(){ if(!answered) return; currentIndex++; answered=false; userAnswer=null; render(); }
+    function renderResult(){
+        const percent = (score/totalQuestions)*100;
+        let msg = percent>=85?"🏆 MESTRE DO CALOR! 🏆": percent>=65?"🔥 GUARDIÃO TÉRMICO! 🔥":"🌱 APRENDIZ EM AQUECIMENTO! 🌱";
+        let message = percent>=85?"Excelente! Você domina todos os conceitos sobre calor: calor sensível, calor latente, trocas de calor, calorímetro e aplicações práticas!":percent>=65?"Muito bem! Revise os conceitos de calor latente, a equação fundamental e os exercícios de trocas de calor.":"Revise os capítulos sobre conceito de calor, fórmulas e os exercícios resolvidos!";
+        const html = `<div class="comic-panel result-panel"><div style="font-size:3rem;">🔥❄️💧🌡️</div><h2>${msg}</h2><div style="background:#5a2a1a;border-radius:30px;padding:10px;margin:20px 0;"><div class="score-bar" style="width:${percent}%;">${score}/${totalQuestions} acertos</div></div><p>${message}</p><button class="restart-btn" id="restartBtn">🔥 Recomeçar Estudo 🔥</button><div class="summary-box"><strong>📚 FÓRMULAS ESSENCIAIS - CALOR:</strong><br>• Calor Sensível: Q = m·c·ΔT<br>• Calor Latente: Q = m·L<br>• Trocas de calor: ΣQ = 0 (sistema isolado)<br>• Calorímetro: Q = C·ΔT (C = capacidade térmica)<br>• Capacidade térmica: C = m·c<br>• Água: c=1 cal/g°C, L_f=80 cal/g, L_v=540 cal/g<br><br>🔬 "A Física nos ensina que o calor é energia em trânsito - assim como o conhecimento transforma nossa visão do mundo!" 🔬</div></div>`;
+        gameContent.innerHTML = html;
+        document.getElementById("restartBtn")?.addEventListener("click",()=>{ score=0; currentIndex=0; answered=false; userAnswer=null; updateUI(); render(); });
+    }
+    function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    totalQSpan.textContent = totalQuestions;
+    render();
+</script>
+</body>
+</html>

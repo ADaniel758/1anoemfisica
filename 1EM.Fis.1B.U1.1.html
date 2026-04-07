@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Física em Quadrinhos - Dilatação Térmica | Prof. Anderson Daniel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', 'Poppins', cursive, sans-serif;
+            background: linear-gradient(135deg, #1a3f4f 0%, #0e2a3a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .physics-header {
+            background: linear-gradient(135deg, #4a90e2, #2c5a9e);
+            border-radius: 30px 30px 0 0;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #ffb347;
+            box-shadow: 0 8px 0 #1e3a6f;
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 0 #1e3a6f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-area p {
+            font-size: 0.7rem;
+            color: #ffdd99;
+            font-weight: bold;
+        }
+
+        .physics-stats {
+            display: flex;
+            gap: 20px;
+            background: #0f2a3a;
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 2px solid #ffb347;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: #ffdd99;
+        }
+
+        .comic-content {
+            background: #fff8f0;
+            border-radius: 0 0 30px 30px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .comic-panel {
+            background: #fef7e8;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #ffb347;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .comic-panel::before {
+            content: "🔬";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 2rem;
+            background: #fff8f0;
+            padding: 0 10px;
+        }
+
+        .character {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character-avatar {
+            font-size: 4rem;
+            background: #ffb347;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #d48f3a;
+            box-shadow: 4px 4px 0 #b25d1a;
+        }
+
+        .character-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #d48f3a;
+        }
+
+        .speech-bubble {
+            background: white;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #ffb347;
+            position: relative;
+        }
+
+        .theory-box {
+            background: linear-gradient(135deg, #e8f0fe, #d4e4fc);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 8px solid #ffb347;
+        }
+
+        .theory-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c5a9e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-box {
+            background: #2c5a9e20;
+            padding: 12px;
+            border-radius: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px dashed #2c5a9e;
+        }
+
+        .question-box {
+            background: #fff3e0;
+            border-radius: 25px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 10px solid #ffb347;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e2a;
+        }
+
+        .options-comic {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-comic {
+            background: white;
+            border: 2px solid #e6d5b8;
+            border-radius: 60px;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .option-comic:hover {
+            background: #fff3e0;
+            border-color: #ffb347;
+            transform: translateX(10px);
+        }
+
+        .option-number {
+            background: #ffb347;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .feedback-comic {
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+
+        .feedback-comic.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .feedback-comic.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .next-btn {
+            background: #ffb347;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 15px;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #b25d1a;
+        }
+
+        .next-btn:active {
+            transform: translateY(2px);
+        }
+
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #fff3e0, #ffe4c4);
+            border-radius: 40px;
+            padding: 35px;
+            margin: 20px 0;
+            border: 4px solid #ffb347;
+            text-align: center;
+        }
+
+        .score-bar {
+            background: #ffb347;
+            height: 30px;
+            border-radius: 25px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .restart-btn {
+            background: #2c5a9e;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            background: #fef3e0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* Rodapé personalizado */
+        .footer {
+            margin-top: 25px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #0f2a3a, #08202c);
+            border-radius: 20px;
+            text-align: center;
+            color: #ffdd99;
+            font-size: 0.9rem;
+            border-top: 3px solid #ffb347;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer a {
+            color: #ffb347;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #ffd966;
+        }
+
+        .footer .physics-message {
+            font-style: italic;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ffd966;
+        }
+
+        .footer .prof-name {
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #e6d5b8;
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: #ffb347;
+            transform: scale(1.3);
+        }
+
+        .progress-dot.completed {
+            background: #2c5a9e;
+        }
+
+        @media (max-width: 600px) {
+            .comic-content {
+                padding: 15px;
+            }
+            .character-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-wrapper">
+    <div class="physics-header">
+        <div class="logo-area">
+            <h1><span>🔥🧊📏</span> FÍSICA EM QUADRINHOS</h1>
+            <p>⚡ 1º Ano EM • 1º Bimestre: Dilatação Térmica (Sólidos e Líquidos) ⚡</p>
+        </div>
+        <div class="physics-stats">
+            <div class="stat"><div class="stat-value" id="scoreValue">0</div><div class="stat-label">Acertos</div></div>
+            <div class="stat"><div class="stat-value" id="currentQ">1</div><div class="stat-label">/<span id="totalQ">24</span></div></div>
+        </div>
+    </div>
+    <div class="comic-content" id="gameContent"></div>
+    <div class="footer">
+        <div class="physics-message">
+            🌡️ "A Física nos ensina que tudo se expande com o calor, assim como o conhecimento se expande com a curiosidade! Estude com paixão e veja o universo se dilatar diante dos seus olhos!" 🌡️
+        </div>
+        <div class="prof-name">
+            👨‍🏫 <strong>Professor Anderson Daniel</strong> | ✉️ <a href="mailto:adaniel758@gmail.com">adaniel758@gmail.com</a> 👨‍🏫
+        </div>
+        <div style="font-size: 0.7rem; margin-top: 8px;">
+            🔬 "A ciência é a chave que transforma o desconhecido em conhecimento - assim como o calor transforma a matéria!" 🔬
+        </div>
+    </div>
+</div>
+
+<script>
+    let score = 0, currentIndex = 0, answered = false, userAnswer = null;
+
+    // ==================== 24 CAPÍTULOS COMPLETOS SOBRE DILATAÇÃO TÉRMICA ====================
+    const CHAPTERS = [
+        { id:1, title:"🔬 Capítulo 1: O Mundo Microscópico da Dilatação", character:"Prof. Átomos", avatar:"⚛️🔬", speech:"Quando aquecemos um material, suas partículas vibram mais e se afastam! É isso que causa a dilatação!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO EM TERMOS MICROSCÓPICOS</div><div class="theory-content">Os átomos e moléculas de um material vibram constantemente. Quando a temperatura aumenta, a energia cinética média das partículas aumenta, fazendo com que elas vibrem com maior amplitude. Isso aumenta a distância média entre elas, causando a DILATAÇÃO do corpo.<br><br>🔹 Quanto maior a temperatura → maior vibração → maior espaçamento → maior volume.<br>🔹 Materiais diferentes dilatam de formas diferentes devido à intensidade das forças interatômicas.<br>🔹 A dilatação ocorre em todas as direções simultaneamente!</div><div class="formula-box">💡 No nível microscópico: ΔE_cinética → Δamplitude de vibração → Δdistância interatômica</div></div>`,
+          text:"O que acontece com as partículas de um material quando ele é aquecido?",
+          options:["Elas param de se mover","Elas vibram mais intensamente e se afastam","Elas se aproximam umas das outras","Elas se transformam em outro material"], correct:1,
+          explanation:"✅ Quando a temperatura aumenta, a energia cinética das partículas aumenta, elas vibram mais e a distância média entre elas aumenta, causando dilatação." },
+        { id:2, title:"📏 Capítulo 2: Dilatação Linear", character:"Engenheiro das Barras", avatar:"📏🔧", speech:"Para barras e fios, a dilatação acontece principalmente no comprimento!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO LINEAR (ΔL = L₀ · α · ΔT)</div><div class="theory-content"><strong>Fórmula:</strong> ΔL = L₀ · α · ΔT<br>• ΔL = variação do comprimento<br>• L₀ = comprimento inicial<br>• α = coeficiente de dilatação linear (depende do material)<br>• ΔT = variação de temperatura (T_final - T_inicial)<br><br>🔹 Exemplo: O coeficiente do ferro é 1,2×10⁻⁵ °C⁻¹.<br>🔹 Aplicações: juntas de dilatação em pontes e trilhos de trem.</div><div class="formula-box">📌 L_final = L₀ + ΔL = L₀ (1 + α·ΔT)</div></div>`,
+          text:"Uma barra de ferro tem comprimento inicial de 10 m e sofre uma variação de temperatura de 50°C. (α = 1,2×10⁻⁵ °C⁻¹). Qual é a dilatação linear?",
+          options:["0,006 m","0,06 m","0,6 m","0,012 m"], correct:0,
+          explanation:"✅ ΔL = L₀·α·ΔT = 10 × 1,2×10⁻⁵ × 50 = 10 × 60×10⁻⁵ = 600×10⁻⁵ = 0,006 m = 6 mm." },
+        { id:3, title:"🟦 Capítulo 3: Dilatação Superficial", character:"Mestra das Chapas", avatar:"🟦📐", speech:"Chapas e superfícies dilatam em duas direções! Área também aumenta!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO SUPERFICIAL (ΔA = A₀ · β · ΔT)</div><div class="theory-content"><strong>Fórmula:</strong> ΔA = A₀ · β · ΔT<br>• β = 2α (coeficiente de dilatação superficial)<br>• A₀ = área inicial<br>• ΔT = variação de temperatura<br><br>🔹 A dilatação superficial é usada para placas, lâminas e superfícies planas.<br>🔹 A_final = A₀ (1 + β·ΔT)</div><div class="formula-box">💡 Demonstração: β = 2α porque a área depende de duas dimensões lineares!</div></div>`,
+          text:"Uma chapa de alumínio tem área inicial 2 m² e coeficiente α = 2,4×10⁻⁵ °C⁻¹. Aquecida em 100°C, qual a dilatação superficial? (β = 2α)",
+          options:["4,8×10⁻³ m²","9,6×10⁻³ m²","2,4×10⁻³ m²","1,2×10⁻³ m²"], correct:1,
+          explanation:"✅ β = 2α = 4,8×10⁻⁵ °C⁻¹. ΔA = A₀·β·ΔT = 2 × 4,8×10⁻⁵ × 100 = 2 × 4,8×10⁻³ = 9,6×10⁻³ m²." },
+        { id:4, title:"🧊 Capítulo 4: Dilatação Volumétrica", character:"Doutor Volume", avatar:"🧊📦", speech:"Sólidos dilatam em todas as direções! Volume também aumenta com o calor!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO VOLUMÉTRICA (ΔV = V₀ · γ · ΔT)</div><div class="theory-content"><strong>Fórmula:</strong> ΔV = V₀ · γ · ΔT<br>• γ = 3α (coeficiente de dilatação volumétrica)<br>• V₀ = volume inicial<br>• ΔT = variação de temperatura<br><br>🔹 Para sólidos isotrópicos (mesma dilatação em todas as direções), γ = 3α.<br>🔹 V_final = V₀ (1 + γ·ΔT)</div><div class="formula-box">📌 Relação fundamental: α : β : γ = 1 : 2 : 3</div></div>`,
+          text:"Um bloco de cobre tem volume 0,5 m³, α = 1,7×10⁻⁵ °C⁻¹. Aquecido em 200°C, qual a variação de volume? (γ = 3α)",
+          options:["5,1×10⁻³ m³","2,55×10⁻³ m³","1,7×10⁻³ m³","3,4×10⁻³ m³"], correct:0,
+          explanation:"✅ γ = 3×1,7×10⁻⁵ = 5,1×10⁻⁵ °C⁻¹. ΔV = 0,5 × 5,1×10⁻⁵ × 200 = 0,5 × 1,02×10⁻² = 5,1×10⁻³ m³." },
+        { id:5, title:"💧 Capítulo 5: Dilatação dos Líquidos", character:"Professora Líquida", avatar:"💧🧪", speech:"Os líquidos dilatam mais que os sólidos! Mas precisamos considerar o recipiente!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO DOS LÍQUIDOS - REAL E APARENTE</div><div class="theory-content"><strong>Dilatação Real:</strong> É a dilatação verdadeira do líquido, considerando que o recipiente também dilata.<br><strong>Dilatação Aparente:</strong> É a dilatação que observamos (ΔV_ap = V₀ · γ_ap · ΔT).<br><br>🔹 γ_real = γ_ap + γ_recipiente<br>🔹 γ_ap = γ_real - γ_recipiente<br>🔹 Os líquidos geralmente têm γ muito maior que os sólidos!</div><div class="formula-box">💡 Líquidos dilatam mais que sólidos: γ_líquido >> γ_sólido</div></div>`,
+          text:"O que é dilatação APARENTE de um líquido?",
+          options:["É a dilatação real do líquido","É a dilatação que observamos, já descontando a dilatação do recipiente","É a dilatação do recipiente","Não tem relação com a dilatação"], correct:1,
+          explanation:"✅ Dilatação aparente é a variação de volume do líquido que conseguimos observar, pois o recipiente também se dilata." },
+        { id:6, title:"💧💎 Capítulo 6: Dilatação Real e Aparente - Exercício", character:"Detetive dos Frascos", avatar:"🔍🧪", speech:"Vamos calcular! A dilatação real é a soma da aparente com a do recipiente.",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO REAL = APARENTE + DO RECIPIENTE</div><div class="theory-content">γ_real = γ_ap + γ_recipiente<br>ΔV_real = ΔV_ap + ΔV_recipiente<br><br>Exemplo: Um frasco de vidro (γ_vidro = 2,7×10⁻⁵ °C⁻¹) contém um líquido com γ_real = 1,1×10⁻⁴ °C⁻¹. A dilatação aparente será: γ_ap = γ_real - γ_vidro = 1,1×10⁻⁴ - 2,7×10⁻⁵ = 8,3×10⁻⁵ °C⁻¹.</div></div>`,
+          text:"Um líquido tem γ_real = 9×10⁻⁴ °C⁻¹. O recipiente de vidro tem γ = 3×10⁻⁵ °C⁻¹. Qual o coeficiente de dilatação aparente do líquido?",
+          options:["8,7×10⁻⁴ °C⁻¹","9,3×10⁻⁴ °C⁻¹","6×10⁻⁴ °C⁻¹","12×10⁻⁴ °C⁻¹"], correct:0,
+          explanation:"✅ γ_ap = γ_real - γ_recipiente = 9×10⁻⁴ - 3×10⁻⁵ = 8,7×10⁻⁴ °C⁻¹." },
+        { id:7, title:"💧❄️ Capítulo 7: O Comportamento Anômalo da Água", character:"Sábia da Água", avatar:"💧❄️", speech:"A água é especial! Entre 0°C e 4°C, ela se comporta de forma diferente de todas as outras substâncias!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 COMPORTAMENTO ANÔMALO DA ÁGUA</div><div class="theory-content"><strong>Anomalia da água:</strong> Entre 0°C e 4°C, a água CONTRAI quando é aquecida! A densidade máxima ocorre a 4°C (1,000 g/cm³).<br><br>🔹 0°C → gelo (menos denso, flutua)<br>🔹 4°C → densidade máxima<br>🔹 Acima de 4°C → dilatação normal<br><br>🌊 Esse fenômeno é vital para a vida aquática! O gelo forma uma camada isolante na superfície, protegendo os organismos no fundo.</div><div class="formula-box">💡 Gelo flutua porque sua densidade é menor que a da água líquida (0,92 g/cm³).</div></div>`,
+          text:"Em que temperatura a água atinge sua densidade MÁXIMA?",
+          options:["0°C","4°C","10°C","100°C"], correct:1,
+          explanation:"✅ A 4°C a água tem densidade máxima (1,000 g/cm³). Entre 0°C e 4°C, ela se contrai ao ser aquecida, comportamento anômalo." },
+        { id:8, title:"🧊❄️ Capítulo 8: Por que o gelo flutua?", character:"Explorador Polar", avatar:"🧊🐧", speech:"Se o gelo afundasse, os lagos congelariam do fundo para a superfície! A vida seria impossível!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 IMPORTÂNCIA DO COMPORTAMENTO ANÔMALO</div><div class="theory-content">• A 0°C, o gelo tem densidade 0,92 g/cm³, menor que a água líquida.<br>• Por isso o gelo flutua, formando uma camada isolante.<br>• Isso permite que a vida subaquática sobreviva no inverno.<br>• Se a água se comportasse como outros líquidos, lagos congelariam solidamente, inviabilizando a vida.</div></div>`,
+          text:"Por que o gelo flutua na água?",
+          options:["Porque é mais denso","Porque é menos denso que a água líquida","Porque tem ar dentro","Porque é mais pesado"], correct:1,
+          explanation:"✅ O gelo tem densidade menor (0,92 g/cm³) que a água líquida (1,00 g/cm³ a 4°C), por isso flutua." },
+        { id:9, title:"🔧 Capítulo 9: Exercício Resolvido - Dilatação Linear", character:"Mestre dos Cálculos", avatar:"🧮🔧", speech:"Vamos resolver juntos! Acompanhe o passo a passo.",
+          theory:`<div class="theory-box"><div class="theory-title">📖 EXERCÍCIO RESOLVIDO</div><div class="theory-content"><strong>Problema:</strong> Uma barra de aço (α = 1,1×10⁻⁵ °C⁻¹) tem 20 m a 20°C. Qual será seu comprimento a 70°C?<br><br><strong>Resolução:</strong><br>ΔT = 70 - 20 = 50°C<br>ΔL = L₀·α·ΔT = 20 × 1,1×10⁻⁵ × 50 = 20 × 55×10⁻⁵ = 1100×10⁻⁵ = 0,011 m<br>L = L₀ + ΔL = 20 + 0,011 = 20,011 m</div></div>`,
+          text:"Uma barra de aço (α=1,1×10⁻⁵) de 20 m a 20°C é aquecida a 70°C. Qual o comprimento final?",
+          options:["20,011 m","20,022 m","20,0055 m","20,044 m"], correct:0,
+          explanation:"✅ ΔL = 20 × 1,1×10⁻⁵ × 50 = 0,011 m → L = 20 + 0,011 = 20,011 m." },
+        { id:10, title:"📐 Capítulo 10: Exercício - Dilatação Superficial", character:"Arquiteta Térmica", avatar:"🏗️📏", speech:"Placas metálicas dilatam! Calcule a nova área.",
+          text:"Uma placa de cobre (α=1,7×10⁻⁵) tem área 0,5 m² a 30°C. Aquecida a 130°C, qual a variação de área?",
+          options:["1,7×10⁻³ m²","3,4×10⁻³ m²","8,5×10⁻³ m²","1,02×10⁻² m²"], correct:0,
+          explanation:"✅ β=2α=3,4×10⁻⁵. ΔA = 0,5 × 3,4×10⁻⁵ × 100 = 0,5 × 3,4×10⁻³ = 1,7×10⁻³ m²." },
+        { id:11, title:"🧪 Capítulo 11: Exercício - Dilatação Volumétrica", character:"Químico das Escalas", avatar:"⚗️📊", speech:"Volume também se dilata! Vamos praticar.",
+          text:"Um cubo de alumínio (α=2,4×10⁻⁵) tem volume 1 m³ a 0°C. Aquecido a 100°C, qual o volume final? (γ=3α)",
+          options:["1,0072 m³","1,0024 m³","1,0048 m³","1,0096 m³"], correct:0,
+          explanation:"✅ γ=7,2×10⁻⁵. ΔV = 1 × 7,2×10⁻⁵ × 100 = 7,2×10⁻³ m³. V=1+0,0072=1,0072 m³." },
+        { id:12, title:"💧 Capítulo 12: Exercício - Dilatação de Líquidos", character:"Mestre dos Líquidos", avatar:"💧📈", speech:"Líquidos dilatam mais! Vamos calcular a dilatação real.",
+          text:"Um líquido com γ=1,2×10⁻³ °C⁻¹ ocupa 2 L a 20°C. Aquecido a 80°C, qual o aumento de volume?",
+          options:["0,144 L","0,072 L","0,288 L","0,036 L"], correct:0,
+          explanation:"✅ ΔV = V₀·γ·ΔT = 2 × 1,2×10⁻³ × 60 = 2 × 72×10⁻³ = 0,144 L." },
+        { id:13, title:"❄️ Capítulo 13: Recapitulação - Conceitos Fundamentais", character:"Professor Revisão", avatar:"📚🔄", speech:"Hora de revisar! Vamos testar seus conhecimentos gerais.",
+          theory:`<div class="theory-box"><div class="theory-title">📖 RECAPITULAÇÃO RÁPIDA</div><div class="theory-content">• Dilatação LINEAR: ΔL = L₀·α·ΔT<br>• Dilatação SUPERFICIAL: ΔA = A₀·β·ΔT (β=2α)<br>• Dilatação VOLUMÉTRICA: ΔV = V₀·γ·ΔT (γ=3α)<br>• Líquidos: γ_real = γ_ap + γ_recipiente<br>• Água: densidade máxima a 4°C, gelo menos denso</div></div>`,
+          text:"Qual a relação entre os coeficientes de dilatação linear (α), superficial (β) e volumétrico (γ)?",
+          options:["β=2α, γ=3α","β=α, γ=2α","β=3α, γ=2α","β=α/2, γ=α/3"], correct:0,
+          explanation:"✅ Para sólidos isotrópicos: β = 2α e γ = 3α." },
+        { id:14, title:"🌊 Capítulo 14: Recapitulação - Água", character:"Guardiã dos Oceanos", avatar:"🌊💙", speech:"A água tem propriedades únicas! Vamos revisar.",
+          text:"Qual fenômeno permite que peixes sobrevivam em lagos congelados no inverno?",
+          options:["Alta condutividade térmica","Comportamento anômalo da água (gelo menos denso flutua)","Baixo calor específico","Grande dilatação"], correct:1,
+          explanation:"✅ O gelo flutua e forma uma camada isolante, protegendo a água líquida abaixo." },
+        { id:15, title:"🏆 Capítulo 15: Teste Final - Dilatação Linear", character:"Avaliador Master", avatar:"🏆📝", speech:"Teste final! Mostre que você aprendeu!",
+          text:"Uma ponte de concreto (α=1×10⁻⁵) tem 200 m de comprimento. Variação de temperatura de 30°C. Qual a dilatação?",
+          options:["0,06 m","0,6 m","0,006 m","6 m"], correct:0,
+          explanation:"✅ ΔL = 200 × 1×10⁻⁵ × 30 = 200 × 3×10⁻⁴ = 6×10⁻² = 0,06 m." },
+        { id:16, title:"🏆 Capítulo 16: Teste Final - Dilatação Volumétrica", character:"Avaliadora Volume", avatar:"📦🏆", speech:"Último desafio de sólidos!",
+          text:"Uma esfera de ferro (α=1,2×10⁻⁵) tem volume 0,1 m³ a 20°C. Aquecida a 120°C, qual o volume final? (γ=3α)",
+          options:["0,10036 m³","0,10072 m³","0,10108 m³","0,10018 m³"], correct:0,
+          explanation:"✅ γ=3,6×10⁻⁵. ΔV=0,1×3,6×10⁻⁵×100=3,6×10⁻⁴ m³. V=0,1+0,00036=0,10036 m³." },
+        { id:17, title:"🏆 Capítulo 17: Teste Final - Líquidos", character:"Mestre dos Fluidos", avatar:"💧🏆", speech:"Desafio com líquidos!",
+          text:"Um frasco de vidro (γ=3×10⁻⁵) contém 1 L de mercúrio (γ_real=1,8×10⁻⁴). Qual a dilatação aparente para ΔT=50°C?",
+          options:["7,5×10⁻³ L","9×10⁻³ L","1,5×10⁻³ L","3×10⁻³ L"], correct:0,
+          explanation:"✅ γ_ap = γ_real - γ_vidro = 1,8×10⁻⁴ - 3×10⁻⁵ = 1,5×10⁻⁴. ΔV_ap = 1 × 1,5×10⁻⁴ × 50 = 7,5×10⁻³ L." },
+        { id:18, title:"🏆 Capítulo 18: Teste Final - Anomalia da Água", character:"Sábia da Natureza", avatar:"❄️💧", speech:"Questão clássica sobre a água!",
+          text:"Por que a água é essencial para a vida nos lagos durante o inverno?",
+          options:["Seu alto calor específico","Comportamento anômalo - gelo isola a água líquida","Sua transparência","Sua pressão de vapor"], correct:1,
+          explanation:"✅ O gelo flutua e isola a água abaixo, permitindo vida aquática mesmo com temperatura abaixo de zero." },
+        { id:19, title:"📝 Capítulo 19: Desafio Integrado", character:"Desafiador Final", avatar:"🧩🏆", speech:"Último desafio! Integre tudo que aprendeu!",
+          text:"Uma placa de alumínio (α=2,4×10⁻⁵) tem área 1 m² a 20°C. Se a temperatura sobe para 70°C, qual a nova área? (β=2α)",
+          options:["1,0024 m²","1,0048 m²","1,0012 m²","1,0036 m²"], correct:0,
+          explanation:"✅ β=4,8×10⁻⁵. ΔA=1×4,8×10⁻⁵×50=2,4×10⁻³ m². A=1+0,0024=1,0024 m²." },
+        { id:20, title:"🧊💧 Capítulo 20: Dilatação e Densidade", character:"Mestre da Densidade", avatar:"📊💧", speech:"A dilatação altera a densidade! Vamos entender essa relação!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 DILATAÇÃO E DENSIDADE</div><div class="theory-content">A densidade (ρ) é a razão entre massa e volume: ρ = m/V. Quando a temperatura aumenta, o volume aumenta (dilatação), mas a massa permanece constante. Portanto, a DENSIDADE DIMINUI com o aumento da temperatura!<br><br>🔹 ρ_final = ρ_inicial / (1 + γ·ΔT)<br>🔹 Exceção: água entre 0°C e 4°C (densidade aumenta com temperatura).</div><div class="formula-box">💡 Quanto maior a temperatura, menor a densidade (exceto água entre 0-4°C)!</div></div>`,
+          text:"O que acontece com a densidade de um sólido quando ele é aquecido?",
+          options:["Aumenta","Diminui","Permanece constante","Dobra"], correct:1,
+          explanation:"✅ Quando um sólido é aquecido, seu volume aumenta (dilata) enquanto a massa permanece constante, então a densidade DIMINUI." },
+        { id:21, title:"🔧 Capítulo 21: Aplicações Práticas - Juntas de Dilatação", character:"Engenheiro Civil", avatar:"🏗️🔧", speech:"Pontes e trilhos precisam de espaço para dilatar! Por isso existem as juntas de dilatação!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 JUNTAS DE DILATAÇÃO</div><div class="theory-content">Em estruturas grandes como pontes, viadutos e trilhos de trem, são deixados espaços vazios (juntas de dilatação) para permitir a expansão térmica. Sem essas juntas, o material poderia entortar ou quebrar com as variações de temperatura.<br><br>🔹 Exemplo: Uma ponte de 500 m pode dilatar até 30 cm no verão!<br>🔹 Os trilhos de trem têm pequenos espaços entre eles para dilatação.</div><div class="formula-box">📌 A engenharia usa juntas de dilatação para evitar danos estruturais!</div></div>`,
+          text:"Por que os trilhos de trem têm pequenos espaços entre eles?",
+          options:["Para economizar material","Para permitir a dilatação térmica","Para facilitar a manutenção","Para reduzir o barulho"], correct:1,
+          explanation:"✅ Os espaços permitem que os trilhos se expandam nos dias quentes sem entortar ou causar acidentes." },
+        { id:22, title:"🏭 Capítulo 22: Aplicações - Termômetros", character:"Físico Instrumentista", avatar:"🌡️🔬", speech:"Os termômetros usam a dilatação dos líquidos para medir temperatura!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 TERMÔMETROS E DILATAÇÃO</div><div class="theory-content">Os termômetros de mercúrio ou álcool utilizam a dilatação dos líquidos. Quando a temperatura aumenta, o líquido dilata e sobe pelo capilar. A escala é calibrada para indicar a temperatura.<br><br>🔹 Mercúrio: ponto de fusão -38,8°C, ebulição 356,6°C<br>🔹 Álcool colorido: usado em regiões frias (mercúrio congela)</div><div class="formula-box">💡 A dilatação dos líquidos é a base dos termômetros de coluna!</div></div>`,
+          text:"Qual princípio físico é utilizado nos termômetros de mercúrio?",
+          options:["Dilatação térmica dos líquidos","Compressão dos gases","Condução térmica","Radiação infravermelha"], correct:0,
+          explanation:"✅ Os termômetros de mercúrio usam a dilatação térmica do mercúrio: quanto maior a temperatura, mais o mercúrio dilata e sobe no capilar." },
+        { id:23, title:"📊 Capítulo 23: Recapitulação Avançada", character:"Mestre Revisor", avatar:"📚🎓", speech:"Vamos revisar tudo que aprendemos sobre dilatação térmica!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 REVISÃO COMPLETA - DILATAÇÃO TÉRMICA</div><div class="theory-content"><strong>DILATAÇÃO MICROSCÓPICA:</strong> Aumento da vibração atômica com o calor.<br><br><strong>FÓRMULAS:</strong><br>• Linear: ΔL = L₀·α·ΔT<br>• Superficial: ΔA = A₀·2α·ΔT<br>• Volumétrica: ΔV = V₀·3α·ΔT<br><br><strong>LÍQUIDOS:</strong><br>• γ_real = γ_ap + γ_recipiente<br>• Líquidos dilatam mais que sólidos<br><br><strong>ÁGUA:</strong><br>• Densidade máxima a 4°C<br>• Gelo flutua (menos denso)<br>• Fenômeno vital para a vida</div></div>`,
+          text:"Qual a principal consequência do comportamento anômalo da água para a vida aquática?",
+          options:["A água evapora mais rápido","O gelo flutua e isola a água líquida abaixo","A água congela mais rápido","Os peixes hibernam"], correct:1,
+          explanation:"✅ O gelo flutua e forma uma camada isolante, protegendo a vida aquática no fundo dos lagos durante o inverno." },
+        { id:24, title:"🎓 Capítulo 24: Certificado do Mestre Térmico", character:"Grande Mestre da Física", avatar:"🎓🔥", speech:"Parabéns! Você completou a jornada da dilatação térmica! A física está em tudo ao nosso redor!",
+          theory:`<div class="theory-box"><div class="theory-title">📖 PARABÉNS! VOCÊ APRENDEU:</div><div class="theory-content">✓ Dilatação microscópica - vibração das partículas<br>✓ Dilatação linear (ΔL = L₀·α·ΔT)<br>✓ Dilatação superficial (ΔA = A₀·2α·ΔT)<br>✓ Dilatação volumétrica (ΔV = V₀·3α·ΔT)<br>✓ Dilatação real e aparente dos líquidos<br>✓ Comportamento anômalo da água<br>✓ Exercícios resolvidos, propostos e testes<br>✓ Aplicações práticas (juntas de dilatação, termômetros)</div><div class="formula-box">🌟 "A física não é apenas fórmulas, é a poesia da natureza se revelando!" 🌟</div></div>`,
+          text:"O que acontece com a densidade da água entre 0°C e 4°C quando a temperatura aumenta?",
+          options:["Aumenta","Diminui","Permanece constante","Zera"], correct:0,
+          explanation:"✅ Entre 0°C e 4°C, a água se contrai ao ser aquecida, então sua densidade AUMENTA até atingir o máximo a 4°C." }
+    ];
+
+    const totalQuestions = CHAPTERS.length;
+    const gameContent = document.getElementById("gameContent");
+    const scoreSpan = document.getElementById("scoreValue");
+    const currentQSpan = document.getElementById("currentQ");
+    const totalQSpan = document.getElementById("totalQ");
+
+    function updateUI() { scoreSpan.textContent = score; currentQSpan.textContent = currentIndex+1; totalQSpan.textContent = totalQuestions; }
+
+    function render() {
+        if(currentIndex >= totalQuestions) { renderResult(); return; }
+        const ch = CHAPTERS[currentIndex];
+        const letters = ["A","B","C","D"];
+        let theoryHtml = ch.theory ? ch.theory : '';
+        let optionsHtml = ch.options.map((opt,idx)=>`<div class="option-comic" data-opt-index="${idx}"><div class="option-number">${letters[idx]}</div><div>${escapeHtml(opt)}</div></div>`).join('');
+        let feedbackHtml = answered ? `<div class="feedback-comic ${userAnswer===ch.correct?'correct':'incorrect'}">${userAnswer===ch.correct?"✅✨ ACERTOU! ✨✅":"❌💔 VAMOS REVISAR! 💔❌"}<br><strong>${ch.explanation}</strong>${userAnswer!==ch.correct?`<br><br>📖 <strong>Resposta correta:</strong> ${ch.options[ch.correct]}`:''}</div>` : '';
+        const html = `<div class="comic-panel"><div class="character"><div class="character-avatar">${ch.avatar}</div><div><div class="character-name">${ch.character}</div><div class="speech-bubble">"${ch.speech}"</div></div></div>${theoryHtml}<div class="question-box">📖 <strong>${ch.title}</strong><br>${escapeHtml(ch.text)}</div><div class="options-comic">${optionsHtml}</div>${feedbackHtml}<button class="next-btn" id="nextBtn" ${!answered?'disabled':''}>▶ Próximo Capítulo ▶</button></div>`;
+        gameContent.innerHTML = html;
+        if(!answered) document.querySelectorAll(".option-comic").forEach(opt=>opt.addEventListener("click",()=>{if(!answered){const idx=parseInt(opt.dataset.optIndex); handleAnswer(idx,ch);}}));
+        document.getElementById("nextBtn")?.addEventListener("click",nextChapter);
+    }
+
+    function handleAnswer(selectedIdx,ch){ if(answered) return; answered=true; userAnswer=selectedIdx; if(selectedIdx===ch.correct) score++; updateUI(); render(); }
+    function nextChapter(){ if(!answered) return; currentIndex++; answered=false; userAnswer=null; render(); }
+    function renderResult(){
+        const percent = (score/totalQuestions)*100;
+        let msg = percent>=80?"🏆 MESTRE DA DILATAÇÃO TÉRMICA! 🏆": percent>=60?"📚 GUARDIÃO TÉRMICO! 📚":"🌱 APRENDIZ EM EXPANSÃO! 🌱";
+        let message = percent>=80?"Excelente! Você domina dilatação linear, superficial, volumétrica, dilatação de líquidos e o comportamento anômalo da água!":percent>=60?"Muito bem! Revise os conceitos de dilatação aparente, a relação γ=3α e a anomalia da água.":"Revise os capítulos sobre fórmulas, o comportamento da água e os exercícios resolvidos!";
+        const html = `<div class="comic-panel result-panel"><div style="font-size:3rem;">🔥🧊📏💧</div><h2>${msg}</h2><div style="background:#2c1810;border-radius:30px;padding:10px;margin:20px 0;"><div class="score-bar" style="width:${percent}%;">${score}/${totalQuestions} acertos</div></div><p>${message}</p><button class="restart-btn" id="restartBtn">🔥 Recomeçar Estudo 🔥</button><div class="summary-box"><strong>📚 FÓRMULAS ESSENCIAIS - DILATAÇÃO TÉRMICA:</strong><br>• LINEAR: ΔL = L₀·α·ΔT | L = L₀(1 + α·ΔT)<br>• SUPERFICIAL: ΔA = A₀·2α·ΔT | A = A₀(1 + 2α·ΔT)<br>• VOLUMÉTRICA: ΔV = V₀·3α·ΔT | V = V₀(1 + 3α·ΔT)<br>• LÍQUIDOS: γ_real = γ_ap + γ_recipiente<br>• ÁGUA: densidade máxima a 4°C | gelo flutua (ρ=0,92 g/cm³)<br><br>🔬 "A dilatação térmica está presente em pontes, termômetros, trilhos e até na vida aquática!" 🔬</div></div>`;
+        gameContent.innerHTML = html;
+        document.getElementById("restartBtn")?.addEventListener("click",()=>{ score=0; currentIndex=0; answered=false; userAnswer=null; updateUI(); render(); });
+    }
+    function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g,function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    totalQSpan.textContent = totalQuestions;
+    render();
+</script>
+</body>
+</html>
